@@ -1,0 +1,34 @@
+---
+version: '3'
+
+tasks:
+  default:
+    cmds:
+      - task --list
+    silent: true
+
+  mcp-schema-download:
+    desc: 'Download the latest MCP schema and convert to YAML'
+    cmds:
+      - curl -o mcp/mcp-schema.json https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/refs/heads/main/schema/draft/schema.json
+      - |
+        echo "Converting JSON schema to YAML format"
+        NODE_PATH=/usr/lib/node_modules node -e "
+          const fs = require('fs');
+          const yaml = require('js-yaml');
+          const json = JSON.parse(fs.readFileSync('mcp/mcp-schema.json', 'utf8'));
+          fs.writeFileSync('mcp/mcp-schema.yaml', yaml.dump(json, {lineWidth: -1}));
+        "
+
+  a2a-schema-download:
+    desc: 'Download the latest A2A schema and convert to YAML'
+    cmds:
+      - curl -o a2a/a2a-schema.json https://raw.githubusercontent.com/google-a2a/A2A/main/specification/json/a2a.json
+      - |
+        echo "Converting A2A JSON schema to YAML format"
+        NODE_PATH=/usr/lib/node_modules node -e "
+          const fs = require('fs');
+          const yaml = require('js-yaml');
+          const json = JSON.parse(fs.readFileSync('a2a/a2a-schema.json', 'utf8'));
+          fs.writeFileSync('a2a/a2a-schema.yaml', yaml.dump(json, {lineWidth: -1}));
+        "

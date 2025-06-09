@@ -1,0 +1,6 @@
+---
+extends: ['spectral:oas']
+rules:
+  no-$ref-siblings: off
+  oas3-valid-schema-example: off
+  oas3-unused-component: off
