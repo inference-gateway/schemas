@@ -52,6 +52,4 @@ jobs:
             - A2A schema from google-a2a/A2A
           branch: schemas-sync
           base: main
-          labels: |
-            automation
           delete-branch: true
