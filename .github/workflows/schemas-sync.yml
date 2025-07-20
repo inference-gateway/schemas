@@ -30,6 +30,7 @@ jobs:
 
       - name: Download and convert schemas
         run: |
+          export NODE_PATH=$(npm root -g)
           task mcp-schema-download
           task a2a-schema-download
 
