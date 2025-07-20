@@ -46,9 +46,7 @@ jobs:
             This PR updates:
             - MCP schema from modelcontextprotocol/modelcontextprotocol
             - A2A schema from google-a2a/A2A
-
-            Resolves #1
-          branch: schemas-sync-$(date +'%Y%m%d-%H%M%S')
+          branch: schemas-sync
           base: main
           labels: |
             automation
