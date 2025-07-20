@@ -449,7 +449,7 @@ definitions:
         description: |-
           The user action in response to the elicitation.
           - "accept": User submitted the form/confirmed the action
-          - "decline": User explicitly declined the action
+          - "decline": User explicitly decline the action
           - "cancel": User dismissed without making an explicit choice
         enum:
           - accept
