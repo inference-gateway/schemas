@@ -34,21 +34,22 @@ jobs:
           task mcp-schema-download
           task a2a-schema-download
 
-      - name: Commit changes
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout -b schemas-sync-$(date +'%Y%m%d') || git checkout schemas-sync-$(date +'%Y%m%d')
-          git add a2a/a2a-schema.json a2a/a2a-schema.yaml mcp/mcp-schema.json mcp/mcp-schema.yaml
-          git commit -m "chore: Sync schemas from MCP and A2A sources"
-          git push origin HEAD
-
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: Sync schemas from MCP and A2A sources"
           title: "chore: Sync schemas from MCP and A2A sources"
-          body: "Automated update of schemas from MCP and A2A sources."
-          branch: schemas-sync-$(date +'%Y%m%d')
+          body: |
+            Automated update of schemas from MCP and A2A sources.
+
+            This PR updates:
+            - MCP schema from modelcontextprotocol/modelcontextprotocol
+            - A2A schema from google-a2a/A2A
+
+            Resolves #1
+          branch: schemas-sync-$(date +'%Y%m%d-%H%M%S')
           base: main
           labels: |
             automation
+          delete-branch: true
