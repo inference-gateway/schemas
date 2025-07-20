@@ -36,7 +36,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b schemas-sync-$(date +'%Y%m%d') || git checkout schemas-sync-$(date +'%Y%m%d')
           git add a2a/a2a-schema.json a2a/a2a-schema.yaml mcp/mcp-schema.json mcp/mcp-schema.yaml
-          git commit -m "chore: sync schemas from MCP and A2A sources"
+          git commit -m "chore: Sync schemas from MCP and A2A sources"
           git push origin HEAD
 
       - name: Create Pull Request
