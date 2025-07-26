@@ -33,7 +33,12 @@ tasks:
           fs.writeFileSync('a2a/a2a-schema.yaml', yaml.dump(json, {lineWidth: -1}));
         "
 
-  openapi-lint:
+  openapi:format:
+    desc: "Format OpenAPI Spec"
+    cmds:
+      - prettier --write openapi.yaml
+
+  openapi:lint:
     desc: "Lint OpenAPI spec"
     cmds:
       - spectral lint --verbose openapi.yaml
