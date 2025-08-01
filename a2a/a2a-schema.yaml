@@ -13,6 +13,7 @@ definitions:
       - $ref: '#/definitions/UnsupportedOperationError'
       - $ref: '#/definitions/ContentTypeNotSupportedError'
       - $ref: '#/definitions/InvalidAgentResponseError'
+      - $ref: '#/definitions/AuthenticatedExtendedCardNotConfiguredError'
     description: A discriminated union of all standard JSON-RPC and A2A-specific error types.
   A2ARequest:
     anyOf:
@@ -25,6 +26,7 @@ definitions:
       - $ref: '#/definitions/TaskResubscriptionRequest'
       - $ref: '#/definitions/ListTaskPushNotificationConfigRequest'
       - $ref: '#/definitions/DeleteTaskPushNotificationConfigRequest'
+      - $ref: '#/definitions/GetAuthenticatedExtendedCardRequest'
     description: A discriminated union representing all possible JSON-RPC 2.0 requests supported by the A2A specification.
   APIKeySecurityScheme:
     description: Defines a security scheme using an API key.
@@ -141,7 +143,7 @@ definitions:
           - HTTP+JSON
         type: string
       protocolVersion:
-        default: 0.2.6
+        default: 0.3.0
         description: The version of the A2A protocol this agent supports.
         type: string
       provider:
@@ -151,6 +153,14 @@ definitions:
         description: |-
           A list of security requirement objects that apply to all agent interactions. Each object
           lists security schemes that can be used. Follows the OpenAPI 3.0 Security Requirement Object.
+          This list can be seen as an OR of ANDs. Each object in the list describes one possible
+          set of security requirements that must be present on a request. This allows specifying,
+          for example, "callers must either use OAuth OR an API Key AND mTLS."
+        examples:
+          - - oauth:
+                - read
+            - api-key: []
+              mtls: []
         items:
           additionalProperties:
             items:
@@ -321,6 +331,22 @@ definitions:
         items:
           type: string
         type: array
+      security:
+        description: |-
+          Security schemes necessary for the agent to leverage this skill.
+          As in the overall AgentCard.security, this list represents a logical OR of security
+          requirement objects. Each object is a set of security schemes that must be used together
+          (a logical AND).
+        examples:
+          - - google:
+                - oidc
+        items:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          type: object
+        type: array
       tags:
         description: A set of keywords describing the skill's capabilities.
         examples:
@@ -365,6 +391,25 @@ definitions:
     required:
       - artifactId
       - parts
+    type: object
+  AuthenticatedExtendedCardNotConfiguredError:
+    description: An A2A-specific error indicating that the agent does not have an Authenticated Extended Card configured
+    properties:
+      code:
+        const: -32007
+        description: The error code for when an authenticated extended card is not configured.
+        type: integer
+      data:
+        description: |-
+          A primitive or structured value containing additional information about the error.
+          This may be omitted.
+      message:
+        default: Authenticated Extended Card is not configured
+        description: The error message.
+        type: string
+    required:
+      - code
+      - message
     type: object
   AuthorizationCodeOAuthFlow:
     description: Defines configuration details for the OAuth 2.0 Authorization Code flow.
@@ -636,6 +681,53 @@ definitions:
         type: string
     required:
       - uri
+    type: object
+  GetAuthenticatedExtendedCardRequest:
+    description: Represents a JSON-RPC request for the `agent/getAuthenticatedExtendedCard` method.
+    properties:
+      id:
+        description: The identifier for this request.
+        type:
+          - string
+          - integer
+      jsonrpc:
+        const: '2.0'
+        description: The version of the JSON-RPC protocol. MUST be exactly "2.0".
+        type: string
+      method:
+        const: agent/getAuthenticatedExtendedCard
+        description: The method name. Must be 'agent/getAuthenticatedExtendedCard'.
+        type: string
+    required:
+      - id
+      - jsonrpc
+      - method
+    type: object
+  GetAuthenticatedExtendedCardResponse:
+    anyOf:
+      - $ref: '#/definitions/JSONRPCErrorResponse'
+      - $ref: '#/definitions/GetAuthenticatedExtendedCardSuccessResponse'
+    description: Represents a JSON-RPC response for the `agent/getAuthenticatedExtendedCard` method.
+  GetAuthenticatedExtendedCardSuccessResponse:
+    description: Represents a successful JSON-RPC response for the `agent/getAuthenticatedExtendedCard` method.
+    properties:
+      id:
+        description: The identifier established by the client.
+        type:
+          - string
+          - integer
+          - 'null'
+      jsonrpc:
+        const: '2.0'
+        description: The version of the JSON-RPC protocol. MUST be exactly "2.0".
+        type: string
+      result:
+        $ref: '#/definitions/AgentCard'
+        description: The result is an Agent Card object.
+    required:
+      - id
+      - jsonrpc
+      - result
     type: object
   GetTaskPushNotificationConfigParams:
     description: Defines parameters for fetching a specific push notification configuration for a task.
@@ -933,6 +1025,7 @@ definitions:
           - $ref: '#/definitions/UnsupportedOperationError'
           - $ref: '#/definitions/ContentTypeNotSupportedError'
           - $ref: '#/definitions/InvalidAgentResponseError'
+          - $ref: '#/definitions/AuthenticatedExtendedCardNotConfiguredError'
         description: An object describing the error that occurred.
       id:
         description: The identifier established by the client.
@@ -1004,6 +1097,7 @@ definitions:
       - $ref: '#/definitions/GetTaskPushNotificationConfigSuccessResponse'
       - $ref: '#/definitions/ListTaskPushNotificationConfigSuccessResponse'
       - $ref: '#/definitions/DeleteTaskPushNotificationConfigSuccessResponse'
+      - $ref: '#/definitions/GetAuthenticatedExtendedCardSuccessResponse'
     description: |-
       A discriminated union representing all possible JSON-RPC 2.0 responses
       for the A2A specification methods.
@@ -1197,6 +1291,19 @@ definitions:
       - code
       - message
     type: object
+  MutualTLSSecurityScheme:
+    description: Defines a security scheme using mTLS authentication.
+    properties:
+      description:
+        description: An optional description for the security scheme.
+        type: string
+      type:
+        const: mutualTLS
+        description: The type of the security scheme. Must be 'mutualTLS'.
+        type: string
+    required:
+      - type
+    type: object
   OAuth2SecurityScheme:
     description: Defines a security scheme using OAuth 2.0.
     properties:
@@ -1206,6 +1313,11 @@ definitions:
       flows:
         $ref: '#/definitions/OAuthFlows'
         description: An object containing configuration information for the supported OAuth 2.0 flows.
+      oauth2MetadataUrl:
+        description: |-
+          URL to the oauth2 authorization server metadata
+          [RFC8414](https://datatracker.ietf.org/doc/html/rfc8414). TLS is required.
+        type: string
       type:
         const: oauth2
         description: The type of the security scheme. Must be 'oauth2'.
@@ -1305,7 +1417,7 @@ definitions:
         description: Optional authentication details for the agent to use when calling the notification URL.
       id:
         description: |-
-          A unique ID for the push notification configuration, created by the server
+          A unique ID for the push notification configuration, set by the client
           to support multiple notification callbacks.
         type: string
       token:
@@ -1342,6 +1454,7 @@ definitions:
       - $ref: '#/definitions/HTTPAuthSecurityScheme'
       - $ref: '#/definitions/OAuth2SecurityScheme'
       - $ref: '#/definitions/OpenIdConnectSecurityScheme'
+      - $ref: '#/definitions/MutualTLSSecurityScheme'
     description: |-
       Defines a security scheme that can be used to secure an agent's endpoints.
       This is a discriminated union type based on the OpenAPI 3.0 Security Scheme Object.
@@ -1530,7 +1643,7 @@ definitions:
           $ref: '#/definitions/Message'
         type: array
       id:
-        description: A unique identifier for the task, generated by the client for a new task or provided by the agent.
+        description: A unique identifier for the task, generated by the server for a new task.
         type: string
       kind:
         const: task
