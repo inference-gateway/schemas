@@ -36,7 +36,7 @@ definitions:
     properties:
       _meta:
         additionalProperties: {}
-        description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
         type: object
       annotations:
         $ref: '#/definitions/Annotations'
@@ -78,7 +78,7 @@ definitions:
     properties:
       _meta:
         additionalProperties: {}
-        description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
         type: object
       blob:
         description: A base64-encoded string representing the binary data of the item.
@@ -134,7 +134,7 @@ definitions:
     properties:
       _meta:
         additionalProperties: {}
-        description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
         type: object
       content:
         description: A list of content objects that represent the unstructured result of the tool call.
@@ -296,7 +296,7 @@ definitions:
     properties:
       _meta:
         additionalProperties: {}
-        description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
         type: object
       completion:
         properties:
@@ -376,7 +376,7 @@ definitions:
     properties:
       _meta:
         additionalProperties: {}
-        description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
         type: object
       content:
         anyOf:
@@ -443,7 +443,7 @@ definitions:
     properties:
       _meta:
         additionalProperties: {}
-        description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
         type: object
       action:
         description: |-
@@ -478,7 +478,7 @@ definitions:
     properties:
       _meta:
         additionalProperties: {}
-        description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
         type: object
       annotations:
         $ref: '#/definitions/Annotations'
@@ -545,7 +545,7 @@ definitions:
     properties:
       _meta:
         additionalProperties: {}
-        description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
         type: object
       description:
         description: An optional description for the prompt.
@@ -562,7 +562,7 @@ definitions:
     properties:
       _meta:
         additionalProperties: {}
-        description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
         type: object
       annotations:
         $ref: '#/definitions/Annotations'
@@ -632,7 +632,7 @@ definitions:
     properties:
       _meta:
         additionalProperties: {}
-        description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
         type: object
       capabilities:
         $ref: '#/definitions/ServerCapabilities'
@@ -663,7 +663,7 @@ definitions:
         properties:
           _meta:
             additionalProperties: {}
-            description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+            description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
             type: object
         type: object
     required:
@@ -716,7 +716,7 @@ definitions:
         properties:
           _meta:
             additionalProperties: {}
-            description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+            description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
             type: object
         type: object
     required:
@@ -738,7 +738,7 @@ definitions:
         properties:
           _meta:
             additionalProperties: {}
-            description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+            description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
             properties:
               progressToken:
                 $ref: '#/definitions/ProgressToken'
@@ -787,7 +787,7 @@ definitions:
     properties:
       _meta:
         additionalProperties: {}
-        description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
         type: object
       nextCursor:
         description: |-
@@ -823,7 +823,7 @@ definitions:
     properties:
       _meta:
         additionalProperties: {}
-        description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
         type: object
       nextCursor:
         description: |-
@@ -859,7 +859,7 @@ definitions:
     properties:
       _meta:
         additionalProperties: {}
-        description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
         type: object
       nextCursor:
         description: |-
@@ -891,7 +891,7 @@ definitions:
         properties:
           _meta:
             additionalProperties: {}
-            description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+            description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
             properties:
               progressToken:
                 $ref: '#/definitions/ProgressToken'
@@ -909,7 +909,7 @@ definitions:
     properties:
       _meta:
         additionalProperties: {}
-        description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
         type: object
       roots:
         items:
@@ -940,7 +940,7 @@ definitions:
     properties:
       _meta:
         additionalProperties: {}
-        description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
         type: object
       nextCursor:
         description: |-
@@ -1074,7 +1074,7 @@ definitions:
         properties:
           _meta:
             additionalProperties: {}
-            description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+            description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
             type: object
         type: object
     required:
@@ -1117,7 +1117,7 @@ definitions:
     properties:
       _meta:
         additionalProperties: {}
-        description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
         type: object
       nextCursor:
         description: |-
@@ -1136,7 +1136,7 @@ definitions:
         properties:
           _meta:
             additionalProperties: {}
-            description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+            description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
             properties:
               progressToken:
                 $ref: '#/definitions/ProgressToken'
@@ -1193,7 +1193,7 @@ definitions:
     properties:
       _meta:
         additionalProperties: {}
-        description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
         type: object
       arguments:
         description: A list of arguments to use for templating the prompt.
@@ -1253,7 +1253,7 @@ definitions:
         properties:
           _meta:
             additionalProperties: {}
-            description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+            description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
             type: object
         type: object
     required:
@@ -1320,7 +1320,7 @@ definitions:
     properties:
       _meta:
         additionalProperties: {}
-        description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
         type: object
       contents:
         items:
@@ -1340,7 +1340,7 @@ definitions:
         properties:
           _meta:
             additionalProperties: {}
-            description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+            description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
             properties:
               progressToken:
                 $ref: '#/definitions/ProgressToken'
@@ -1360,7 +1360,7 @@ definitions:
     properties:
       _meta:
         additionalProperties: {}
-        description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
         type: object
       annotations:
         $ref: '#/definitions/Annotations'
@@ -1405,7 +1405,7 @@ definitions:
     properties:
       _meta:
         additionalProperties: {}
-        description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
         type: object
       mimeType:
         description: The MIME type of this resource, if known.
@@ -1425,7 +1425,7 @@ definitions:
     properties:
       _meta:
         additionalProperties: {}
-        description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
         type: object
       annotations:
         $ref: '#/definitions/Annotations'
@@ -1480,7 +1480,7 @@ definitions:
         properties:
           _meta:
             additionalProperties: {}
-            description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+            description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
             type: object
         type: object
     required:
@@ -1491,7 +1491,7 @@ definitions:
     properties:
       _meta:
         additionalProperties: {}
-        description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
         type: object
       annotations:
         $ref: '#/definitions/Annotations'
@@ -1563,7 +1563,7 @@ definitions:
     properties:
       _meta:
         additionalProperties: {}
-        description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
         type: object
     type: object
   Role:
@@ -1577,7 +1577,7 @@ definitions:
     properties:
       _meta:
         additionalProperties: {}
-        description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
         type: object
       name:
         description: |-
@@ -1609,7 +1609,7 @@ definitions:
         properties:
           _meta:
             additionalProperties: {}
-            description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+            description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
             type: object
         type: object
     required:
@@ -1766,7 +1766,7 @@ definitions:
     properties:
       _meta:
         additionalProperties: {}
-        description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
         type: object
       annotations:
         $ref: '#/definitions/Annotations'
@@ -1785,7 +1785,7 @@ definitions:
     properties:
       _meta:
         additionalProperties: {}
-        description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
         type: object
       mimeType:
         description: The MIME type of this resource, if known.
@@ -1806,7 +1806,7 @@ definitions:
     properties:
       _meta:
         additionalProperties: {}
-        description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
         type: object
       annotations:
         $ref: '#/definitions/ToolAnnotations'
@@ -1935,7 +1935,7 @@ definitions:
         properties:
           _meta:
             additionalProperties: {}
-            description: See [specification/draft/basic/index#general-fields] for notes on _meta usage.
+            description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
             type: object
         type: object
     required:
