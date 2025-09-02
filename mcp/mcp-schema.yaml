@@ -112,6 +112,11 @@ definitions:
   CallToolRequest:
     description: Used by the client to invoke a tool provided by the server.
     properties:
+      id:
+        $ref: '#/definitions/RequestId'
+      jsonrpc:
+        const: '2.0'
+        type: string
       method:
         const: tools/call
         type: string
@@ -126,6 +131,8 @@ definitions:
           - name
         type: object
     required:
+      - id
+      - jsonrpc
       - method
       - params
     type: object
@@ -173,6 +180,9 @@ definitions:
 
       A client MUST NOT attempt to cancel its `initialize` request.
     properties:
+      jsonrpc:
+        const: '2.0'
+        type: string
       method:
         const: notifications/cancelled
         type: string
@@ -191,6 +201,7 @@ definitions:
           - requestId
         type: object
     required:
+      - jsonrpc
       - method
       - params
     type: object
@@ -252,6 +263,11 @@ definitions:
   CompleteRequest:
     description: A request from the client to the server, to ask for completion options.
     properties:
+      id:
+        $ref: '#/definitions/RequestId'
+      jsonrpc:
+        const: '2.0'
+        type: string
       method:
         const: completion/complete
         type: string
@@ -288,6 +304,8 @@ definitions:
           - ref
         type: object
     required:
+      - id
+      - jsonrpc
       - method
       - params
     type: object
@@ -327,6 +345,11 @@ definitions:
   CreateMessageRequest:
     description: A request from the server to sample an LLM via the client. The client has full discretion over which model to select. The client should also inform the user before beginning sampling, to allow them to inspect the request (human in the loop) and decide whether to approve it.
     properties:
+      id:
+        $ref: '#/definitions/RequestId'
+      jsonrpc:
+        const: '2.0'
+        type: string
       method:
         const: sampling/createMessage
         type: string
@@ -368,6 +391,8 @@ definitions:
           - messages
         type: object
     required:
+      - id
+      - jsonrpc
       - method
       - params
     type: object
@@ -402,6 +427,11 @@ definitions:
   ElicitRequest:
     description: A request from the server to elicit additional information from the user via the client.
     properties:
+      id:
+        $ref: '#/definitions/RequestId'
+      jsonrpc:
+        const: '2.0'
+        type: string
       method:
         const: elicitation/create
         type: string
@@ -435,6 +465,8 @@ definitions:
           - requestedSchema
         type: object
     required:
+      - id
+      - jsonrpc
       - method
       - params
     type: object
@@ -517,9 +549,28 @@ definitions:
       - enum
       - type
     type: object
+  Error:
+    properties:
+      code:
+        description: The error type that occurred.
+        type: integer
+      data:
+        description: Additional information about the error. The value of this member is defined by the sender (e.g. detailed error information, nested errors etc.).
+      message:
+        description: A short description of the error. The message SHOULD be limited to a concise single sentence.
+        type: string
+    required:
+      - code
+      - message
+    type: object
   GetPromptRequest:
     description: Used by the client to get a prompt provided by the server.
     properties:
+      id:
+        $ref: '#/definitions/RequestId'
+      jsonrpc:
+        const: '2.0'
+        type: string
       method:
         const: prompts/get
         type: string
@@ -537,6 +588,8 @@ definitions:
           - name
         type: object
     required:
+      - id
+      - jsonrpc
       - method
       - params
     type: object
@@ -606,6 +659,11 @@ definitions:
   InitializeRequest:
     description: This request is sent from the client to the server when it first connects, asking it to begin initialization.
     properties:
+      id:
+        $ref: '#/definitions/RequestId'
+      jsonrpc:
+        const: '2.0'
+        type: string
       method:
         const: initialize
         type: string
@@ -624,6 +682,8 @@ definitions:
           - protocolVersion
         type: object
     required:
+      - id
+      - jsonrpc
       - method
       - params
     type: object
@@ -655,6 +715,9 @@ definitions:
   InitializedNotification:
     description: This notification is sent from the client to the server after initialization has finished.
     properties:
+      jsonrpc:
+        const: '2.0'
+        type: string
       method:
         const: notifications/initialized
         type: string
@@ -667,25 +730,14 @@ definitions:
             type: object
         type: object
     required:
+      - jsonrpc
       - method
     type: object
   JSONRPCError:
     description: A response to a request that indicates an error occurred.
     properties:
       error:
-        properties:
-          code:
-            description: The error type that occurred.
-            type: integer
-          data:
-            description: Additional information about the error. The value of this member is defined by the sender (e.g. detailed error information, nested errors etc.).
-          message:
-            description: A short description of the error. The message SHOULD be limited to a concise single sentence.
-            type: string
-        required:
-          - code
-          - message
-        type: object
+        $ref: '#/definitions/Error'
       id:
         $ref: '#/definitions/RequestId'
       jsonrpc:
@@ -768,6 +820,11 @@ definitions:
   ListPromptsRequest:
     description: Sent from the client to request a list of prompts and prompt templates the server has.
     properties:
+      id:
+        $ref: '#/definitions/RequestId'
+      jsonrpc:
+        const: '2.0'
+        type: string
       method:
         const: prompts/list
         type: string
@@ -780,6 +837,8 @@ definitions:
             type: string
         type: object
     required:
+      - id
+      - jsonrpc
       - method
     type: object
   ListPromptsResult:
@@ -804,6 +863,11 @@ definitions:
   ListResourceTemplatesRequest:
     description: Sent from the client to request a list of resource templates the server has.
     properties:
+      id:
+        $ref: '#/definitions/RequestId'
+      jsonrpc:
+        const: '2.0'
+        type: string
       method:
         const: resources/templates/list
         type: string
@@ -816,6 +880,8 @@ definitions:
             type: string
         type: object
     required:
+      - id
+      - jsonrpc
       - method
     type: object
   ListResourceTemplatesResult:
@@ -840,6 +906,11 @@ definitions:
   ListResourcesRequest:
     description: Sent from the client to request a list of resources the server has.
     properties:
+      id:
+        $ref: '#/definitions/RequestId'
+      jsonrpc:
+        const: '2.0'
+        type: string
       method:
         const: resources/list
         type: string
@@ -852,6 +923,8 @@ definitions:
             type: string
         type: object
     required:
+      - id
+      - jsonrpc
       - method
     type: object
   ListResourcesResult:
@@ -883,6 +956,11 @@ definitions:
       This request is typically used when the server needs to understand the file system
       structure or access specific locations that the client has permission to read from.
     properties:
+      id:
+        $ref: '#/definitions/RequestId'
+      jsonrpc:
+        const: '2.0'
+        type: string
       method:
         const: roots/list
         type: string
@@ -899,6 +977,8 @@ definitions:
             type: object
         type: object
     required:
+      - id
+      - jsonrpc
       - method
     type: object
   ListRootsResult:
@@ -921,6 +1001,11 @@ definitions:
   ListToolsRequest:
     description: Sent from the client to request a list of tools the server has.
     properties:
+      id:
+        $ref: '#/definitions/RequestId'
+      jsonrpc:
+        const: '2.0'
+        type: string
       method:
         const: tools/list
         type: string
@@ -933,6 +1018,8 @@ definitions:
             type: string
         type: object
     required:
+      - id
+      - jsonrpc
       - method
     type: object
   ListToolsResult:
@@ -971,8 +1058,11 @@ definitions:
       - warning
     type: string
   LoggingMessageNotification:
-    description: Notification of a log message passed from server to client. If no logging/setLevel request has been sent from the client, the server MAY decide which messages to send automatically.
+    description: JSONRPCNotification of a log message passed from server to client. If no logging/setLevel request has been sent from the client, the server MAY decide which messages to send automatically.
     properties:
+      jsonrpc:
+        const: '2.0'
+        type: string
       method:
         const: notifications/message
         type: string
@@ -991,6 +1081,7 @@ definitions:
           - level
         type: object
     required:
+      - jsonrpc
       - method
       - params
     type: object
@@ -1100,6 +1191,11 @@ definitions:
     type: object
   PaginatedRequest:
     properties:
+      id:
+        $ref: '#/definitions/RequestId'
+      jsonrpc:
+        const: '2.0'
+        type: string
       method:
         type: string
       params:
@@ -1111,6 +1207,8 @@ definitions:
             type: string
         type: object
     required:
+      - id
+      - jsonrpc
       - method
     type: object
   PaginatedResult:
@@ -1128,6 +1226,11 @@ definitions:
   PingRequest:
     description: A ping, issued by either the server or the client, to check that the other party is still alive. The receiver must promptly respond, or else may be disconnected.
     properties:
+      id:
+        $ref: '#/definitions/RequestId'
+      jsonrpc:
+        const: '2.0'
+        type: string
       method:
         const: ping
         type: string
@@ -1144,6 +1247,8 @@ definitions:
             type: object
         type: object
     required:
+      - id
+      - jsonrpc
       - method
     type: object
   PrimitiveSchemaDefinition:
@@ -1158,6 +1263,9 @@ definitions:
   ProgressNotification:
     description: An out-of-band notification used to inform the receiver of a progress update for a long-running request.
     properties:
+      jsonrpc:
+        const: '2.0'
+        type: string
       method:
         const: notifications/progress
         type: string
@@ -1180,6 +1288,7 @@ definitions:
           - progressToken
         type: object
     required:
+      - jsonrpc
       - method
       - params
     type: object
@@ -1245,6 +1354,9 @@ definitions:
   PromptListChangedNotification:
     description: An optional notification from the server to the client, informing it that the list of prompts it offers has changed. This may be issued by servers without any previous subscription from the client.
     properties:
+      jsonrpc:
+        const: '2.0'
+        type: string
       method:
         const: notifications/prompts/list_changed
         type: string
@@ -1257,6 +1369,7 @@ definitions:
             type: object
         type: object
     required:
+      - jsonrpc
       - method
     type: object
   PromptMessage:
@@ -1299,6 +1412,11 @@ definitions:
   ReadResourceRequest:
     description: Sent from the client to the server, to read a specific resource URI.
     properties:
+      id:
+        $ref: '#/definitions/RequestId'
+      jsonrpc:
+        const: '2.0'
+        type: string
       method:
         const: resources/read
         type: string
@@ -1312,6 +1430,8 @@ definitions:
           - uri
         type: object
     required:
+      - id
+      - jsonrpc
       - method
       - params
     type: object
@@ -1472,6 +1592,9 @@ definitions:
   ResourceListChangedNotification:
     description: An optional notification from the server to the client, informing it that the list of resources it can read from has changed. This may be issued by servers without any previous subscription from the client.
     properties:
+      jsonrpc:
+        const: '2.0'
+        type: string
       method:
         const: notifications/resources/list_changed
         type: string
@@ -1484,6 +1607,7 @@ definitions:
             type: object
         type: object
     required:
+      - jsonrpc
       - method
     type: object
   ResourceTemplate:
@@ -1542,6 +1666,9 @@ definitions:
   ResourceUpdatedNotification:
     description: A notification from the server to the client, informing it that a resource has changed and may need to be read again. This should only be sent if the client previously sent a resources/subscribe request.
     properties:
+      jsonrpc:
+        const: '2.0'
+        type: string
       method:
         const: notifications/resources/updated
         type: string
@@ -1555,6 +1682,7 @@ definitions:
           - uri
         type: object
     required:
+      - jsonrpc
       - method
       - params
     type: object
@@ -1601,6 +1729,9 @@ definitions:
       This notification should be sent whenever the client adds, removes, or modifies any root.
       The server should then request an updated list of roots using the ListRootsRequest.
     properties:
+      jsonrpc:
+        const: '2.0'
+        type: string
       method:
         const: notifications/roots/list_changed
         type: string
@@ -1613,6 +1744,7 @@ definitions:
             type: object
         type: object
     required:
+      - jsonrpc
       - method
     type: object
   SamplingMessage:
@@ -1704,6 +1836,11 @@ definitions:
   SetLevelRequest:
     description: A request from the client to the server, to enable or adjust logging.
     properties:
+      id:
+        $ref: '#/definitions/RequestId'
+      jsonrpc:
+        const: '2.0'
+        type: string
       method:
         const: logging/setLevel
         type: string
@@ -1716,6 +1853,8 @@ definitions:
           - level
         type: object
     required:
+      - id
+      - jsonrpc
       - method
       - params
     type: object
@@ -1745,6 +1884,11 @@ definitions:
   SubscribeRequest:
     description: Sent from the client to request resources/updated notifications from the server whenever a particular resource changes.
     properties:
+      id:
+        $ref: '#/definitions/RequestId'
+      jsonrpc:
+        const: '2.0'
+        type: string
       method:
         const: resources/subscribe
         type: string
@@ -1758,6 +1902,8 @@ definitions:
           - uri
         type: object
     required:
+      - id
+      - jsonrpc
       - method
       - params
     type: object
@@ -1927,6 +2073,9 @@ definitions:
   ToolListChangedNotification:
     description: An optional notification from the server to the client, informing it that the list of tools it offers has changed. This may be issued by servers without any previous subscription from the client.
     properties:
+      jsonrpc:
+        const: '2.0'
+        type: string
       method:
         const: notifications/tools/list_changed
         type: string
@@ -1939,11 +2088,17 @@ definitions:
             type: object
         type: object
     required:
+      - jsonrpc
       - method
     type: object
   UnsubscribeRequest:
     description: Sent from the client to request cancellation of resources/updated notifications from the server. This should follow a previous resources/subscribe request.
     properties:
+      id:
+        $ref: '#/definitions/RequestId'
+      jsonrpc:
+        const: '2.0'
+        type: string
       method:
         const: resources/unsubscribe
         type: string
@@ -1957,6 +2112,8 @@ definitions:
           - uri
         type: object
     required:
+      - id
+      - jsonrpc
       - method
       - params
     type: object
