@@ -530,6 +530,8 @@ definitions:
     $ref: '#/definitions/Result'
   EnumSchema:
     properties:
+      default:
+        type: string
       description:
         type: string
       enum:
@@ -1173,6 +1175,8 @@ definitions:
     type: object
   NumberSchema:
     properties:
+      default:
+        type: integer
       description:
         type: string
       maximum:
@@ -1860,6 +1864,8 @@ definitions:
     type: object
   StringSchema:
     properties:
+      default:
+        type: string
       description:
         type: string
       format:
