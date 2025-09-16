@@ -612,6 +612,54 @@ definitions:
     required:
       - messages
     type: object
+  Icon:
+    description: An optionally-sized icon that can be displayed in a user interface.
+    properties:
+      mimeType:
+        description: |-
+          Optional MIME type override if the source MIME type is missing or generic.
+          For example: `"image/png"`, `"image/jpeg"`, or `"image/svg+xml"`.
+        type: string
+      sizes:
+        description: |-
+          Optional string that specifies one or more sizes at which the icon can be used.
+          For example: `"48x48"`, `"48x48 96x96"`, or `"any"` for scalable formats like SVG.
+
+          If not provided, the client should assume that the icon can be used at any size.
+        type: string
+      src:
+        description: |-
+          A standard URI pointing to an icon resource. May be an HTTP/HTTPS URL or a
+          `data:` URI with Base64-encoded image data.
+
+          Consumers SHOULD takes steps to ensure URLs serving icons are from the
+          same domain as the client/server or a trusted domain.
+
+          Consumers SHOULD take appropriate precautions when consuming SVGs as they can contain
+          executable JavaScript.
+        format: uri
+        type: string
+    required:
+      - src
+    type: object
+  Icons:
+    description: Base interface to add `icons` property.
+    properties:
+      icons:
+        description: |-
+          Optional set of sized icons that the client can display in a user interface.
+
+          Clients that support rendering icons MUST support at least the following MIME types:
+          - `image/png` - PNG images (safe, universal compatibility)
+          - `image/jpeg` (and `image/jpg`) - JPEG images (safe, universal compatibility)
+
+          Clients that support rendering icons SHOULD also support:
+          - `image/svg+xml` - SVG images (scalable but requires security precautions)
+          - `image/webp` - WebP images (modern, efficient format)
+        items:
+          $ref: '#/definitions/Icon'
+        type: array
+    type: object
   ImageContent:
     description: An image provided to or from an LLM.
     properties:
@@ -638,8 +686,22 @@ definitions:
       - type
     type: object
   Implementation:
-    description: Describes the name and version of an MCP implementation, with an optional title for UI representation.
+    description: Describes the MCP implementation
     properties:
+      icons:
+        description: |-
+          Optional set of sized icons that the client can display in a user interface.
+
+          Clients that support rendering icons MUST support at least the following MIME types:
+          - `image/png` - PNG images (safe, universal compatibility)
+          - `image/jpeg` (and `image/jpg`) - JPEG images (safe, universal compatibility)
+
+          Clients that support rendering icons SHOULD also support:
+          - `image/svg+xml` - SVG images (scalable but requires security precautions)
+          - `image/webp` - WebP images (modern, efficient format)
+        items:
+          $ref: '#/definitions/Icon'
+        type: array
       name:
         description: Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).
         type: string
@@ -653,6 +715,10 @@ definitions:
           if present).
         type: string
       version:
+        type: string
+      websiteUrl:
+        description: An optional URL of the website for this implementation.
+        format: ': uri'
         type: string
     required:
       - name
@@ -1316,6 +1382,20 @@ definitions:
       description:
         description: An optional description of what this prompt provides
         type: string
+      icons:
+        description: |-
+          Optional set of sized icons that the client can display in a user interface.
+
+          Clients that support rendering icons MUST support at least the following MIME types:
+          - `image/png` - PNG images (safe, universal compatibility)
+          - `image/jpeg` (and `image/jpg`) - JPEG images (safe, universal compatibility)
+
+          Clients that support rendering icons SHOULD also support:
+          - `image/svg+xml` - SVG images (scalable but requires security precautions)
+          - `image/webp` - WebP images (modern, efficient format)
+        items:
+          $ref: '#/definitions/Icon'
+        type: array
       name:
         description: Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).
         type: string
@@ -1495,6 +1575,20 @@ definitions:
 
           This can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a "hint" to the model.
         type: string
+      icons:
+        description: |-
+          Optional set of sized icons that the client can display in a user interface.
+
+          Clients that support rendering icons MUST support at least the following MIME types:
+          - `image/png` - PNG images (safe, universal compatibility)
+          - `image/jpeg` (and `image/jpg`) - JPEG images (safe, universal compatibility)
+
+          Clients that support rendering icons SHOULD also support:
+          - `image/svg+xml` - SVG images (scalable but requires security precautions)
+          - `image/webp` - WebP images (modern, efficient format)
+        items:
+          $ref: '#/definitions/Icon'
+        type: array
       mimeType:
         description: The MIME type of this resource, if known.
         type: string
@@ -1560,6 +1654,20 @@ definitions:
 
           This can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a "hint" to the model.
         type: string
+      icons:
+        description: |-
+          Optional set of sized icons that the client can display in a user interface.
+
+          Clients that support rendering icons MUST support at least the following MIME types:
+          - `image/png` - PNG images (safe, universal compatibility)
+          - `image/jpeg` (and `image/jpg`) - JPEG images (safe, universal compatibility)
+
+          Clients that support rendering icons SHOULD also support:
+          - `image/svg+xml` - SVG images (scalable but requires security precautions)
+          - `image/webp` - WebP images (modern, efficient format)
+        items:
+          $ref: '#/definitions/Icon'
+        type: array
       mimeType:
         description: The MIME type of this resource, if known.
         type: string
@@ -1972,6 +2080,20 @@ definitions:
 
           This can be used by clients to improve the LLM's understanding of available tools. It can be thought of like a "hint" to the model.
         type: string
+      icons:
+        description: |-
+          Optional set of sized icons that the client can display in a user interface.
+
+          Clients that support rendering icons MUST support at least the following MIME types:
+          - `image/png` - PNG images (safe, universal compatibility)
+          - `image/jpeg` (and `image/jpg`) - JPEG images (safe, universal compatibility)
+
+          Clients that support rendering icons SHOULD also support:
+          - `image/svg+xml` - SVG images (scalable but requires security precautions)
+          - `image/webp` - WebP images (modern, efficient format)
+        items:
+          $ref: '#/definitions/Icon'
+        type: array
       inputSchema:
         description: A JSON Schema object defining the expected parameters for the tool.
         properties:
