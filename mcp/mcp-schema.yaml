@@ -121,20 +121,33 @@ definitions:
         const: tools/call
         type: string
       params:
-        properties:
-          arguments:
-            additionalProperties: {}
-            type: object
-          name:
-            type: string
-        required:
-          - name
-        type: object
+        $ref: '#/definitions/CallToolRequestParams'
     required:
       - id
       - jsonrpc
       - method
       - params
+    type: object
+  CallToolRequestParams:
+    description: Parameters for a `tools/call` request.
+    properties:
+      _meta:
+        additionalProperties: {}
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
+        properties:
+          progressToken:
+            $ref: '#/definitions/ProgressToken'
+            description: If specified, the caller is requesting out-of-band progress notifications for this request (as represented by notifications/progress). The value of this parameter is an opaque token that will be attached to any subsequent notifications. The receiver is not obligated to provide these notifications.
+        type: object
+      arguments:
+        additionalProperties: {}
+        description: Arguments to use for the tool call.
+        type: object
+      name:
+        description: The name of the tool.
+        type: string
+    required:
+      - name
     type: object
   CallToolResult:
     description: The server's response to a tool call.
@@ -187,31 +200,45 @@ definitions:
         const: notifications/cancelled
         type: string
       params:
-        properties:
-          reason:
-            description: An optional string describing the reason for the cancellation. This MAY be logged or presented to the user.
-            type: string
-          requestId:
-            $ref: '#/definitions/RequestId'
-            description: |-
-              The ID of the request to cancel.
-
-              This MUST correspond to the ID of a request previously issued in the same direction.
-        required:
-          - requestId
-        type: object
+        $ref: '#/definitions/CancelledNotificationParams'
     required:
       - jsonrpc
       - method
       - params
     type: object
+  CancelledNotificationParams:
+    description: Parameters for a `notifications/cancelled` notification.
+    properties:
+      _meta:
+        additionalProperties: {}
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
+        type: object
+      reason:
+        description: An optional string describing the reason for the cancellation. This MAY be logged or presented to the user.
+        type: string
+      requestId:
+        $ref: '#/definitions/RequestId'
+        description: |-
+          The ID of the request to cancel.
+
+          This MUST correspond to the ID of a request previously issued in the same direction.
+    required:
+      - requestId
+    type: object
   ClientCapabilities:
     description: 'Capabilities a client may support. Known capabilities are defined here, in this schema, but this is not a closed set: any client can define its own, additional capabilities.'
     properties:
       elicitation:
-        additionalProperties: true
         description: Present if the client supports elicitation from the server.
-        properties: {}
+        properties:
+          form:
+            additionalProperties: true
+            properties: {}
+            type: object
+          url:
+            additionalProperties: true
+            properties: {}
+            type: object
         type: object
       experimental:
         additionalProperties:
@@ -272,42 +299,53 @@ definitions:
         const: completion/complete
         type: string
       params:
-        properties:
-          argument:
-            description: The argument's information
-            properties:
-              name:
-                description: The name of the argument
-                type: string
-              value:
-                description: The value of the argument to use for completion matching.
-                type: string
-            required:
-              - name
-              - value
-            type: object
-          context:
-            description: Additional, optional context for completions
-            properties:
-              arguments:
-                additionalProperties:
-                  type: string
-                description: Previously-resolved variables in a URI template or prompt.
-                type: object
-            type: object
-          ref:
-            anyOf:
-              - $ref: '#/definitions/PromptReference'
-              - $ref: '#/definitions/ResourceTemplateReference'
-        required:
-          - argument
-          - ref
-        type: object
+        $ref: '#/definitions/CompleteRequestParams'
     required:
       - id
       - jsonrpc
       - method
       - params
+    type: object
+  CompleteRequestParams:
+    description: Parameters for a `completion/complete` request.
+    properties:
+      _meta:
+        additionalProperties: {}
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
+        properties:
+          progressToken:
+            $ref: '#/definitions/ProgressToken'
+            description: If specified, the caller is requesting out-of-band progress notifications for this request (as represented by notifications/progress). The value of this parameter is an opaque token that will be attached to any subsequent notifications. The receiver is not obligated to provide these notifications.
+        type: object
+      argument:
+        description: The argument's information
+        properties:
+          name:
+            description: The name of the argument
+            type: string
+          value:
+            description: The value of the argument to use for completion matching.
+            type: string
+        required:
+          - name
+          - value
+        type: object
+      context:
+        description: Additional, optional context for completions
+        properties:
+          arguments:
+            additionalProperties:
+              type: string
+            description: Previously-resolved variables in a URI template or prompt.
+            type: object
+        type: object
+      ref:
+        anyOf:
+          - $ref: '#/definitions/PromptReference'
+          - $ref: '#/definitions/ResourceTemplateReference'
+    required:
+      - argument
+      - ref
     type: object
   CompleteResult:
     description: The server's response to a completion/complete request
@@ -354,50 +392,61 @@ definitions:
         const: sampling/createMessage
         type: string
       params:
-        properties:
-          includeContext:
-            description: A request to include context from one or more MCP servers (including the caller), to be attached to the prompt. The client MAY ignore this request.
-            enum:
-              - allServers
-              - none
-              - thisServer
-            type: string
-          maxTokens:
-            description: |-
-              The requested maximum number of tokens to sample (to prevent runaway completions).
-
-              The client MAY choose to sample fewer tokens than the requested maximum.
-            type: integer
-          messages:
-            items:
-              $ref: '#/definitions/SamplingMessage'
-            type: array
-          metadata:
-            additionalProperties: true
-            description: Optional metadata to pass through to the LLM provider. The format of this metadata is provider-specific.
-            properties: {}
-            type: object
-          modelPreferences:
-            $ref: '#/definitions/ModelPreferences'
-            description: The server's preferences for which model to select. The client MAY ignore these preferences.
-          stopSequences:
-            items:
-              type: string
-            type: array
-          systemPrompt:
-            description: An optional system prompt the server wants to use for sampling. The client MAY modify or omit this prompt.
-            type: string
-          temperature:
-            type: number
-        required:
-          - maxTokens
-          - messages
-        type: object
+        $ref: '#/definitions/CreateMessageRequestParams'
     required:
       - id
       - jsonrpc
       - method
       - params
+    type: object
+  CreateMessageRequestParams:
+    description: Parameters for a `sampling/createMessage` request.
+    properties:
+      _meta:
+        additionalProperties: {}
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
+        properties:
+          progressToken:
+            $ref: '#/definitions/ProgressToken'
+            description: If specified, the caller is requesting out-of-band progress notifications for this request (as represented by notifications/progress). The value of this parameter is an opaque token that will be attached to any subsequent notifications. The receiver is not obligated to provide these notifications.
+        type: object
+      includeContext:
+        description: A request to include context from one or more MCP servers (including the caller), to be attached to the prompt. The client MAY ignore this request.
+        enum:
+          - allServers
+          - none
+          - thisServer
+        type: string
+      maxTokens:
+        description: |-
+          The requested maximum number of tokens to sample (to prevent runaway completions).
+
+          The client MAY choose to sample fewer tokens than the requested maximum.
+        type: integer
+      messages:
+        items:
+          $ref: '#/definitions/SamplingMessage'
+        type: array
+      metadata:
+        additionalProperties: true
+        description: Optional metadata to pass through to the LLM provider. The format of this metadata is provider-specific.
+        properties: {}
+        type: object
+      modelPreferences:
+        $ref: '#/definitions/ModelPreferences'
+        description: The server's preferences for which model to select. The client MAY ignore these preferences.
+      stopSequences:
+        items:
+          type: string
+        type: array
+      systemPrompt:
+        description: An optional system prompt the server wants to use for sampling. The client MAY modify or omit this prompt.
+        type: string
+      temperature:
+        type: number
+    required:
+      - maxTokens
+      - messages
     type: object
   CreateMessageResult:
     description: The client's response to a sampling/create_message request from the server. The client should inform the user before returning the sampled message, to allow them to inspect the response (human in the loop) and decide whether to allow the server to see it.
@@ -439,39 +488,93 @@ definitions:
         const: elicitation/create
         type: string
       params:
-        properties:
-          message:
-            description: The message to present to the user.
-            type: string
-          requestedSchema:
-            description: |-
-              A restricted subset of JSON Schema.
-              Only top-level properties are allowed, without nesting.
-            properties:
-              properties:
-                additionalProperties:
-                  $ref: '#/definitions/PrimitiveSchemaDefinition'
-                type: object
-              required:
-                items:
-                  type: string
-                type: array
-              type:
-                const: object
-                type: string
-            required:
-              - properties
-              - type
-            type: object
-        required:
-          - message
-          - requestedSchema
-        type: object
+        $ref: '#/definitions/ElicitRequestParams'
     required:
       - id
       - jsonrpc
       - method
       - params
+    type: object
+  ElicitRequestFormParams:
+    description: The parameters for a request to elicit non-sensitive information from the user via a form in the client.
+    properties:
+      _meta:
+        additionalProperties: {}
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
+        properties:
+          progressToken:
+            $ref: '#/definitions/ProgressToken'
+            description: If specified, the caller is requesting out-of-band progress notifications for this request (as represented by notifications/progress). The value of this parameter is an opaque token that will be attached to any subsequent notifications. The receiver is not obligated to provide these notifications.
+        type: object
+      message:
+        description: The message to present to the user describing what information is being requested.
+        type: string
+      mode:
+        const: form
+        description: The elicitation mode.
+        type: string
+      requestedSchema:
+        description: |-
+          A restricted subset of JSON Schema.
+          Only top-level properties are allowed, without nesting.
+        properties:
+          properties:
+            additionalProperties:
+              $ref: '#/definitions/PrimitiveSchemaDefinition'
+            type: object
+          required:
+            items:
+              type: string
+            type: array
+          type:
+            const: object
+            type: string
+        required:
+          - properties
+          - type
+        type: object
+    required:
+      - message
+      - mode
+      - requestedSchema
+    type: object
+  ElicitRequestParams:
+    anyOf:
+      - $ref: '#/definitions/ElicitRequestURLParams'
+      - $ref: '#/definitions/ElicitRequestFormParams'
+    description: The parameters for a request to elicit additional information from the user via the client.
+  ElicitRequestURLParams:
+    description: The parameters for a request to elicit information from the user via a URL in the client.
+    properties:
+      _meta:
+        additionalProperties: {}
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
+        properties:
+          progressToken:
+            $ref: '#/definitions/ProgressToken'
+            description: If specified, the caller is requesting out-of-band progress notifications for this request (as represented by notifications/progress). The value of this parameter is an opaque token that will be attached to any subsequent notifications. The receiver is not obligated to provide these notifications.
+        type: object
+      elicitationId:
+        description: |-
+          The ID of the elicitation, which must be unique within the context of the server.
+          The client MUST treat this ID as an opaque value.
+        type: string
+      message:
+        description: The message to present to the user explaining why the interaction is needed.
+        type: string
+      mode:
+        const: url
+        description: The elicitation mode.
+        type: string
+      url:
+        description: The URL that the user should navigate to.
+        format: uri
+        type: string
+    required:
+      - elicitationId
+      - message
+      - mode
+      - url
     type: object
   ElicitResult:
     description: The client's response to an elicitation request.
@@ -493,16 +596,43 @@ definitions:
         type: string
       content:
         additionalProperties:
-          type:
-            - string
-            - integer
-            - boolean
+          anyOf:
+            - items:
+                type: string
+              type: array
+            - type:
+                - string
+                - integer
+                - boolean
         description: |-
-          The submitted form data, only present when action is "accept".
+          The submitted form data, only present when action is "accept" and mode was "form".
           Contains values matching the requested schema.
+          Omitted for out-of-band mode responses.
         type: object
     required:
       - action
+    type: object
+  ElicitationCompleteNotification:
+    description: An optional notification from the server to the client, informing it of a completion of a out-of-band elicitation request.
+    properties:
+      jsonrpc:
+        const: '2.0'
+        type: string
+      method:
+        const: notifications/elicitation/complete
+        type: string
+      params:
+        properties:
+          elicitationId:
+            description: The ID of the elicitation that completed.
+            type: string
+        required:
+          - elicitationId
+        type: object
+    required:
+      - jsonrpc
+      - method
+      - params
     type: object
   EmbeddedResource:
     description: |-
@@ -532,28 +662,12 @@ definitions:
   EmptyResult:
     $ref: '#/definitions/Result'
   EnumSchema:
-    properties:
-      default:
-        type: string
-      description:
-        type: string
-      enum:
-        items:
-          type: string
-        type: array
-      enumNames:
-        items:
-          type: string
-        type: array
-      title:
-        type: string
-      type:
-        const: string
-        type: string
-    required:
-      - enum
-      - type
-    type: object
+    anyOf:
+      - $ref: '#/definitions/UntitledSingleSelectEnumSchema'
+      - $ref: '#/definitions/TitledSingleSelectEnumSchema'
+      - $ref: '#/definitions/UntitledMultiSelectEnumSchema'
+      - $ref: '#/definitions/TitledMultiSelectEnumSchema'
+      - $ref: '#/definitions/LegacyTitledEnumSchema'
   Error:
     properties:
       code:
@@ -580,23 +694,34 @@ definitions:
         const: prompts/get
         type: string
       params:
-        properties:
-          arguments:
-            additionalProperties:
-              type: string
-            description: Arguments to use for templating the prompt.
-            type: object
-          name:
-            description: The name of the prompt or prompt template.
-            type: string
-        required:
-          - name
-        type: object
+        $ref: '#/definitions/GetPromptRequestParams'
     required:
       - id
       - jsonrpc
       - method
       - params
+    type: object
+  GetPromptRequestParams:
+    description: Parameters for a `prompts/get` request.
+    properties:
+      _meta:
+        additionalProperties: {}
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
+        properties:
+          progressToken:
+            $ref: '#/definitions/ProgressToken'
+            description: If specified, the caller is requesting out-of-band progress notifications for this request (as represented by notifications/progress). The value of this parameter is an opaque token that will be attached to any subsequent notifications. The receiver is not obligated to provide these notifications.
+        type: object
+      arguments:
+        additionalProperties:
+          type: string
+        description: Arguments to use for templating the prompt.
+        type: object
+      name:
+        description: The name of the prompt or prompt template.
+        type: string
+    required:
+      - name
     type: object
   GetPromptResult:
     description: The server's response to a prompts/get request from the client.
@@ -702,7 +827,7 @@ definitions:
       - type
     type: object
   Implementation:
-    description: Describes the MCP implementation
+    description: Describes the MCP implementation.
     properties:
       icons:
         description: |-
@@ -752,24 +877,35 @@ definitions:
         const: initialize
         type: string
       params:
-        properties:
-          capabilities:
-            $ref: '#/definitions/ClientCapabilities'
-          clientInfo:
-            $ref: '#/definitions/Implementation'
-          protocolVersion:
-            description: The latest version of the Model Context Protocol that the client supports. The client MAY decide to support older versions as well.
-            type: string
-        required:
-          - capabilities
-          - clientInfo
-          - protocolVersion
-        type: object
+        $ref: '#/definitions/InitializeRequestParams'
     required:
       - id
       - jsonrpc
       - method
       - params
+    type: object
+  InitializeRequestParams:
+    description: Parameters for an `initialize` request.
+    properties:
+      _meta:
+        additionalProperties: {}
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
+        properties:
+          progressToken:
+            $ref: '#/definitions/ProgressToken'
+            description: If specified, the caller is requesting out-of-band progress notifications for this request (as represented by notifications/progress). The value of this parameter is an opaque token that will be attached to any subsequent notifications. The receiver is not obligated to provide these notifications.
+        type: object
+      capabilities:
+        $ref: '#/definitions/ClientCapabilities'
+      clientInfo:
+        $ref: '#/definitions/Implementation'
+      protocolVersion:
+        description: The latest version of the Model Context Protocol that the client supports. The client MAY decide to support older versions as well.
+        type: string
+    required:
+      - capabilities
+      - clientInfo
+      - protocolVersion
     type: object
   InitializeResult:
     description: After receiving an initialize request from the client, the server sends this response.
@@ -806,13 +942,7 @@ definitions:
         const: notifications/initialized
         type: string
       params:
-        additionalProperties: {}
-        properties:
-          _meta:
-            additionalProperties: {}
-            description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
-            type: object
-        type: object
+        $ref: '#/definitions/NotificationParams'
     required:
       - jsonrpc
       - method
@@ -849,11 +979,6 @@ definitions:
         type: string
       params:
         additionalProperties: {}
-        properties:
-          _meta:
-            additionalProperties: {}
-            description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
-            type: object
         type: object
     required:
       - jsonrpc
@@ -871,15 +996,6 @@ definitions:
         type: string
       params:
         additionalProperties: {}
-        properties:
-          _meta:
-            additionalProperties: {}
-            description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
-            properties:
-              progressToken:
-                $ref: '#/definitions/ProgressToken'
-                description: If specified, the caller is requesting out-of-band progress notifications for this request (as represented by notifications/progress). The value of this parameter is an opaque token that will be attached to any subsequent notifications. The receiver is not obligated to provide these notifications.
-            type: object
         type: object
     required:
       - id
@@ -901,6 +1017,35 @@ definitions:
       - jsonrpc
       - result
     type: object
+  LegacyTitledEnumSchema:
+    description: |-
+      Use TitledSingleSelectEnumSchema instead.
+      This interface will be removed in a future version.
+    properties:
+      default:
+        type: string
+      description:
+        type: string
+      enum:
+        items:
+          type: string
+        type: array
+      enumNames:
+        description: |-
+          (Legacy) Display names for enum values.
+          Non-standard according to JSON schema 2020-12.
+        items:
+          type: string
+        type: array
+      title:
+        type: string
+      type:
+        const: string
+        type: string
+    required:
+      - enum
+      - type
+    type: object
   ListPromptsRequest:
     description: Sent from the client to request a list of prompts and prompt templates the server has.
     properties:
@@ -913,13 +1058,7 @@ definitions:
         const: prompts/list
         type: string
       params:
-        properties:
-          cursor:
-            description: |-
-              An opaque token representing the current pagination position.
-              If provided, the server should return results starting after this cursor.
-            type: string
-        type: object
+        $ref: '#/definitions/PaginatedRequestParams'
     required:
       - id
       - jsonrpc
@@ -956,13 +1095,7 @@ definitions:
         const: resources/templates/list
         type: string
       params:
-        properties:
-          cursor:
-            description: |-
-              An opaque token representing the current pagination position.
-              If provided, the server should return results starting after this cursor.
-            type: string
-        type: object
+        $ref: '#/definitions/PaginatedRequestParams'
     required:
       - id
       - jsonrpc
@@ -999,13 +1132,7 @@ definitions:
         const: resources/list
         type: string
       params:
-        properties:
-          cursor:
-            description: |-
-              An opaque token representing the current pagination position.
-              If provided, the server should return results starting after this cursor.
-            type: string
-        type: object
+        $ref: '#/definitions/PaginatedRequestParams'
     required:
       - id
       - jsonrpc
@@ -1049,17 +1176,7 @@ definitions:
         const: roots/list
         type: string
       params:
-        additionalProperties: {}
-        properties:
-          _meta:
-            additionalProperties: {}
-            description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
-            properties:
-              progressToken:
-                $ref: '#/definitions/ProgressToken'
-                description: If specified, the caller is requesting out-of-band progress notifications for this request (as represented by notifications/progress). The value of this parameter is an opaque token that will be attached to any subsequent notifications. The receiver is not obligated to provide these notifications.
-            type: object
-        type: object
+        $ref: '#/definitions/RequestParams'
     required:
       - id
       - jsonrpc
@@ -1094,13 +1211,7 @@ definitions:
         const: tools/list
         type: string
       params:
-        properties:
-          cursor:
-            description: |-
-              An opaque token representing the current pagination position.
-              If provided, the server should return results starting after this cursor.
-            type: string
-        type: object
+        $ref: '#/definitions/PaginatedRequestParams'
     required:
       - id
       - jsonrpc
@@ -1151,23 +1262,30 @@ definitions:
         const: notifications/message
         type: string
       params:
-        properties:
-          data:
-            description: The data to be logged, such as a string message or an object. Any JSON serializable type is allowed here.
-          level:
-            $ref: '#/definitions/LoggingLevel'
-            description: The severity of this log message.
-          logger:
-            description: An optional name of the logger issuing this message.
-            type: string
-        required:
-          - data
-          - level
-        type: object
+        $ref: '#/definitions/LoggingMessageNotificationParams'
     required:
       - jsonrpc
       - method
       - params
+    type: object
+  LoggingMessageNotificationParams:
+    description: Parameters for a `notifications/message` notification.
+    properties:
+      _meta:
+        additionalProperties: {}
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
+        type: object
+      data:
+        description: The data to be logged, such as a string message or an object. Any JSON serializable type is allowed here.
+      level:
+        $ref: '#/definitions/LoggingLevel'
+        description: The severity of this log message.
+      logger:
+        description: An optional name of the logger issuing this message.
+        type: string
+    required:
+      - data
+      - level
     type: object
   ModelHint:
     description: |-
@@ -1240,20 +1358,26 @@ definitions:
         minimum: 0
         type: number
     type: object
+  MultiSelectEnumSchema:
+    anyOf:
+      - $ref: '#/definitions/UntitledMultiSelectEnumSchema'
+      - $ref: '#/definitions/TitledMultiSelectEnumSchema'
   Notification:
     properties:
       method:
         type: string
       params:
         additionalProperties: {}
-        properties:
-          _meta:
-            additionalProperties: {}
-            description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
-            type: object
         type: object
     required:
       - method
+    type: object
+  NotificationParams:
+    properties:
+      _meta:
+        additionalProperties: {}
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
+        type: object
     type: object
   NumberSchema:
     properties:
@@ -1285,17 +1409,28 @@ definitions:
       method:
         type: string
       params:
-        properties:
-          cursor:
-            description: |-
-              An opaque token representing the current pagination position.
-              If provided, the server should return results starting after this cursor.
-            type: string
-        type: object
+        $ref: '#/definitions/PaginatedRequestParams'
     required:
       - id
       - jsonrpc
       - method
+    type: object
+  PaginatedRequestParams:
+    description: Common parameters for paginated requests.
+    properties:
+      _meta:
+        additionalProperties: {}
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
+        properties:
+          progressToken:
+            $ref: '#/definitions/ProgressToken'
+            description: If specified, the caller is requesting out-of-band progress notifications for this request (as represented by notifications/progress). The value of this parameter is an opaque token that will be attached to any subsequent notifications. The receiver is not obligated to provide these notifications.
+        type: object
+      cursor:
+        description: |-
+          An opaque token representing the current pagination position.
+          If provided, the server should return results starting after this cursor.
+        type: string
     type: object
   PaginatedResult:
     properties:
@@ -1321,17 +1456,7 @@ definitions:
         const: ping
         type: string
       params:
-        additionalProperties: {}
-        properties:
-          _meta:
-            additionalProperties: {}
-            description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
-            properties:
-              progressToken:
-                $ref: '#/definitions/ProgressToken'
-                description: If specified, the caller is requesting out-of-band progress notifications for this request (as represented by notifications/progress). The value of this parameter is an opaque token that will be attached to any subsequent notifications. The receiver is not obligated to provide these notifications.
-            type: object
-        type: object
+        $ref: '#/definitions/RequestParams'
     required:
       - id
       - jsonrpc
@@ -1342,10 +1467,15 @@ definitions:
       - $ref: '#/definitions/StringSchema'
       - $ref: '#/definitions/NumberSchema'
       - $ref: '#/definitions/BooleanSchema'
-      - $ref: '#/definitions/EnumSchema'
+      - $ref: '#/definitions/UntitledSingleSelectEnumSchema'
+      - $ref: '#/definitions/TitledSingleSelectEnumSchema'
+      - $ref: '#/definitions/UntitledMultiSelectEnumSchema'
+      - $ref: '#/definitions/TitledMultiSelectEnumSchema'
+      - $ref: '#/definitions/LegacyTitledEnumSchema'
     description: |-
-      Restricted schema definitions that only allow primitive types
-      without nested objects or arrays.
+      /**
+       Restricted schema definitions that only allow primitive types
+       without nested objects or arrays.
   ProgressNotification:
     description: An out-of-band notification used to inform the receiver of a progress update for a long-running request.
     properties:
@@ -1356,27 +1486,34 @@ definitions:
         const: notifications/progress
         type: string
       params:
-        properties:
-          message:
-            description: An optional message describing the current progress.
-            type: string
-          progress:
-            description: The progress thus far. This should increase every time progress is made, even if the total is unknown.
-            type: number
-          progressToken:
-            $ref: '#/definitions/ProgressToken'
-            description: The progress token which was given in the initial request, used to associate this notification with the request that is proceeding.
-          total:
-            description: Total number of items to process (or total progress required), if known.
-            type: number
-        required:
-          - progress
-          - progressToken
-        type: object
+        $ref: '#/definitions/ProgressNotificationParams'
     required:
       - jsonrpc
       - method
       - params
+    type: object
+  ProgressNotificationParams:
+    description: Parameters for a `notifications/progress` notification.
+    properties:
+      _meta:
+        additionalProperties: {}
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
+        type: object
+      message:
+        description: An optional message describing the current progress.
+        type: string
+      progress:
+        description: The progress thus far. This should increase every time progress is made, even if the total is unknown.
+        type: number
+      progressToken:
+        $ref: '#/definitions/ProgressToken'
+        description: The progress token which was given in the initial request, used to associate this notification with the request that is proceeding.
+      total:
+        description: Total number of items to process (or total progress required), if known.
+        type: number
+    required:
+      - progress
+      - progressToken
     type: object
   ProgressToken:
     description: A progress token, used to associate progress notifications with the original request.
@@ -1461,13 +1598,7 @@ definitions:
         const: notifications/prompts/list_changed
         type: string
       params:
-        additionalProperties: {}
-        properties:
-          _meta:
-            additionalProperties: {}
-            description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
-            type: object
-        type: object
+        $ref: '#/definitions/NotificationParams'
     required:
       - jsonrpc
       - method
@@ -1521,19 +1652,30 @@ definitions:
         const: resources/read
         type: string
       params:
-        properties:
-          uri:
-            description: The URI of the resource to read. The URI can use any protocol; it is up to the server how to interpret it.
-            format: uri
-            type: string
-        required:
-          - uri
-        type: object
+        $ref: '#/definitions/ReadResourceRequestParams'
     required:
       - id
       - jsonrpc
       - method
       - params
+    type: object
+  ReadResourceRequestParams:
+    description: Parameters for a `resources/read` request.
+    properties:
+      _meta:
+        additionalProperties: {}
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
+        properties:
+          progressToken:
+            $ref: '#/definitions/ProgressToken'
+            description: If specified, the caller is requesting out-of-band progress notifications for this request (as represented by notifications/progress). The value of this parameter is an opaque token that will be attached to any subsequent notifications. The receiver is not obligated to provide these notifications.
+        type: object
+      uri:
+        description: The URI of the resource. The URI can use any protocol; it is up to the server how to interpret it.
+        format: uri
+        type: string
+    required:
+      - uri
     type: object
   ReadResourceResult:
     description: The server's response to a resources/read request from the client.
@@ -1557,15 +1699,6 @@ definitions:
         type: string
       params:
         additionalProperties: {}
-        properties:
-          _meta:
-            additionalProperties: {}
-            description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
-            properties:
-              progressToken:
-                $ref: '#/definitions/ProgressToken'
-                description: If specified, the caller is requesting out-of-band progress notifications for this request (as represented by notifications/progress). The value of this parameter is an opaque token that will be attached to any subsequent notifications. The receiver is not obligated to provide these notifications.
-            type: object
         type: object
     required:
       - method
@@ -1575,6 +1708,18 @@ definitions:
     type:
       - string
       - integer
+  RequestParams:
+    description: Common params for any request.
+    properties:
+      _meta:
+        additionalProperties: {}
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
+        properties:
+          progressToken:
+            $ref: '#/definitions/ProgressToken'
+            description: If specified, the caller is requesting out-of-band progress notifications for this request (as represented by notifications/progress). The value of this parameter is an opaque token that will be attached to any subsequent notifications. The receiver is not obligated to provide these notifications.
+        type: object
+    type: object
   Resource:
     description: A known resource that the server is capable of reading.
     properties:
@@ -1727,16 +1872,28 @@ definitions:
         const: notifications/resources/list_changed
         type: string
       params:
-        additionalProperties: {}
-        properties:
-          _meta:
-            additionalProperties: {}
-            description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
-            type: object
-        type: object
+        $ref: '#/definitions/NotificationParams'
     required:
       - jsonrpc
       - method
+    type: object
+  ResourceRequestParams:
+    description: Common parameters when working with resources.
+    properties:
+      _meta:
+        additionalProperties: {}
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
+        properties:
+          progressToken:
+            $ref: '#/definitions/ProgressToken'
+            description: If specified, the caller is requesting out-of-band progress notifications for this request (as represented by notifications/progress). The value of this parameter is an opaque token that will be attached to any subsequent notifications. The receiver is not obligated to provide these notifications.
+        type: object
+      uri:
+        description: The URI of the resource. The URI can use any protocol; it is up to the server how to interpret it.
+        format: uri
+        type: string
+    required:
+      - uri
     type: object
   ResourceTemplate:
     description: A template description for resources available on the server.
@@ -1815,18 +1972,25 @@ definitions:
         const: notifications/resources/updated
         type: string
       params:
-        properties:
-          uri:
-            description: The URI of the resource that has been updated. This might be a sub-resource of the one that the client actually subscribed to.
-            format: uri
-            type: string
-        required:
-          - uri
-        type: object
+        $ref: '#/definitions/ResourceUpdatedNotificationParams'
     required:
       - jsonrpc
       - method
       - params
+    type: object
+  ResourceUpdatedNotificationParams:
+    description: Parameters for a `notifications/resources/updated` notification.
+    properties:
+      _meta:
+        additionalProperties: {}
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
+        type: object
+      uri:
+        description: The URI of the resource that has been updated. This might be a sub-resource of the one that the client actually subscribed to.
+        format: uri
+        type: string
+    required:
+      - uri
     type: object
   Result:
     additionalProperties: {}
@@ -1878,13 +2042,7 @@ definitions:
         const: notifications/roots/list_changed
         type: string
       params:
-        additionalProperties: {}
-        properties:
-          _meta:
-            additionalProperties: {}
-            description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
-            type: object
-        type: object
+        $ref: '#/definitions/NotificationParams'
     required:
       - jsonrpc
       - method
@@ -1957,6 +2115,7 @@ definitions:
       - $ref: '#/definitions/PromptListChangedNotification'
       - $ref: '#/definitions/ToolListChangedNotification'
       - $ref: '#/definitions/LoggingMessageNotification'
+      - $ref: '#/definitions/ElicitationCompleteNotification'
   ServerRequest:
     anyOf:
       - $ref: '#/definitions/PingRequest'
@@ -1987,19 +2146,34 @@ definitions:
         const: logging/setLevel
         type: string
       params:
-        properties:
-          level:
-            $ref: '#/definitions/LoggingLevel'
-            description: The level of logging that the client wants to receive from the server. The server should send all logs at this level and higher (i.e., more severe) to the client as notifications/message.
-        required:
-          - level
-        type: object
+        $ref: '#/definitions/SetLevelRequestParams'
     required:
       - id
       - jsonrpc
       - method
       - params
     type: object
+  SetLevelRequestParams:
+    description: Parameters for a `logging/setLevel` request.
+    properties:
+      _meta:
+        additionalProperties: {}
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
+        properties:
+          progressToken:
+            $ref: '#/definitions/ProgressToken'
+            description: If specified, the caller is requesting out-of-band progress notifications for this request (as represented by notifications/progress). The value of this parameter is an opaque token that will be attached to any subsequent notifications. The receiver is not obligated to provide these notifications.
+        type: object
+      level:
+        $ref: '#/definitions/LoggingLevel'
+        description: The level of logging that the client wants to receive from the server. The server should send all logs at this level and higher (i.e., more severe) to the client as notifications/message.
+    required:
+      - level
+    type: object
+  SingleSelectEnumSchema:
+    anyOf:
+      - $ref: '#/definitions/UntitledSingleSelectEnumSchema'
+      - $ref: '#/definitions/TitledSingleSelectEnumSchema'
   StringSchema:
     properties:
       default:
@@ -2037,19 +2211,30 @@ definitions:
         const: resources/subscribe
         type: string
       params:
-        properties:
-          uri:
-            description: The URI of the resource to subscribe to. The URI can use any protocol; it is up to the server how to interpret it.
-            format: uri
-            type: string
-        required:
-          - uri
-        type: object
+        $ref: '#/definitions/SubscribeRequestParams'
     required:
       - id
       - jsonrpc
       - method
       - params
+    type: object
+  SubscribeRequestParams:
+    description: Parameters for a `resources/subscribe` request.
+    properties:
+      _meta:
+        additionalProperties: {}
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
+        properties:
+          progressToken:
+            $ref: '#/definitions/ProgressToken'
+            description: If specified, the caller is requesting out-of-band progress notifications for this request (as represented by notifications/progress). The value of this parameter is an opaque token that will be attached to any subsequent notifications. The receiver is not obligated to provide these notifications.
+        type: object
+      uri:
+        description: The URI of the resource. The URI can use any protocol; it is up to the server how to interpret it.
+        format: uri
+        type: string
+    required:
+      - uri
     type: object
   TextContent:
     description: Text provided to or from an LLM.
@@ -2090,6 +2275,88 @@ definitions:
     required:
       - text
       - uri
+    type: object
+  TitledMultiSelectEnumSchema:
+    description: Schema for multiple-selection enumeration with display titles for each option.
+    properties:
+      default:
+        description: Optional default value.
+        items:
+          type: string
+        type: array
+      description:
+        description: Optional description for the enum field.
+        type: string
+      items:
+        description: Schema for array items with enum options and display labels.
+        properties:
+          anyOf:
+            description: Array of enum options with values and display labels.
+            items:
+              properties:
+                const:
+                  description: The constant enum value.
+                  type: string
+                title:
+                  description: Display title for this option.
+                  type: string
+              required:
+                - const
+                - title
+              type: object
+            type: array
+        required:
+          - anyOf
+        type: object
+      maxItems:
+        description: Maximum number of items to select.
+        type: integer
+      minItems:
+        description: Minimum number of items to select.
+        type: integer
+      title:
+        description: Optional title for the enum field.
+        type: string
+      type:
+        const: array
+        type: string
+    required:
+      - items
+      - type
+    type: object
+  TitledSingleSelectEnumSchema:
+    description: Schema for single-selection enumeration with display titles for each option.
+    properties:
+      default:
+        description: Optional default value.
+        type: string
+      description:
+        description: Optional description for the enum field.
+        type: string
+      oneOf:
+        description: Array of enum options with values and display labels.
+        items:
+          properties:
+            const:
+              description: The enum value.
+              type: string
+            title:
+              description: Display label for this option.
+              type: string
+          required:
+            - const
+            - title
+          type: object
+        type: array
+      title:
+        description: Optional title for the enum field.
+        type: string
+      type:
+        const: string
+        type: string
+    required:
+      - oneOf
+      - type
     type: object
   Tool:
     description: Definition for a tool the client can call.
@@ -2238,16 +2505,44 @@ definitions:
         const: notifications/tools/list_changed
         type: string
       params:
-        additionalProperties: {}
-        properties:
-          _meta:
-            additionalProperties: {}
-            description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
-            type: object
-        type: object
+        $ref: '#/definitions/NotificationParams'
     required:
       - jsonrpc
       - method
+    type: object
+  URLElicitationRequiredError:
+    description: An error response that indicates that the server requires the client to provide additional information via an elicitation request.
+    properties:
+      error:
+        allOf:
+          - $ref: '#/definitions/Error'
+          - properties:
+              code:
+                const: -32042
+                type: integer
+              data:
+                additionalProperties: {}
+                properties:
+                  elicitations:
+                    items:
+                      $ref: '#/definitions/ElicitRequestURLParams'
+                    type: array
+                required:
+                  - elicitations
+                type: object
+            required:
+              - code
+              - data
+            type: object
+      id:
+        $ref: '#/definitions/RequestId'
+      jsonrpc:
+        const: '2.0'
+        type: string
+    required:
+      - error
+      - id
+      - jsonrpc
     type: object
   UnsubscribeRequest:
     description: Sent from the client to request cancellation of resources/updated notifications from the server. This should follow a previous resources/subscribe request.
@@ -2261,17 +2556,94 @@ definitions:
         const: resources/unsubscribe
         type: string
       params:
-        properties:
-          uri:
-            description: The URI of the resource to unsubscribe from.
-            format: uri
-            type: string
-        required:
-          - uri
-        type: object
+        $ref: '#/definitions/UnsubscribeRequestParams'
     required:
       - id
       - jsonrpc
       - method
       - params
+    type: object
+  UnsubscribeRequestParams:
+    description: Parameters for a `resources/unsubscribe` request.
+    properties:
+      _meta:
+        additionalProperties: {}
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
+        properties:
+          progressToken:
+            $ref: '#/definitions/ProgressToken'
+            description: If specified, the caller is requesting out-of-band progress notifications for this request (as represented by notifications/progress). The value of this parameter is an opaque token that will be attached to any subsequent notifications. The receiver is not obligated to provide these notifications.
+        type: object
+      uri:
+        description: The URI of the resource. The URI can use any protocol; it is up to the server how to interpret it.
+        format: uri
+        type: string
+    required:
+      - uri
+    type: object
+  UntitledMultiSelectEnumSchema:
+    description: Schema for multiple-selection enumeration without display titles for options.
+    properties:
+      default:
+        description: Optional default value.
+        items:
+          type: string
+        type: array
+      description:
+        description: Optional description for the enum field.
+        type: string
+      items:
+        description: Schema for the array items.
+        properties:
+          enum:
+            description: Array of enum values to choose from.
+            items:
+              type: string
+            type: array
+          type:
+            const: string
+            type: string
+        required:
+          - enum
+          - type
+        type: object
+      maxItems:
+        description: Maximum number of items to select.
+        type: integer
+      minItems:
+        description: Minimum number of items to select.
+        type: integer
+      title:
+        description: Optional title for the enum field.
+        type: string
+      type:
+        const: array
+        type: string
+    required:
+      - items
+      - type
+    type: object
+  UntitledSingleSelectEnumSchema:
+    description: Schema for single-selection enumeration without display titles for options.
+    properties:
+      default:
+        description: Optional default value.
+        type: string
+      description:
+        description: Optional description for the enum field.
+        type: string
+      enum:
+        description: Array of enum values to choose from.
+        items:
+          type: string
+        type: array
+      title:
+        description: Optional title for the enum field.
+        type: string
+      type:
+        const: string
+        type: string
+    required:
+      - enum
+      - type
     type: object
