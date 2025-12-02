@@ -21,17 +21,52 @@ tasks:
         "
 
   a2a-schema-download:
-    desc: "Download the latest A2A schema and convert to YAML"
+    desc: "Download the latest A2A proto and generate JSON schema, then convert to YAML"
     cmds:
-      - curl -o a2a/a2a-schema.json https://raw.githubusercontent.com/google-a2a/A2A/main/specification/json/a2a.json
+      - mkdir -p a2a/tmp
+      - curl -o a2a/tmp/a2a.proto https://raw.githubusercontent.com/google-a2a/A2A/main/specification/grpc/a2a.proto
+      - curl -o a2a/tmp/buf.yaml https://raw.githubusercontent.com/google-a2a/A2A/main/specification/grpc/buf.yaml
       - |
-        echo "Converting A2A JSON schema to YAML format"
+        echo "Converting proto to JSON schema using buf and protoc"
+        cat > a2a/tmp/buf.gen.yaml <<EOF
+        version: v2
+        plugins:
+          - local: protoc-gen-jsonschema
+            out: ..
+            opt:
+              - enforce_oneof
+        EOF
+        cd a2a/tmp
+        buf dep update
+        buf generate
+        cd ../..
+      - |
+        echo "Merging individual JSON schemas into single schema"
         NODE_PATH=${NODE_PATH:-/usr/lib/node_modules} node -e "
           const fs = require('fs');
+          const path = require('path');
           const yaml = require('js-yaml');
-          const json = JSON.parse(fs.readFileSync('a2a/a2a-schema.json', 'utf8'));
-          fs.writeFileSync('a2a/a2a-schema.yaml', yaml.dump(json, {lineWidth: -1}));
+
+          const combinedSchema = {
+            '\$schema': 'http://json-schema.org/draft-07/schema#',
+            definitions: {}
+          };
+
+          const files = fs.readdirSync('a2a')
+            .filter(f => f.endsWith('.json') && f !== 'a2a-schema.json');
+
+          files.forEach(file => {
+            const content = JSON.parse(fs.readFileSync(path.join('a2a', file), 'utf8'));
+            if (content.definitions) {
+              Object.assign(combinedSchema.definitions, content.definitions);
+            }
+            fs.unlinkSync(path.join('a2a', file));
+          });
+
+          fs.writeFileSync('a2a/a2a-schema.json', JSON.stringify(combinedSchema, null, 2));
+          fs.writeFileSync('a2a/a2a-schema.yaml', yaml.dump(combinedSchema, {lineWidth: -1}));
         "
+      - rm -rf a2a/tmp
 
   openapi:format:
     desc: "Format OpenAPI Spec"
