@@ -5,7 +5,7 @@ $defs:
     properties:
       audience:
         description: |-
-          Describes who the intended customer of this object or data is.
+          Describes who the intended audience of this object or data is.
 
           It can include multiple entries to indicate content useful for multiple audiences (e.g., `["user", "assistant"]`).
         items:
@@ -265,9 +265,6 @@ $defs:
           This MUST correspond to the ID of a request previously issued in the same direction.
           This MUST be provided for cancelling non-task requests.
           This MUST NOT be used for cancelling tasks (use the `tasks/cancel` request instead).
-      taskId:
-        description: 'Deprecated: Use the `tasks/cancel` request instead of this notification for task cancellation.'
-        type: string
     type: object
   ClientCapabilities:
     description: 'Capabilities a client may support. Known capabilities are defined here, in this schema, but this is not a closed set: any client can define its own, additional capabilities.'
@@ -445,15 +442,6 @@ $defs:
         anyOf:
           - $ref: '#/$defs/PromptReference'
           - $ref: '#/$defs/ResourceTemplateReference'
-      task:
-        $ref: '#/$defs/TaskMetadata'
-        description: |-
-          If specified, the caller is requesting task-augmented execution for this request.
-          The request will return a CreateTaskResult immediately, and the actual result can be
-          retrieved later via tasks/result.
-
-          Task augmentation is subject to capability negotiation - receivers MUST declare support
-          for task augmentation of specific request types in their capabilities.
     required:
       - argument
       - ref
@@ -713,7 +701,6 @@ $defs:
           for task augmentation of specific request types in their capabilities.
     required:
       - message
-      - mode
       - requestedSchema
     type: object
   ElicitRequestParams:
@@ -907,15 +894,6 @@ $defs:
       name:
         description: The name of the prompt or prompt template.
         type: string
-      task:
-        $ref: '#/$defs/TaskMetadata'
-        description: |-
-          If specified, the caller is requesting task-augmented execution for this request.
-          The request will return a CreateTaskResult immediately, and the actual result can be
-          retrieved later via tasks/result.
-
-          Task augmentation is subject to capability negotiation - receivers MUST declare support
-          for task augmentation of specific request types in their capabilities.
     required:
       - name
     type: object
@@ -1173,15 +1151,6 @@ $defs:
       protocolVersion:
         description: The latest version of the Model Context Protocol that the client supports. The client MAY decide to support older versions as well.
         type: string
-      task:
-        $ref: '#/$defs/TaskMetadata'
-        description: |-
-          If specified, the caller is requesting task-augmented execution for this request.
-          The request will return a CreateTaskResult immediately, and the actual result can be
-          retrieved later via tasks/result.
-
-          Task augmentation is subject to capability negotiation - receivers MUST declare support
-          for task augmentation of specific request types in their capabilities.
     required:
       - capabilities
       - clientInfo
@@ -1227,7 +1196,7 @@ $defs:
       - jsonrpc
       - method
     type: object
-  JSONRPCError:
+  JSONRPCErrorResponse:
     description: A response to a request that indicates an error occurred.
     properties:
       error:
@@ -1239,15 +1208,14 @@ $defs:
         type: string
     required:
       - error
-      - id
       - jsonrpc
     type: object
   JSONRPCMessage:
     anyOf:
       - $ref: '#/$defs/JSONRPCRequest'
       - $ref: '#/$defs/JSONRPCNotification'
-      - $ref: '#/$defs/JSONRPCResponse'
-      - $ref: '#/$defs/JSONRPCError'
+      - $ref: '#/$defs/JSONRPCResultResponse'
+      - $ref: '#/$defs/JSONRPCErrorResponse'
     description: Refers to any valid JSON-RPC object that can be decoded off the wire, or encoded to be sent.
   JSONRPCNotification:
     description: A notification which does not expect a response.
@@ -1283,6 +1251,11 @@ $defs:
       - method
     type: object
   JSONRPCResponse:
+    anyOf:
+      - $ref: '#/$defs/JSONRPCResultResponse'
+      - $ref: '#/$defs/JSONRPCErrorResponse'
+    description: A response to a request, containing either the result or error.
+  JSONRPCResultResponse:
     description: A successful (non-error) response to a request.
     properties:
       id:
@@ -1748,15 +1721,6 @@ $defs:
           An opaque token representing the current pagination position.
           If provided, the server should return results starting after this cursor.
         type: string
-      task:
-        $ref: '#/$defs/TaskMetadata'
-        description: |-
-          If specified, the caller is requesting task-augmented execution for this request.
-          The request will return a CreateTaskResult immediately, and the actual result can be
-          retrieved later via tasks/result.
-
-          Task augmentation is subject to capability negotiation - receivers MUST declare support
-          for task augmentation of specific request types in their capabilities.
     type: object
   PaginatedResult:
     properties:
@@ -1995,15 +1959,6 @@ $defs:
             $ref: '#/$defs/ProgressToken'
             description: If specified, the caller is requesting out-of-band progress notifications for this request (as represented by notifications/progress). The value of this parameter is an opaque token that will be attached to any subsequent notifications. The receiver is not obligated to provide these notifications.
         type: object
-      task:
-        $ref: '#/$defs/TaskMetadata'
-        description: |-
-          If specified, the caller is requesting task-augmented execution for this request.
-          The request will return a CreateTaskResult immediately, and the actual result can be
-          retrieved later via tasks/result.
-
-          Task augmentation is subject to capability negotiation - receivers MUST declare support
-          for task augmentation of specific request types in their capabilities.
       uri:
         description: The URI of the resource. The URI can use any protocol; it is up to the server how to interpret it.
         format: uri
@@ -2064,15 +2019,6 @@ $defs:
             $ref: '#/$defs/ProgressToken'
             description: If specified, the caller is requesting out-of-band progress notifications for this request (as represented by notifications/progress). The value of this parameter is an opaque token that will be attached to any subsequent notifications. The receiver is not obligated to provide these notifications.
         type: object
-      task:
-        $ref: '#/$defs/TaskMetadata'
-        description: |-
-          If specified, the caller is requesting task-augmented execution for this request.
-          The request will return a CreateTaskResult immediately, and the actual result can be
-          retrieved later via tasks/result.
-
-          Task augmentation is subject to capability negotiation - receivers MUST declare support
-          for task augmentation of specific request types in their capabilities.
     type: object
   Resource:
     description: A known resource that the server is capable of reading.
@@ -2242,15 +2188,6 @@ $defs:
             $ref: '#/$defs/ProgressToken'
             description: If specified, the caller is requesting out-of-band progress notifications for this request (as represented by notifications/progress). The value of this parameter is an opaque token that will be attached to any subsequent notifications. The receiver is not obligated to provide these notifications.
         type: object
-      task:
-        $ref: '#/$defs/TaskMetadata'
-        description: |-
-          If specified, the caller is requesting task-augmented execution for this request.
-          The request will return a CreateTaskResult immediately, and the actual result can be
-          retrieved later via tasks/result.
-
-          Task augmentation is subject to capability negotiation - receivers MUST declare support
-          for task augmentation of specific request types in their capabilities.
       uri:
         description: The URI of the resource. The URI can use any protocol; it is up to the server how to interpret it.
         format: uri
@@ -2584,15 +2521,6 @@ $defs:
       level:
         $ref: '#/$defs/LoggingLevel'
         description: The level of logging that the client wants to receive from the server. The server should send all logs at this level and higher (i.e., more severe) to the client as notifications/message.
-      task:
-        $ref: '#/$defs/TaskMetadata'
-        description: |-
-          If specified, the caller is requesting task-augmented execution for this request.
-          The request will return a CreateTaskResult immediately, and the actual result can be
-          retrieved later via tasks/result.
-
-          Task augmentation is subject to capability negotiation - receivers MUST declare support
-          for task augmentation of specific request types in their capabilities.
     required:
       - level
     type: object
@@ -2655,15 +2583,6 @@ $defs:
             $ref: '#/$defs/ProgressToken'
             description: If specified, the caller is requesting out-of-band progress notifications for this request (as represented by notifications/progress). The value of this parameter is an opaque token that will be attached to any subsequent notifications. The receiver is not obligated to provide these notifications.
         type: object
-      task:
-        $ref: '#/$defs/TaskMetadata'
-        description: |-
-          If specified, the caller is requesting task-augmented execution for this request.
-          The request will return a CreateTaskResult immediately, and the actual result can be
-          retrieved later via tasks/result.
-
-          Task augmentation is subject to capability negotiation - receivers MUST declare support
-          for task augmentation of specific request types in their capabilities.
       uri:
         description: The URI of the resource. The URI can use any protocol; it is up to the server how to interpret it.
         format: uri
@@ -2676,6 +2595,9 @@ $defs:
     properties:
       createdAt:
         description: ISO 8601 timestamp when the task was created.
+        type: string
+      lastUpdatedAt:
+        description: ISO 8601 timestamp when the task was last updated.
         type: string
       pollInterval:
         description: Suggested polling interval in milliseconds.
@@ -2699,9 +2621,31 @@ $defs:
         type: integer
     required:
       - createdAt
+      - lastUpdatedAt
       - status
       - taskId
       - ttl
+    type: object
+  TaskAugmentedRequestParams:
+    description: Common params for any task-augmented request.
+    properties:
+      _meta:
+        additionalProperties: {}
+        description: 'See [General fields: `_meta`](/specification/draft/basic/index#meta) for notes on `_meta` usage.'
+        properties:
+          progressToken:
+            $ref: '#/$defs/ProgressToken'
+            description: If specified, the caller is requesting out-of-band progress notifications for this request (as represented by notifications/progress). The value of this parameter is an opaque token that will be attached to any subsequent notifications. The receiver is not obligated to provide these notifications.
+        type: object
+      task:
+        $ref: '#/$defs/TaskMetadata'
+        description: |-
+          If specified, the caller is requesting task-augmented execution for this request.
+          The request will return a CreateTaskResult immediately, and the actual result can be
+          retrieved later via tasks/result.
+
+          Task augmentation is subject to capability negotiation - receivers MUST declare support
+          for task augmentation of specific request types in their capabilities.
     type: object
   TaskMetadata:
     description: |-
@@ -2883,6 +2827,9 @@ $defs:
 
           This can be used by clients to improve the LLM's understanding of available tools. It can be thought of like a "hint" to the model.
         type: string
+      execution:
+        $ref: '#/$defs/ToolExecution'
+        description: Execution-related properties for this tool.
       icons:
         description: |-
           Optional set of sized icons that the client can display in a user interface.
@@ -3004,22 +2951,6 @@ $defs:
 
           Default: false
         type: boolean
-      taskHint:
-        description: |-
-          Indicates whether this tool supports task-augmented execution.
-          This allows clients to handle long-running operations through polling
-          the task system.
-
-          - "never": Tool does not support task-augmented execution (default when absent)
-          - "optional": Tool may support task-augmented execution
-          - "always": Tool requires task-augmented execution
-
-          Default: "never"
-        enum:
-          - always
-          - never
-          - optional
-        type: string
       title:
         description: A human-readable title for the tool.
         type: string
@@ -3036,6 +2967,26 @@ $defs:
         enum:
           - auto
           - none
+          - required
+        type: string
+    type: object
+  ToolExecution:
+    description: Execution-related properties for a tool.
+    properties:
+      taskSupport:
+        description: |-
+          Indicates whether this tool supports task-augmented execution.
+          This allows clients to handle long-running operations through polling
+          the task system.
+
+          - "forbidden": Tool does not support task-augmented execution (default when absent)
+          - "optional": Tool may support task-augmented execution
+          - "required": Tool requires task-augmented execution
+
+          Default: "forbidden"
+        enum:
+          - forbidden
+          - optional
           - required
         type: string
     type: object
@@ -3082,12 +3033,11 @@ $defs:
           Default: false
         type: boolean
       structuredContent:
-        additionalProperties: true
+        additionalProperties: {}
         description: |-
           An optional structured result object.
 
           If the tool defined an outputSchema, this SHOULD conform to that schema.
-        properties: {}
         type: object
       toolUseId:
         description: |-
@@ -3121,9 +3071,8 @@ $defs:
           This ID is used to match tool results to their corresponding tool uses.
         type: string
       input:
-        additionalProperties: true
+        additionalProperties: {}
         description: The arguments to pass to the tool, conforming to the tool's input schema.
-        properties: {}
         type: object
       name:
         description: The name of the tool to call.
@@ -3168,7 +3117,6 @@ $defs:
         type: string
     required:
       - error
-      - id
       - jsonrpc
     type: object
   UnsubscribeRequest:
@@ -3201,15 +3149,6 @@ $defs:
             $ref: '#/$defs/ProgressToken'
             description: If specified, the caller is requesting out-of-band progress notifications for this request (as represented by notifications/progress). The value of this parameter is an opaque token that will be attached to any subsequent notifications. The receiver is not obligated to provide these notifications.
         type: object
-      task:
-        $ref: '#/$defs/TaskMetadata'
-        description: |-
-          If specified, the caller is requesting task-augmented execution for this request.
-          The request will return a CreateTaskResult immediately, and the actual result can be
-          retrieved later via tasks/result.
-
-          Task augmentation is subject to capability negotiation - receivers MUST declare support
-          for task augmentation of specific request types in their capabilities.
       uri:
         description: The URI of the resource. The URI can use any protocol; it is up to the server how to interpret it.
         format: uri
