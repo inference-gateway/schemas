@@ -1,4 +1,5 @@
-name: Sync Schemas and Create PR
+---
+name: Sync A2A Schema and Create PR
 
 on:
   workflow_dispatch:
@@ -8,23 +9,18 @@ permissions:
   pull-requests: write
 
 jobs:
-  sync-schemas:
+  sync-a2a-schema:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: "lts/*"
-
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: "stable"
 
       - name: Install Task
         uses: arduino/setup-task@v2
@@ -32,24 +28,22 @@ jobs:
       - name: Install js-yaml
         run: npm install -g js-yaml
 
-      - name: Download and convert schemas
+      - name: Download and convert A2A schema
         run: |
           export NODE_PATH=$(npm root -g)
-          task mcp-schema-download
           task a2a-schema-download
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "chore: Sync schemas from MCP and A2A sources"
-          title: "chore: Sync schemas from MCP and A2A sources"
+          commit-message: "chore: Sync A2A schema"
+          title: "chore: Sync A2A schema"
           body: |
-            Automated update of schemas from MCP and A2A sources.
+            Automated update of A2A schema from google-a2a/A2A.
 
             This PR updates:
-            - MCP schema from modelcontextprotocol/modelcontextprotocol
             - A2A schema from google-a2a/A2A
-          branch: schemas-sync
+          branch: a2a-schema-sync
           base: main
           delete-branch: true

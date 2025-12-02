@@ -1,0 +1,49 @@
+---
+name: Sync MCP Schema and Create PR
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync-mcp-schema:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "lts/*"
+
+      - name: Install Task
+        uses: arduino/setup-task@v2
+
+      - name: Install js-yaml
+        run: npm install -g js-yaml
+
+      - name: Download and convert MCP schema
+        run: |
+          export NODE_PATH=$(npm root -g)
+          task mcp-schema-download
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: Sync MCP schema"
+          title: "chore: Sync MCP schema"
+          body: |
+            Automated update of MCP schema from modelcontextprotocol/modelcontextprotocol.
+
+            This PR updates:
+            - MCP schema from modelcontextprotocol/modelcontextprotocol
+          branch: mcp-schema-sync
+          base: main
+          delete-branch: true
