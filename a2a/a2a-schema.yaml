@@ -121,7 +121,7 @@ definitions:
           $ref: '#/definitions/a2a.v1.AgentSkill'
         type: array
         description: Skills represent an ability of an agent. It is largely a descriptive concept but represents a more focused set of behaviors that the agent is likely to succeed at.
-      supports_authenticated_extended_card:
+      supports_extended_agent_card:
         type: boolean
         description: Whether the agent supports providing an extended agent card when authenticated.
       signatures:
@@ -195,6 +195,9 @@ definitions:
       protocol_binding:
         type: string
         description: The protocol binding supported at this URL. This is an open form string, to be easily extended for other protocol bindings. The core ones officially supported are `JSONRPC`, `GRPC` and `HTTP+JSON`.
+      tenant:
+        type: string
+        description: Tenant to be set in the request when calling the agent.
     additionalProperties: true
     type: object
     title: Agent Interface
@@ -529,6 +532,9 @@ definitions:
       protocol_binding:
         type: string
         description: The protocol binding supported at this URL. This is an open form string, to be easily extended for other protocol bindings. The core ones officially supported are `JSONRPC`, `GRPC` and `HTTP+JSON`.
+      tenant:
+        type: string
+        description: Tenant to be set in the request when calling the agent.
     additionalProperties: true
     type: object
     title: Agent Interface
@@ -729,6 +735,9 @@ definitions:
     description: '--8<-- [start:AuthorizationCodeOAuthFlow] Defines configuration details for the OAuth 2.0 Authorization Code flow.'
   CancelTaskRequest:
     properties:
+      tenant:
+        type: string
+        description: Optional tenant, provided as a path parameter.
       name:
         type: string
         description: 'The resource name of the task to cancel. Format: tasks/{task_id}'
@@ -765,6 +774,9 @@ definitions:
     description: '--8<-- [start:DataPart] DataPart represents a structured blob.'
   DeleteTaskPushNotificationConfigRequest:
     properties:
+      tenant:
+        type: string
+        description: Optional tenant, provided as a path parameter.
       name:
         type: string
         description: 'The resource name of the config to delete. Format: tasks/{task_id}/pushNotificationConfigs/{config_id}'
@@ -805,12 +817,19 @@ definitions:
     title: File Part
     description: '--8<-- [start:FilePart] FilePart represents the different ways files can be provided. If files are small, directly feeding the bytes is supported via file_with_bytes. If the file is large, the agent should read the content as appropriate directly from the file_with_uri source.'
   GetExtendedAgentCardRequest:
+    properties:
+      tenant:
+        type: string
+        description: Optional tenant, provided as a path parameter.
     additionalProperties: true
     type: object
     title: Get Extended Agent Card Request
-    description: '--8<-- [start:GetExtendedAgentCardRequest]  Empty. Added to fix linter violation.'
+    description: '--8<-- [start:GetExtendedAgentCardRequest]'
   GetTaskPushNotificationConfigRequest:
     properties:
+      tenant:
+        type: string
+        description: Optional tenant, provided as a path parameter.
       name:
         type: string
         description: 'The resource name of the config to retrieve. Format: tasks/{task_id}/pushNotificationConfigs/{config_id}'
@@ -820,6 +839,9 @@ definitions:
     description: '--8<-- [start:GetTaskPushNotificationConfigRequest]'
   GetTaskRequest:
     properties:
+      tenant:
+        type: string
+        description: Optional tenant, provided as a path parameter.
       name:
         type: string
         description: 'The resource name of the task. Format: tasks/{task_id}'
@@ -864,6 +886,9 @@ definitions:
     description: '--8<-- [start:ImplicitOAuthFlow] Defines configuration details for the OAuth 2.0 Implicit flow.'
   ListTaskPushNotificationConfigRequest:
     properties:
+      tenant:
+        type: string
+        description: Optional tenant, provided as a path parameter.
       parent:
         type: string
         description: 'The parent task resource. Format: tasks/{task_id}'
@@ -939,6 +964,9 @@ definitions:
     description: '--8<-- [start:TaskPushNotificationConfig] A container associating a push notification configuration with a specific task.'
   ListTasksRequest:
     properties:
+      tenant:
+        type: string
+        description: Optional tenant, provided as a path parameter.
       context_id:
         type: string
         description: Filter tasks by context ID to get tasks from a specific conversation or session.
@@ -1433,6 +1461,9 @@ definitions:
     description: /////// Data Model ////////////  --8<-- [start:SendMessageConfiguration] Configuration of a send message request.
   SendMessageRequest:
     properties:
+      tenant:
+        type: string
+        description: Optional tenant, provided as a path parameter.
       request:
         $ref: '#/definitions/a2a.v1.Message'
         additionalProperties: true
@@ -1496,6 +1527,9 @@ definitions:
     description: ////// Response Messages /////////// --8<-- [start:SendMessageResponse]
   SetTaskPushNotificationConfigRequest:
     properties:
+      tenant:
+        type: string
+        description: Optional tenant, provided as a path parameter.
       parent:
         type: string
         description: 'The parent task resource for this config. Format: tasks/{task_id}'
@@ -1613,6 +1647,9 @@ definitions:
     description: protolint:disable REPEATED_FIELD_NAMES_PLURALIZED
   SubscribeToTaskRequest:
     properties:
+      tenant:
+        type: string
+        description: Optional tenant, provided as a path parameter.
       name:
         type: string
         description: 'The resource name of the task to subscribe to. Format: tasks/{task_id}'

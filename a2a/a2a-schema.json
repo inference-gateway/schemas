@@ -163,7 +163,7 @@
           "type": "array",
           "description": "Skills represent an ability of an agent. It is largely a descriptive concept but represents a more focused set of behaviors that the agent is likely to succeed at."
         },
-        "supports_authenticated_extended_card": {
+        "supports_extended_agent_card": {
           "type": "boolean",
           "description": "Whether the agent supports providing an extended agent card when authenticated."
         },
@@ -261,6 +261,10 @@
         "protocol_binding": {
           "type": "string",
           "description": "The protocol binding supported at this URL. This is an open form string, to be easily extended for other protocol bindings. The core ones officially supported are `JSONRPC`, `GRPC` and `HTTP+JSON`."
+        },
+        "tenant": {
+          "type": "string",
+          "description": "Tenant to be set in the request when calling the agent."
         }
       },
       "additionalProperties": true,
@@ -762,6 +766,10 @@
         "protocol_binding": {
           "type": "string",
           "description": "The protocol binding supported at this URL. This is an open form string, to be easily extended for other protocol bindings. The core ones officially supported are `JSONRPC`, `GRPC` and `HTTP+JSON`."
+        },
+        "tenant": {
+          "type": "string",
+          "description": "Tenant to be set in the request when calling the agent."
         }
       },
       "additionalProperties": true,
@@ -1067,6 +1075,10 @@
     },
     "CancelTaskRequest": {
       "properties": {
+        "tenant": {
+          "type": "string",
+          "description": "Optional tenant, provided as a path parameter."
+        },
         "name": {
           "type": "string",
           "description": "The resource name of the task to cancel. Format: tasks/{task_id}"
@@ -1115,6 +1127,10 @@
     },
     "DeleteTaskPushNotificationConfigRequest": {
       "properties": {
+        "tenant": {
+          "type": "string",
+          "description": "Optional tenant, provided as a path parameter."
+        },
         "name": {
           "type": "string",
           "description": "The resource name of the config to delete. Format: tasks/{task_id}/pushNotificationConfigs/{config_id}"
@@ -1184,13 +1200,23 @@
       "description": "--8<-- [start:FilePart] FilePart represents the different ways files can be provided. If files are small, directly feeding the bytes is supported via file_with_bytes. If the file is large, the agent should read the content as appropriate directly from the file_with_uri source."
     },
     "GetExtendedAgentCardRequest": {
+      "properties": {
+        "tenant": {
+          "type": "string",
+          "description": "Optional tenant, provided as a path parameter."
+        }
+      },
       "additionalProperties": true,
       "type": "object",
       "title": "Get Extended Agent Card Request",
-      "description": "--8<-- [start:GetExtendedAgentCardRequest]  Empty. Added to fix linter violation."
+      "description": "--8<-- [start:GetExtendedAgentCardRequest]"
     },
     "GetTaskPushNotificationConfigRequest": {
       "properties": {
+        "tenant": {
+          "type": "string",
+          "description": "Optional tenant, provided as a path parameter."
+        },
         "name": {
           "type": "string",
           "description": "The resource name of the config to retrieve. Format: tasks/{task_id}/pushNotificationConfigs/{config_id}"
@@ -1203,6 +1229,10 @@
     },
     "GetTaskRequest": {
       "properties": {
+        "tenant": {
+          "type": "string",
+          "description": "Optional tenant, provided as a path parameter."
+        },
         "name": {
           "type": "string",
           "description": "The resource name of the task. Format: tasks/{task_id}"
@@ -1262,6 +1292,10 @@
     },
     "ListTaskPushNotificationConfigRequest": {
       "properties": {
+        "tenant": {
+          "type": "string",
+          "description": "Optional tenant, provided as a path parameter."
+        },
         "parent": {
           "type": "string",
           "description": "The parent task resource. Format: tasks/{task_id}"
@@ -1362,6 +1396,10 @@
     },
     "ListTasksRequest": {
       "properties": {
+        "tenant": {
+          "type": "string",
+          "description": "Optional tenant, provided as a path parameter."
+        },
         "context_id": {
           "type": "string",
           "description": "Filter tasks by context ID to get tasks from a specific conversation or session."
@@ -2097,6 +2135,10 @@
     },
     "SendMessageRequest": {
       "properties": {
+        "tenant": {
+          "type": "string",
+          "description": "Optional tenant, provided as a path parameter."
+        },
         "request": {
           "$ref": "#/definitions/a2a.v1.Message",
           "additionalProperties": true,
@@ -2196,6 +2238,10 @@
     },
     "SetTaskPushNotificationConfigRequest": {
       "properties": {
+        "tenant": {
+          "type": "string",
+          "description": "Optional tenant, provided as a path parameter."
+        },
         "parent": {
           "type": "string",
           "description": "The parent task resource for this config. Format: tasks/{task_id}"
@@ -2375,6 +2421,10 @@
     },
     "SubscribeToTaskRequest": {
       "properties": {
+        "tenant": {
+          "type": "string",
+          "description": "Optional tenant, provided as a path parameter."
+        },
         "name": {
           "type": "string",
           "description": "The resource name of the task to subscribe to. Format: tasks/{task_id}"
