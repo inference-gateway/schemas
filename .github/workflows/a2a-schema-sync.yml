@@ -30,19 +30,14 @@ jobs:
       - name: Install Task
         uses: arduino/setup-task@v2
 
-      - name: Install dependencies
+      - name: Install buf
         run: |
-          npm install -g js-yaml
           BUF_VERSION=1.60.0
           curl -sSL "https://github.com/bufbuild/buf/releases/download/v${BUF_VERSION}/buf-Linux-x86_64" -o /usr/local/bin/buf
           sudo chmod +x /usr/local/bin/buf
-          go install github.com/chrusty/protoc-gen-jsonschema/cmd/protoc-gen-jsonschema@latest
-          echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
 
       - name: Download and convert A2A schema
-        run: |
-          export NODE_PATH=$(npm root -g)
-          task a2a-schema-download
+        run: task a2a-schema-download
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7

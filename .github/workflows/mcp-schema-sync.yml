@@ -25,13 +25,8 @@ jobs:
       - name: Install Task
         uses: arduino/setup-task@v2
 
-      - name: Install js-yaml
-        run: npm install -g js-yaml
-
       - name: Download and convert MCP schema
-        run: |
-          export NODE_PATH=$(npm root -g)
-          task mcp-schema-download
+        run: task mcp-schema-download
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7

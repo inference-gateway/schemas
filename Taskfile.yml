@@ -10,10 +10,11 @@ tasks:
   mcp-schema-download:
     desc: "Download the latest MCP schema and convert to YAML"
     cmds:
+      - npm install js-yaml
       - curl -o mcp/mcp-schema.json https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/refs/heads/main/schema/draft/schema.json
       - |
         echo "Converting JSON schema to YAML format"
-        NODE_PATH=${NODE_PATH:-/usr/lib/node_modules} node -e "
+        NODE_PATH=./node_modules:${NODE_PATH:-/usr/lib/node_modules} node -e "
           const fs = require('fs');
           const yaml = require('js-yaml');
           const json = JSON.parse(fs.readFileSync('mcp/mcp-schema.json', 'utf8'));
@@ -23,6 +24,8 @@ tasks:
   a2a-schema-download:
     desc: "Download the latest A2A proto and generate JSON schema, then convert to YAML"
     cmds:
+      - npm install js-yaml
+      - go install github.com/chrusty/protoc-gen-jsonschema/cmd/protoc-gen-jsonschema@latest
       - mkdir -p a2a/tmp
       - curl -o a2a/tmp/a2a.proto https://raw.githubusercontent.com/google-a2a/A2A/main/specification/grpc/a2a.proto
       - curl -o a2a/tmp/buf.yaml https://raw.githubusercontent.com/google-a2a/A2A/main/specification/grpc/buf.yaml
@@ -38,11 +41,11 @@ tasks:
         EOF
         cd a2a/tmp
         buf dep update
-        buf generate
+        PATH="$(go env GOPATH)/bin:$PATH" buf generate
         cd ../..
       - |
         echo "Merging individual JSON schemas into single schema"
-        NODE_PATH=${NODE_PATH:-/usr/lib/node_modules} node -e "
+        NODE_PATH=./node_modules:${NODE_PATH:-/usr/lib/node_modules} node -e "
           const fs = require('fs');
           const path = require('path');
           const yaml = require('js-yaml');
