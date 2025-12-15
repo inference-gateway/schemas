@@ -22,12 +22,12 @@ tasks:
         "
 
   a2a-schema-download:
-    desc: "Download the latest A2A proto and generate JSON schema, then convert to YAML"
+    desc: "Generate JSON schema from A2A proto and convert to YAML"
     cmds:
       - npm install js-yaml
-      - go install github.com/chrusty/protoc-gen-jsonschema/cmd/protoc-gen-jsonschema@latest
+      - go install github.com/bufbuild/protoschema-plugins/cmd/protoc-gen-jsonschema@latest
       - mkdir -p a2a/tmp
-      - curl -o a2a/tmp/a2a.proto https://raw.githubusercontent.com/google-a2a/A2A/main/specification/grpc/a2a.proto
+      - cp a2a/a2a.proto a2a/tmp/a2a.proto
       - curl -o a2a/tmp/buf.yaml https://raw.githubusercontent.com/google-a2a/A2A/main/specification/grpc/buf.yaml
       - |
         echo "Converting proto to JSON schema using buf and protoc"
@@ -36,60 +36,18 @@ tasks:
         plugins:
           - local: protoc-gen-jsonschema
             out: ..
-            opt:
-              - enums_as_strings_only
-              - type_names_with_no_package
+            opt: target=json-strict-bundle
         EOF
         cd a2a/tmp
         buf dep update
         PATH="$(go env GOPATH)/bin:$PATH" buf generate
         cd ../..
       - |
-        echo "Merging individual JSON schemas into single schema"
-        NODE_PATH=./node_modules:${NODE_PATH:-/usr/lib/node_modules} node -e "
-          const fs = require('fs');
-          const path = require('path');
-          const yaml = require('js-yaml');
-
-          const combinedSchema = {
-            '\$schema': 'http://json-schema.org/draft-07/schema#',
-            definitions: {}
-          };
-
-          const files = fs.readdirSync('a2a')
-            .filter(f => f.endsWith('.json') && f !== 'a2a-schema.json');
-
-          files.forEach(file => {
-            const content = JSON.parse(fs.readFileSync(path.join('a2a', file), 'utf8'));
-            if (content.definitions) {
-              Object.assign(combinedSchema.definitions, content.definitions);
-            }
-            fs.unlinkSync(path.join('a2a', file));
-          });
-
-          const cleanDescriptions = (obj) => {
-            if (typeof obj !== 'object' || obj === null) return;
-            for (const key in obj) {
-              if (key === 'description' && typeof obj[key] === 'string') {
-                let cleaned = obj[key]
-                  .replace(/--8<--\s*\[start:\w+\]\s*/g, '')
-                  .replace(/\s*--8<--\s*\[end:\w+\]/g, '')
-                  .trim();
-                if (cleaned === '') {
-                  delete obj[key];
-                } else {
-                  obj[key] = cleaned;
-                }
-              } else if (typeof obj[key] === 'object') {
-                cleanDescriptions(obj[key]);
-              }
-            }
-          };
-          cleanDescriptions(combinedSchema);
-
-          fs.writeFileSync('a2a/a2a-schema.json', JSON.stringify(combinedSchema, null, 2));
-          fs.writeFileSync('a2a/a2a-schema.yaml', yaml.dump(combinedSchema, {lineWidth: -1}));
-        "
+        echo "Processing bundled schema"
+        NODE_PATH=./node_modules:${NODE_PATH:-/usr/lib/node_modules} node scripts/process-bundle.js
+      - |
+        echo "Adding required fields from proto annotations"
+        NODE_PATH=./node_modules:${NODE_PATH:-/usr/lib/node_modules} node scripts/add-required-fields.js
       - rm -rf a2a/tmp
 
   openapi:format:
