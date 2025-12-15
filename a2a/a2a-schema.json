@@ -715,8 +715,7 @@
       },
       "additionalProperties": true,
       "type": "object",
-      "title": "Get Extended Agent Card Request",
-      "description": "--8<-- [start:GetExtendedAgentCardRequest]"
+      "title": "Get Extended Agent Card Request"
     },
     "GetTaskPushNotificationConfigRequest": {
       "properties": {
@@ -731,8 +730,7 @@
       },
       "additionalProperties": true,
       "type": "object",
-      "title": "Get Task Push Notification Config Request",
-      "description": "--8<-- [start:GetTaskPushNotificationConfigRequest]"
+      "title": "Get Task Push Notification Config Request"
     },
     "GetTaskRequest": {
       "properties": {
@@ -775,8 +773,7 @@
       },
       "additionalProperties": true,
       "type": "object",
-      "title": "List Task Push Notification Config Request",
-      "description": "--8<-- [start:ListTaskPushNotificationConfigRequest]"
+      "title": "List Task Push Notification Config Request"
     },
     "ListTaskPushNotificationConfigResponse": {
       "properties": {
@@ -1117,7 +1114,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Send Message Response",
-      "description": "////// Response Messages /////////// --8<-- [start:SendMessageResponse]"
+      "description": "////// Response Messages ///////////"
     },
     "SetTaskPushNotificationConfigRequest": {
       "properties": {
@@ -1249,8 +1246,7 @@
       },
       "additionalProperties": true,
       "type": "object",
-      "title": "Subscribe To Task Request",
-      "description": "--8<-- [start:SubscribeToTaskRequest]"
+      "title": "Subscribe To Task Request"
     }
   }
 }

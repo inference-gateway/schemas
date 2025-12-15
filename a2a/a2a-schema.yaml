@@ -536,7 +536,6 @@ definitions:
     additionalProperties: true
     type: object
     title: Get Extended Agent Card Request
-    description: '--8<-- [start:GetExtendedAgentCardRequest]'
   GetTaskPushNotificationConfigRequest:
     properties:
       tenant:
@@ -548,7 +547,6 @@ definitions:
     additionalProperties: true
     type: object
     title: Get Task Push Notification Config Request
-    description: '--8<-- [start:GetTaskPushNotificationConfigRequest]'
   GetTaskRequest:
     properties:
       tenant:
@@ -581,7 +579,6 @@ definitions:
     additionalProperties: true
     type: object
     title: List Task Push Notification Config Request
-    description: '--8<-- [start:ListTaskPushNotificationConfigRequest]'
   ListTaskPushNotificationConfigResponse:
     properties:
       configs:
@@ -842,7 +839,7 @@ definitions:
     additionalProperties: true
     type: object
     title: Send Message Response
-    description: ////// Response Messages /////////// --8<-- [start:SendMessageResponse]
+    description: ////// Response Messages ///////////
   SetTaskPushNotificationConfigRequest:
     properties:
       tenant:
@@ -944,4 +941,3 @@ definitions:
     additionalProperties: true
     type: object
     title: Subscribe To Task Request
-    description: '--8<-- [start:SubscribeToTaskRequest]'
