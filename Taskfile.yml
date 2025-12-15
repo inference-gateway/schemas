@@ -37,7 +37,6 @@ tasks:
           - local: protoc-gen-jsonschema
             out: ..
             opt:
-              - enforce_oneof
               - enums_as_strings_only
         EOF
         cd a2a/tmp

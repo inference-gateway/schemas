@@ -368,26 +368,6 @@ definitions:
         description: Configuration for the OAuth Resource Owner Password flow.
     additionalProperties: true
     type: object
-    allOf:
-      - oneOf:
-          - not:
-              anyOf:
-                - required:
-                    - authorization_code
-                - required:
-                    - client_credentials
-                - required:
-                    - implicit
-                - required:
-                    - password
-          - required:
-              - authorization_code
-          - required:
-              - client_credentials
-          - required:
-              - implicit
-          - required:
-              - password
     title: O Auth Flows
     description: Defines the configuration for the supported OAuth 2.0 flows.
   a2a.v1.OpenIdConnectSecurityScheme:
@@ -453,30 +433,6 @@ definitions:
         description: Mutual TLS authentication.
     additionalProperties: true
     type: object
-    allOf:
-      - oneOf:
-          - not:
-              anyOf:
-                - required:
-                    - api_key_security_scheme
-                - required:
-                    - http_auth_security_scheme
-                - required:
-                    - oauth2_security_scheme
-                - required:
-                    - open_id_connect_security_scheme
-                - required:
-                    - mtls_security_scheme
-          - required:
-              - api_key_security_scheme
-          - required:
-              - http_auth_security_scheme
-          - required:
-              - oauth2_security_scheme
-          - required:
-              - open_id_connect_security_scheme
-          - required:
-              - mtls_security_scheme
     title: Security Scheme
     description: 'Defines a security scheme that can be used to secure an agent''s endpoints. This is a discriminated union type based on the OpenAPI 3.2 Security Scheme Object. See: https://spec.openapis.org/oas/v3.2.0.html#security-scheme-object'
   a2a.v1.StringList:
@@ -648,18 +604,6 @@ definitions:
         description: An optional name for the file (e.g., "document.pdf").
     additionalProperties: true
     type: object
-    allOf:
-      - oneOf:
-          - not:
-              anyOf:
-                - required:
-                    - file_with_uri
-                - required:
-                    - file_with_bytes
-          - required:
-              - file_with_uri
-          - required:
-              - file_with_bytes
     title: File Part
     description: FilePart represents the different ways files can be provided. If files are small, directly feeding the bytes is supported via file_with_bytes. If the file is large, the agent should read the content as appropriate directly from the file_with_uri source.
   a2a.v1.Part:
@@ -681,22 +625,6 @@ definitions:
         description: Optional metadata associated with this part.
     additionalProperties: true
     type: object
-    allOf:
-      - oneOf:
-          - not:
-              anyOf:
-                - required:
-                    - text
-                - required:
-                    - file
-                - required:
-                    - data
-          - required:
-              - text
-          - required:
-              - file
-          - required:
-              - data
     title: Part
     description: Part represents a container for a section of communication content. Parts can be purely textual, some sort of file (image, video, etc) or a structured data blob (i.e. JSON).
   AuthenticationInfo:
@@ -802,18 +730,6 @@ definitions:
         description: An optional name for the file (e.g., "document.pdf").
     additionalProperties: true
     type: object
-    allOf:
-      - oneOf:
-          - not:
-              anyOf:
-                - required:
-                    - file_with_uri
-                - required:
-                    - file_with_bytes
-          - required:
-              - file_with_uri
-          - required:
-              - file_with_bytes
     title: File Part
     description: FilePart represents the different ways files can be provided. If files are small, directly feeding the bytes is supported via file_with_bytes. If the file is large, the agent should read the content as appropriate directly from the file_with_uri source.
   GetExtendedAgentCardRequest:
@@ -1239,26 +1155,6 @@ definitions:
         description: Configuration for the OAuth Resource Owner Password flow.
     additionalProperties: true
     type: object
-    allOf:
-      - oneOf:
-          - not:
-              anyOf:
-                - required:
-                    - authorization_code
-                - required:
-                    - client_credentials
-                - required:
-                    - implicit
-                - required:
-                    - password
-          - required:
-              - authorization_code
-          - required:
-              - client_credentials
-          - required:
-              - implicit
-          - required:
-              - password
     title: O Auth Flows
     description: Defines the configuration for the supported OAuth 2.0 flows.
   OpenIdConnectSecurityScheme:
@@ -1292,22 +1188,6 @@ definitions:
         description: Optional metadata associated with this part.
     additionalProperties: true
     type: object
-    allOf:
-      - oneOf:
-          - not:
-              anyOf:
-                - required:
-                    - text
-                - required:
-                    - file
-                - required:
-                    - data
-          - required:
-              - text
-          - required:
-              - file
-          - required:
-              - data
     title: Part
     description: Part represents a container for a section of communication content. Parts can be purely textual, some sort of file (image, video, etc) or a structured data blob (i.e. JSON).
   PasswordOAuthFlow:
@@ -1380,30 +1260,6 @@ definitions:
         description: Mutual TLS authentication.
     additionalProperties: true
     type: object
-    allOf:
-      - oneOf:
-          - not:
-              anyOf:
-                - required:
-                    - api_key_security_scheme
-                - required:
-                    - http_auth_security_scheme
-                - required:
-                    - oauth2_security_scheme
-                - required:
-                    - open_id_connect_security_scheme
-                - required:
-                    - mtls_security_scheme
-          - required:
-              - api_key_security_scheme
-          - required:
-              - http_auth_security_scheme
-          - required:
-              - oauth2_security_scheme
-          - required:
-              - open_id_connect_security_scheme
-          - required:
-              - mtls_security_scheme
     title: Security Scheme
     description: 'Defines a security scheme that can be used to secure an agent''s endpoints. This is a discriminated union type based on the OpenAPI 3.2 Security Scheme Object. See: https://spec.openapis.org/oas/v3.2.0.html#security-scheme-object'
   SendMessageConfiguration:
@@ -1479,18 +1335,6 @@ definitions:
         additionalProperties: true
     additionalProperties: true
     type: object
-    allOf:
-      - oneOf:
-          - not:
-              anyOf:
-                - required:
-                    - task
-                - required:
-                    - msg
-          - required:
-              - task
-          - required:
-              - msg
     title: Send Message Response
     description: ////// Response Messages /////////// --8<-- [start:SendMessageResponse]
   SetTaskPushNotificationConfigRequest:
@@ -1532,26 +1376,6 @@ definitions:
         description: An event indicating a task artifact update.
     additionalProperties: true
     type: object
-    allOf:
-      - oneOf:
-          - not:
-              anyOf:
-                - required:
-                    - task
-                - required:
-                    - msg
-                - required:
-                    - status_update
-                - required:
-                    - artifact_update
-          - required:
-              - task
-          - required:
-              - msg
-          - required:
-              - status_update
-          - required:
-              - artifact_update
     title: Stream Response
     description: A wrapper object used in streaming operations to encapsulate different types of response data.
   a2a.v1.TaskArtifactUpdateEvent:
