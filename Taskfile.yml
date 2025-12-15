@@ -38,6 +38,7 @@ tasks:
             out: ..
             opt:
               - enums_as_strings_only
+              - type_names_with_no_package
         EOF
         cd a2a/tmp
         buf dep update
