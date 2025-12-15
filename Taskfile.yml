@@ -38,6 +38,7 @@ tasks:
             out: ..
             opt:
               - enforce_oneof
+              - enums_as_strings_only
         EOF
         cd a2a/tmp
         buf dep update
@@ -65,6 +66,18 @@ tasks:
             }
             fs.unlinkSync(path.join('a2a', file));
           });
+
+          const cleanDescriptions = (obj) => {
+            if (typeof obj !== 'object' || obj === null) return;
+            for (const key in obj) {
+              if (key === 'description' && typeof obj[key] === 'string') {
+                obj[key] = obj[key].replace(/--8<--\s+\[start:\w+\]\s+/g, '').replace(/\s+--8<--\s+\[end:\w+\]/g, '');
+              } else if (typeof obj[key] === 'object') {
+                cleanDescriptions(obj[key]);
+              }
+            }
+          };
+          cleanDescriptions(combinedSchema);
 
           fs.writeFileSync('a2a/a2a-schema.json', JSON.stringify(combinedSchema, null, 2));
           fs.writeFileSync('a2a/a2a-schema.yaml', yaml.dump(combinedSchema, {lineWidth: -1}));

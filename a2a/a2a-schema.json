@@ -19,7 +19,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "API Key Security Scheme",
-      "description": "--8<-- [start:APIKeySecurityScheme] Defines a security scheme using an API key."
+      "description": "Defines a security scheme using an API key."
     },
     "AgentCapabilities": {
       "properties": {
@@ -46,7 +46,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Agent Capabilities",
-      "description": "--8<-- [start:AgentCapabilities] Defines optional capabilities supported by an agent."
+      "description": "Defines optional capabilities supported by an agent."
     },
     "a2a.v1.AgentExtension": {
       "properties": {
@@ -71,7 +71,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Agent Extension",
-      "description": "--8<-- [start:AgentExtension] A declaration of a protocol extension supported by an Agent."
+      "description": "A declaration of a protocol extension supported by an Agent."
     },
     "AgentCard": {
       "properties": {
@@ -182,7 +182,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Agent Card",
-      "description": "--8<-- [start:AgentCard] AgentCard is a self-describing manifest for an agent. It provides essential metadata including the agent's identity, capabilities, skills, supported communication methods, and security requirements. Next ID: 20"
+      "description": "AgentCard is a self-describing manifest for an agent. It provides essential metadata including the agent's identity, capabilities, skills, supported communication methods, and security requirements. Next ID: 20"
     },
     "a2a.v1.APIKeySecurityScheme": {
       "properties": {
@@ -202,7 +202,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "API Key Security Scheme",
-      "description": "--8<-- [start:APIKeySecurityScheme] Defines a security scheme using an API key."
+      "description": "Defines a security scheme using an API key."
     },
     "a2a.v1.AgentCapabilities": {
       "properties": {
@@ -229,7 +229,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Agent Capabilities",
-      "description": "--8<-- [start:AgentCapabilities] Defines optional capabilities supported by an agent."
+      "description": "Defines optional capabilities supported by an agent."
     },
     "a2a.v1.AgentCardSignature": {
       "properties": {
@@ -250,7 +250,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Agent Card Signature",
-      "description": "--8<-- [start:AgentCardSignature] AgentCardSignature represents a JWS signature of an AgentCard. This follows the JSON format of an RFC 7515 JSON Web Signature (JWS)."
+      "description": "AgentCardSignature represents a JWS signature of an AgentCard. This follows the JSON format of an RFC 7515 JSON Web Signature (JWS)."
     },
     "a2a.v1.AgentInterface": {
       "properties": {
@@ -270,7 +270,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Agent Interface",
-      "description": "--8<-- [start:AgentInterface] Declares a combination of a target URL and a transport protocol for interacting with the agent. This allows agents to expose the same functionality over multiple protocol binding mechanisms."
+      "description": "Declares a combination of a target URL and a transport protocol for interacting with the agent. This allows agents to expose the same functionality over multiple protocol binding mechanisms."
     },
     "a2a.v1.AgentProvider": {
       "properties": {
@@ -286,7 +286,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Agent Provider",
-      "description": "--8<-- [start:AgentProvider] Represents the service provider of an agent."
+      "description": "Represents the service provider of an agent."
     },
     "a2a.v1.AgentSkill": {
       "properties": {
@@ -341,7 +341,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Agent Skill",
-      "description": "--8<-- [start:AgentSkill] Represents a distinct capability or function that an agent can perform."
+      "description": "Represents a distinct capability or function that an agent can perform."
     },
     "a2a.v1.AuthorizationCodeOAuthFlow": {
       "properties": {
@@ -368,7 +368,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Authorization Code O Auth Flow",
-      "description": "--8<-- [start:AuthorizationCodeOAuthFlow] Defines configuration details for the OAuth 2.0 Authorization Code flow."
+      "description": "Defines configuration details for the OAuth 2.0 Authorization Code flow."
     },
     "a2a.v1.ClientCredentialsOAuthFlow": {
       "properties": {
@@ -391,7 +391,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Client Credentials O Auth Flow",
-      "description": "--8<-- [start:ClientCredentialsOAuthFlow] Defines configuration details for the OAuth 2.0 Client Credentials flow."
+      "description": "Defines configuration details for the OAuth 2.0 Client Credentials flow."
     },
     "a2a.v1.HTTPAuthSecurityScheme": {
       "properties": {
@@ -411,7 +411,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "HTTP Auth Security Scheme",
-      "description": "--8<-- [start:HTTPAuthSecurityScheme] Defines a security scheme using HTTP authentication."
+      "description": "Defines a security scheme using HTTP authentication."
     },
     "a2a.v1.ImplicitOAuthFlow": {
       "properties": {
@@ -434,7 +434,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Implicit O Auth Flow",
-      "description": "--8<-- [start:ImplicitOAuthFlow] Defines configuration details for the OAuth 2.0 Implicit flow."
+      "description": "Defines configuration details for the OAuth 2.0 Implicit flow."
     },
     "a2a.v1.MutualTlsSecurityScheme": {
       "properties": {
@@ -446,7 +446,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Mutual Tls Security Scheme",
-      "description": "--8<-- [start:MutualTLSSecurityScheme] Defines a security scheme using mTLS authentication."
+      "description": "Defines a security scheme using mTLS authentication."
     },
     "a2a.v1.OAuth2SecurityScheme": {
       "properties": {
@@ -467,7 +467,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "O Auth 2 Security Scheme",
-      "description": "--8<-- [start:OAuth2SecurityScheme] Defines a security scheme using OAuth 2.0."
+      "description": "Defines a security scheme using OAuth 2.0."
     },
     "a2a.v1.OAuthFlows": {
       "properties": {
@@ -547,7 +547,7 @@
         }
       ],
       "title": "O Auth Flows",
-      "description": "--8<-- [start:OAuthFlows] Defines the configuration for the supported OAuth 2.0 flows."
+      "description": "Defines the configuration for the supported OAuth 2.0 flows."
     },
     "a2a.v1.OpenIdConnectSecurityScheme": {
       "properties": {
@@ -563,7 +563,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Open Id Connect Security Scheme",
-      "description": "--8<-- [start:OpenIdConnectSecurityScheme] Defines a security scheme using OpenID Connect."
+      "description": "Defines a security scheme using OpenID Connect."
     },
     "a2a.v1.PasswordOAuthFlow": {
       "properties": {
@@ -586,7 +586,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Password O Auth Flow",
-      "description": "--8<-- [start:PasswordOAuthFlow] Defines configuration details for the OAuth 2.0 Resource Owner Password flow."
+      "description": "Defines configuration details for the OAuth 2.0 Resource Owner Password flow."
     },
     "a2a.v1.Security": {
       "properties": {
@@ -695,7 +695,7 @@
         }
       ],
       "title": "Security Scheme",
-      "description": "--8<-- [start:SecurityScheme] Defines a security scheme that can be used to secure an agent's endpoints. This is a discriminated union type based on the OpenAPI 3.2 Security Scheme Object. See: https://spec.openapis.org/oas/v3.2.0.html#security-scheme-object"
+      "description": "Defines a security scheme that can be used to secure an agent's endpoints. This is a discriminated union type based on the OpenAPI 3.2 Security Scheme Object. See: https://spec.openapis.org/oas/v3.2.0.html#security-scheme-object"
     },
     "a2a.v1.StringList": {
       "properties": {
@@ -730,7 +730,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Agent Card Signature",
-      "description": "--8<-- [start:AgentCardSignature] AgentCardSignature represents a JWS signature of an AgentCard. This follows the JSON format of an RFC 7515 JSON Web Signature (JWS)."
+      "description": "AgentCardSignature represents a JWS signature of an AgentCard. This follows the JSON format of an RFC 7515 JSON Web Signature (JWS)."
     },
     "AgentExtension": {
       "properties": {
@@ -755,7 +755,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Agent Extension",
-      "description": "--8<-- [start:AgentExtension] A declaration of a protocol extension supported by an Agent."
+      "description": "A declaration of a protocol extension supported by an Agent."
     },
     "AgentInterface": {
       "properties": {
@@ -775,7 +775,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Agent Interface",
-      "description": "--8<-- [start:AgentInterface] Declares a combination of a target URL and a transport protocol for interacting with the agent. This allows agents to expose the same functionality over multiple protocol binding mechanisms."
+      "description": "Declares a combination of a target URL and a transport protocol for interacting with the agent. This allows agents to expose the same functionality over multiple protocol binding mechanisms."
     },
     "AgentProvider": {
       "properties": {
@@ -791,7 +791,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Agent Provider",
-      "description": "--8<-- [start:AgentProvider] Represents the service provider of an agent."
+      "description": "Represents the service provider of an agent."
     },
     "AgentSkill": {
       "properties": {
@@ -846,7 +846,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Agent Skill",
-      "description": "--8<-- [start:AgentSkill] Represents a distinct capability or function that an agent can perform."
+      "description": "Represents a distinct capability or function that an agent can perform."
     },
     "Artifact": {
       "properties": {
@@ -885,7 +885,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Artifact",
-      "description": "--8<-- [start:Artifact] Artifacts represent task outputs."
+      "description": "Artifacts represent task outputs."
     },
     "a2a.v1.DataPart": {
       "properties": {
@@ -898,7 +898,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Data Part",
-      "description": "--8<-- [start:DataPart] DataPart represents a structured blob."
+      "description": "DataPart represents a structured blob."
     },
     "a2a.v1.FilePart": {
       "properties": {
@@ -956,7 +956,7 @@
         }
       ],
       "title": "File Part",
-      "description": "--8<-- [start:FilePart] FilePart represents the different ways files can be provided. If files are small, directly feeding the bytes is supported via file_with_bytes. If the file is large, the agent should read the content as appropriate directly from the file_with_uri source."
+      "description": "FilePart represents the different ways files can be provided. If files are small, directly feeding the bytes is supported via file_with_bytes. If the file is large, the agent should read the content as appropriate directly from the file_with_uri source."
     },
     "a2a.v1.Part": {
       "properties": {
@@ -1025,7 +1025,7 @@
         }
       ],
       "title": "Part",
-      "description": "--8<-- [start:Part] Part represents a container for a section of communication content. Parts can be purely textual, some sort of file (image, video, etc) or a structured data blob (i.e. JSON)."
+      "description": "Part represents a container for a section of communication content. Parts can be purely textual, some sort of file (image, video, etc) or a structured data blob (i.e. JSON)."
     },
     "AuthenticationInfo": {
       "properties": {
@@ -1044,7 +1044,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Authentication Info",
-      "description": "--8<-- [start:PushNotificationAuthenticationInfo] Defines authentication details, used for push notifications."
+      "description": "Defines authentication details, used for push notifications."
     },
     "AuthorizationCodeOAuthFlow": {
       "properties": {
@@ -1071,7 +1071,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Authorization Code O Auth Flow",
-      "description": "--8<-- [start:AuthorizationCodeOAuthFlow] Defines configuration details for the OAuth 2.0 Authorization Code flow."
+      "description": "Defines configuration details for the OAuth 2.0 Authorization Code flow."
     },
     "CancelTaskRequest": {
       "properties": {
@@ -1087,7 +1087,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Cancel Task Request",
-      "description": "--8<-- [start:CancelTaskRequest] Represents a request for the `tasks/cancel` method."
+      "description": "Represents a request for the `tasks/cancel` method."
     },
     "ClientCredentialsOAuthFlow": {
       "properties": {
@@ -1110,7 +1110,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Client Credentials O Auth Flow",
-      "description": "--8<-- [start:ClientCredentialsOAuthFlow] Defines configuration details for the OAuth 2.0 Client Credentials flow."
+      "description": "Defines configuration details for the OAuth 2.0 Client Credentials flow."
     },
     "DataPart": {
       "properties": {
@@ -1123,7 +1123,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Data Part",
-      "description": "--8<-- [start:DataPart] DataPart represents a structured blob."
+      "description": "DataPart represents a structured blob."
     },
     "DeleteTaskPushNotificationConfigRequest": {
       "properties": {
@@ -1139,7 +1139,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Delete Task Push Notification Config Request",
-      "description": "--8<-- [start:DeleteTaskPushNotificationConfigRequest] Represents a request for the `tasks/pushNotificationConfig/delete` method."
+      "description": "Represents a request for the `tasks/pushNotificationConfig/delete` method."
     },
     "FilePart": {
       "properties": {
@@ -1197,7 +1197,7 @@
         }
       ],
       "title": "File Part",
-      "description": "--8<-- [start:FilePart] FilePart represents the different ways files can be provided. If files are small, directly feeding the bytes is supported via file_with_bytes. If the file is large, the agent should read the content as appropriate directly from the file_with_uri source."
+      "description": "FilePart represents the different ways files can be provided. If files are small, directly feeding the bytes is supported via file_with_bytes. If the file is large, the agent should read the content as appropriate directly from the file_with_uri source."
     },
     "GetExtendedAgentCardRequest": {
       "properties": {
@@ -1245,7 +1245,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Get Task Request",
-      "description": "--8<-- [start:GetTaskRequest] Represents a request for the `tasks/get` method."
+      "description": "Represents a request for the `tasks/get` method."
     },
     "HTTPAuthSecurityScheme": {
       "properties": {
@@ -1265,7 +1265,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "HTTP Auth Security Scheme",
-      "description": "--8<-- [start:HTTPAuthSecurityScheme] Defines a security scheme using HTTP authentication."
+      "description": "Defines a security scheme using HTTP authentication."
     },
     "ImplicitOAuthFlow": {
       "properties": {
@@ -1288,7 +1288,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Implicit O Auth Flow",
-      "description": "--8<-- [start:ImplicitOAuthFlow] Defines configuration details for the OAuth 2.0 Implicit flow."
+      "description": "Defines configuration details for the OAuth 2.0 Implicit flow."
     },
     "ListTaskPushNotificationConfigRequest": {
       "properties": {
@@ -1331,7 +1331,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "List Task Push Notification Config Response",
-      "description": "--8<-- [start:ListTaskPushNotificationConfigResponse] Represents a successful response for the `tasks/pushNotificationConfig/list` method."
+      "description": "Represents a successful response for the `tasks/pushNotificationConfig/list` method."
     },
     "a2a.v1.AuthenticationInfo": {
       "properties": {
@@ -1350,7 +1350,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Authentication Info",
-      "description": "--8<-- [start:PushNotificationAuthenticationInfo] Defines authentication details, used for push notifications."
+      "description": "Defines authentication details, used for push notifications."
     },
     "a2a.v1.PushNotificationConfig": {
       "properties": {
@@ -1375,7 +1375,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Push Notification Config",
-      "description": "--8<-- [start:PushNotificationConfig] Configuration for setting up push notifications for task updates."
+      "description": "Configuration for setting up push notifications for task updates."
     },
     "a2a.v1.TaskPushNotificationConfig": {
       "properties": {
@@ -1392,7 +1392,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Task Push Notification Config",
-      "description": "--8<-- [start:TaskPushNotificationConfig] A container associating a push notification configuration with a specific task."
+      "description": "A container associating a push notification configuration with a specific task."
     },
     "ListTasksRequest": {
       "properties": {
@@ -1407,34 +1407,18 @@
         "status": {
           "enum": [
             "TASK_STATE_UNSPECIFIED",
-            0,
             "TASK_STATE_SUBMITTED",
-            1,
             "TASK_STATE_WORKING",
-            2,
             "TASK_STATE_COMPLETED",
-            3,
             "TASK_STATE_FAILED",
-            4,
             "TASK_STATE_CANCELLED",
-            5,
             "TASK_STATE_INPUT_REQUIRED",
-            6,
             "TASK_STATE_REJECTED",
-            7,
-            "TASK_STATE_AUTH_REQUIRED",
-            8
+            "TASK_STATE_AUTH_REQUIRED"
           ],
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "integer"
-            }
-          ],
+          "type": "string",
           "title": "Task State",
-          "description": "--8<-- [start:TaskState] Defines the possible lifecycle states of a Task."
+          "description": "Defines the possible lifecycle states of a Task."
         },
         "page_size": {
           "type": "integer",
@@ -1460,7 +1444,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "List Tasks Request",
-      "description": "--8<-- [start:ListTasksRequest] Parameters for listing tasks with optional filtering criteria."
+      "description": "Parameters for listing tasks with optional filtering criteria."
     },
     "ListTasksResponse": {
       "properties": {
@@ -1487,7 +1471,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "List Tasks Response",
-      "description": "--8<-- [start:ListTasksResponse] Result object for tasks/list method containing an array of tasks and pagination information."
+      "description": "Result object for tasks/list method containing an array of tasks and pagination information."
     },
     "a2a.v1.Artifact": {
       "properties": {
@@ -1526,7 +1510,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Artifact",
-      "description": "--8<-- [start:Artifact] Artifacts represent task outputs."
+      "description": "Artifacts represent task outputs."
     },
     "a2a.v1.Message": {
       "properties": {
@@ -1545,22 +1529,12 @@
         "role": {
           "enum": [
             "ROLE_UNSPECIFIED",
-            0,
             "ROLE_USER",
-            1,
-            "ROLE_AGENT",
-            2
+            "ROLE_AGENT"
           ],
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "integer"
-            }
-          ],
+          "type": "string",
           "title": "Role",
-          "description": "--8<-- [start:Role] Defines the sender of a message in A2A protocol communication."
+          "description": "Defines the sender of a message in A2A protocol communication."
         },
         "parts": {
           "items": {
@@ -1592,7 +1566,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Message",
-      "description": "--8<-- [start:Message] Message is one unit of communication between client and server. It is associated with a context and optionally a task. Since the server is responsible for the context definition, it must always provide a context_id in its messages. The client can optionally provide the context_id if it knows the context to associate the message to. Similarly for task_id, except the server decides if a task is created and whether to include the task_id."
+      "description": "Message is one unit of communication between client and server. It is associated with a context and optionally a task. Since the server is responsible for the context definition, it must always provide a context_id in its messages. The client can optionally provide the context_id if it knows the context to associate the message to. Similarly for task_id, except the server decides if a task is created and whether to include the task_id."
     },
     "a2a.v1.Task": {
       "properties": {
@@ -1632,41 +1606,25 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Task",
-      "description": "--8<-- [start:Task] Task is the core unit of action for A2A. It has a current status and when results are created for the task they are stored in the artifact. If there are multiple turns for a task, these are stored in history."
+      "description": "Task is the core unit of action for A2A. It has a current status and when results are created for the task they are stored in the artifact. If there are multiple turns for a task, these are stored in history."
     },
     "a2a.v1.TaskStatus": {
       "properties": {
         "state": {
           "enum": [
             "TASK_STATE_UNSPECIFIED",
-            0,
             "TASK_STATE_SUBMITTED",
-            1,
             "TASK_STATE_WORKING",
-            2,
             "TASK_STATE_COMPLETED",
-            3,
             "TASK_STATE_FAILED",
-            4,
             "TASK_STATE_CANCELLED",
-            5,
             "TASK_STATE_INPUT_REQUIRED",
-            6,
             "TASK_STATE_REJECTED",
-            7,
-            "TASK_STATE_AUTH_REQUIRED",
-            8
+            "TASK_STATE_AUTH_REQUIRED"
           ],
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "integer"
-            }
-          ],
+          "type": "string",
           "title": "Task State",
-          "description": "--8<-- [start:TaskState] Defines the possible lifecycle states of a Task."
+          "description": "Defines the possible lifecycle states of a Task."
         },
         "message": {
           "$ref": "#/definitions/a2a.v1.Message",
@@ -1682,7 +1640,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Task Status",
-      "description": "--8<-- [start:TaskStatus] A container for the status of a task"
+      "description": "A container for the status of a task"
     },
     "Message": {
       "properties": {
@@ -1701,22 +1659,12 @@
         "role": {
           "enum": [
             "ROLE_UNSPECIFIED",
-            0,
             "ROLE_USER",
-            1,
-            "ROLE_AGENT",
-            2
+            "ROLE_AGENT"
           ],
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "integer"
-            }
-          ],
+          "type": "string",
           "title": "Role",
-          "description": "--8<-- [start:Role] Defines the sender of a message in A2A protocol communication."
+          "description": "Defines the sender of a message in A2A protocol communication."
         },
         "parts": {
           "items": {
@@ -1748,7 +1696,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Message",
-      "description": "--8<-- [start:Message] Message is one unit of communication between client and server. It is associated with a context and optionally a task. Since the server is responsible for the context definition, it must always provide a context_id in its messages. The client can optionally provide the context_id if it knows the context to associate the message to. Similarly for task_id, except the server decides if a task is created and whether to include the task_id."
+      "description": "Message is one unit of communication between client and server. It is associated with a context and optionally a task. Since the server is responsible for the context definition, it must always provide a context_id in its messages. The client can optionally provide the context_id if it knows the context to associate the message to. Similarly for task_id, except the server decides if a task is created and whether to include the task_id."
     },
     "MutualTlsSecurityScheme": {
       "properties": {
@@ -1760,7 +1708,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Mutual Tls Security Scheme",
-      "description": "--8<-- [start:MutualTLSSecurityScheme] Defines a security scheme using mTLS authentication."
+      "description": "Defines a security scheme using mTLS authentication."
     },
     "OAuth2SecurityScheme": {
       "properties": {
@@ -1781,7 +1729,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "O Auth 2 Security Scheme",
-      "description": "--8<-- [start:OAuth2SecurityScheme] Defines a security scheme using OAuth 2.0."
+      "description": "Defines a security scheme using OAuth 2.0."
     },
     "OAuthFlows": {
       "properties": {
@@ -1861,7 +1809,7 @@
         }
       ],
       "title": "O Auth Flows",
-      "description": "--8<-- [start:OAuthFlows] Defines the configuration for the supported OAuth 2.0 flows."
+      "description": "Defines the configuration for the supported OAuth 2.0 flows."
     },
     "OpenIdConnectSecurityScheme": {
       "properties": {
@@ -1877,7 +1825,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Open Id Connect Security Scheme",
-      "description": "--8<-- [start:OpenIdConnectSecurityScheme] Defines a security scheme using OpenID Connect."
+      "description": "Defines a security scheme using OpenID Connect."
     },
     "Part": {
       "properties": {
@@ -1946,7 +1894,7 @@
         }
       ],
       "title": "Part",
-      "description": "--8<-- [start:Part] Part represents a container for a section of communication content. Parts can be purely textual, some sort of file (image, video, etc) or a structured data blob (i.e. JSON)."
+      "description": "Part represents a container for a section of communication content. Parts can be purely textual, some sort of file (image, video, etc) or a structured data blob (i.e. JSON)."
     },
     "PasswordOAuthFlow": {
       "properties": {
@@ -1969,7 +1917,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Password O Auth Flow",
-      "description": "--8<-- [start:PasswordOAuthFlow] Defines configuration details for the OAuth 2.0 Resource Owner Password flow."
+      "description": "Defines configuration details for the OAuth 2.0 Resource Owner Password flow."
     },
     "PushNotificationConfig": {
       "properties": {
@@ -1994,7 +1942,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Push Notification Config",
-      "description": "--8<-- [start:PushNotificationConfig] Configuration for setting up push notifications for task updates."
+      "description": "Configuration for setting up push notifications for task updates."
     },
     "Security": {
       "properties": {
@@ -2103,7 +2051,7 @@
         }
       ],
       "title": "Security Scheme",
-      "description": "--8<-- [start:SecurityScheme] Defines a security scheme that can be used to secure an agent's endpoints. This is a discriminated union type based on the OpenAPI 3.2 Security Scheme Object. See: https://spec.openapis.org/oas/v3.2.0.html#security-scheme-object"
+      "description": "Defines a security scheme that can be used to secure an agent's endpoints. This is a discriminated union type based on the OpenAPI 3.2 Security Scheme Object. See: https://spec.openapis.org/oas/v3.2.0.html#security-scheme-object"
     },
     "SendMessageConfiguration": {
       "properties": {
@@ -2131,7 +2079,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "/////// Data Model ////////////",
-      "description": "/////// Data Model ////////////  --8<-- [start:SendMessageConfiguration] Configuration of a send message request."
+      "description": "/////// Data Model ////////////  Configuration of a send message request."
     },
     "SendMessageRequest": {
       "properties": {
@@ -2158,7 +2106,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Send Message Request",
-      "description": "/////////// Request Messages /////////// --8<-- [start:SendMessageRequest] Represents a request for the `message/send` method."
+      "description": "/////////// Request Messages /////////// Represents a request for the `message/send` method."
     },
     "a2a.v1.SendMessageConfiguration": {
       "properties": {
@@ -2186,7 +2134,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "/////// Data Model ////////////",
-      "description": "/////// Data Model ////////////  --8<-- [start:SendMessageConfiguration] Configuration of a send message request."
+      "description": "/////// Data Model ////////////  Configuration of a send message request."
     },
     "SendMessageResponse": {
       "properties": {
@@ -2259,7 +2207,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Set Task Push Notification Config Request",
-      "description": "--8<-- [start:SetTaskPushNotificationConfigRequest] Represents a request for the `tasks/pushNotificationConfig/set` method."
+      "description": "Represents a request for the `tasks/pushNotificationConfig/set` method."
     },
     "StreamResponse": {
       "properties": {
@@ -2339,7 +2287,7 @@
         }
       ],
       "title": "Stream Response",
-      "description": "--8<-- [start:StreamResponse] A wrapper object used in streaming operations to encapsulate different types of response data."
+      "description": "A wrapper object used in streaming operations to encapsulate different types of response data."
     },
     "a2a.v1.TaskArtifactUpdateEvent": {
       "properties": {
@@ -2373,7 +2321,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Task Artifact Update Event",
-      "description": "--8<-- [start:TaskArtifactUpdateEvent] TaskArtifactUpdateEvent represents a task delta where an artifact has been generated."
+      "description": "TaskArtifactUpdateEvent represents a task delta where an artifact has been generated."
     },
     "a2a.v1.TaskStatusUpdateEvent": {
       "properties": {
@@ -2403,7 +2351,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Task Status Update Event",
-      "description": "--8<-- [start:TaskStatusUpdateEvent] An event sent by the agent to notify the client of a change in a task's status."
+      "description": "An event sent by the agent to notify the client of a change in a task's status."
     },
     "StringList": {
       "properties": {
@@ -2473,7 +2421,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Task",
-      "description": "--8<-- [start:Task] Task is the core unit of action for A2A. It has a current status and when results are created for the task they are stored in the artifact. If there are multiple turns for a task, these are stored in history."
+      "description": "Task is the core unit of action for A2A. It has a current status and when results are created for the task they are stored in the artifact. If there are multiple turns for a task, these are stored in history."
     },
     "TaskArtifactUpdateEvent": {
       "properties": {
@@ -2507,7 +2455,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Task Artifact Update Event",
-      "description": "--8<-- [start:TaskArtifactUpdateEvent] TaskArtifactUpdateEvent represents a task delta where an artifact has been generated."
+      "description": "TaskArtifactUpdateEvent represents a task delta where an artifact has been generated."
     },
     "TaskPushNotificationConfig": {
       "properties": {
@@ -2524,41 +2472,25 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Task Push Notification Config",
-      "description": "--8<-- [start:TaskPushNotificationConfig] A container associating a push notification configuration with a specific task."
+      "description": "A container associating a push notification configuration with a specific task."
     },
     "TaskStatus": {
       "properties": {
         "state": {
           "enum": [
             "TASK_STATE_UNSPECIFIED",
-            0,
             "TASK_STATE_SUBMITTED",
-            1,
             "TASK_STATE_WORKING",
-            2,
             "TASK_STATE_COMPLETED",
-            3,
             "TASK_STATE_FAILED",
-            4,
             "TASK_STATE_CANCELLED",
-            5,
             "TASK_STATE_INPUT_REQUIRED",
-            6,
             "TASK_STATE_REJECTED",
-            7,
-            "TASK_STATE_AUTH_REQUIRED",
-            8
+            "TASK_STATE_AUTH_REQUIRED"
           ],
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "integer"
-            }
-          ],
+          "type": "string",
           "title": "Task State",
-          "description": "--8<-- [start:TaskState] Defines the possible lifecycle states of a Task."
+          "description": "Defines the possible lifecycle states of a Task."
         },
         "message": {
           "$ref": "#/definitions/a2a.v1.Message",
@@ -2574,7 +2506,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Task Status",
-      "description": "--8<-- [start:TaskStatus] A container for the status of a task"
+      "description": "A container for the status of a task"
     },
     "TaskStatusUpdateEvent": {
       "properties": {
@@ -2604,7 +2536,7 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Task Status Update Event",
-      "description": "--8<-- [start:TaskStatusUpdateEvent] An event sent by the agent to notify the client of a change in a task's status."
+      "description": "An event sent by the agent to notify the client of a change in a task's status."
     }
   }
 }
