@@ -304,6 +304,16 @@ $defs:
           type: object
         description: Experimental, non-standard capabilities that the client supports.
         type: object
+      extensions:
+        additionalProperties:
+          additionalProperties: true
+          properties: {}
+          type: object
+        description: |-
+          Optional MCP extensions that the client supports. Keys are extension identifiers
+          (e.g., "io.modelcontextprotocol/oauth-client-credentials"), and values are
+          per-extension settings objects. An empty object indicates support with no settings.
+        type: object
       roots:
         description: Present if the client supports listing roots.
         properties:
@@ -1081,7 +1091,7 @@ $defs:
           A standard URI pointing to an icon resource. May be an HTTP/HTTPS URL or a
           `data:` URI with Base64-encoded image data.
 
-          Consumers SHOULD takes steps to ensure URLs serving icons are from the
+          Consumers SHOULD take steps to ensure URLs serving icons are from the
           same domain as the client/server or a trusted domain.
 
           Consumers SHOULD take appropriate precautions when consuming SVGs as they can contain
@@ -1181,6 +1191,7 @@ $defs:
           if present).
         type: string
       version:
+        description: The version of this implementation.
         type: string
       websiteUrl:
         description: An optional URL of the website for this implementation.
@@ -2654,6 +2665,16 @@ $defs:
           type: object
         description: Experimental, non-standard capabilities that the server supports.
         type: object
+      extensions:
+        additionalProperties:
+          additionalProperties: true
+          properties: {}
+          type: object
+        description: |-
+          Optional MCP extensions that the server supports. Keys are extension identifiers
+          (e.g., "io.modelcontextprotocol/apps"), and values are per-extension settings
+          objects. An empty object indicates support with no settings.
+        type: object
       logging:
         additionalProperties: true
         description: Present if the server supports sending log messages to the client.
@@ -2743,6 +2764,7 @@ $defs:
       - $ref: '#/$defs/GetPromptResult'
       - $ref: '#/$defs/ListToolsResult'
       - $ref: '#/$defs/CallToolResult'
+      - $ref: '#/$defs/CreateTaskResult'
       - $ref: '#/$defs/GetTaskResult'
         description: The result returned for a {@link GetTaskRequesttasks/get} request.
       - $ref: '#/$defs/GetTaskPayloadResult'
