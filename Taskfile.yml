@@ -28,7 +28,7 @@ tasks:
       - go install github.com/bufbuild/protoschema-plugins/cmd/protoc-gen-jsonschema@latest
       - mkdir -p a2a/tmp
       - cp a2a/a2a.proto a2a/tmp/a2a.proto
-      - curl -o a2a/tmp/buf.yaml https://raw.githubusercontent.com/google-a2a/A2A/main/specification/grpc/buf.yaml
+      - curl -o a2a/tmp/buf.yaml https://raw.githubusercontent.com/a2aproject/A2A/main/specification/buf.yaml
       - |
         echo "Converting proto to JSON schema using buf and protoc"
         cat > a2a/tmp/buf.gen.yaml <<EOF
