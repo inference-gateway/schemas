@@ -28,8 +28,9 @@ jobs:
           go-version: "1.26.2"
           cache: true
 
-      - name: Install Task
-        uses: arduino/setup-task@v2
+      - name: Install task
+        run: |
+          curl -s https://taskfile.dev/install.sh | sh -s -- -b /usr/local/bin v3.48.0
 
       - name: Install buf
         run: |

@@ -22,8 +22,9 @@ jobs:
         with:
           node-version: "24.11.1"
 
-      - name: Install Task
-        uses: arduino/setup-task@v2
+      - name: Install task
+        run: |
+          curl -s https://taskfile.dev/install.sh | sh -s -- -b /usr/local/bin v3.48.0
 
       - name: Download and convert MCP schema
         run: task mcp-schema-download
