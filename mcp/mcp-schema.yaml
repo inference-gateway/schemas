@@ -133,8 +133,12 @@ $defs:
         additionalProperties: {}
         description: Arguments to use for the tool call.
         type: object
+      inputResponses:
+        $ref: '#/$defs/InputResponses'
       name:
         description: The name of the tool.
+        type: string
+      requestState:
         type: string
       task:
         $ref: '#/$defs/TaskMetadata'
@@ -173,12 +177,19 @@ $defs:
           server does not support tool calls, or any other exceptional conditions,
           should be reported as an MCP error response.
         type: boolean
+      resultType:
+        $ref: '#/$defs/ResultType'
+        default: complete
+        description: |-
+          Indicates the type of the result, which allows the client to determine
+          how to parse the result object.
       structuredContent:
         additionalProperties: {}
         description: An optional JSON object that represents the structured result of the tool call.
         type: object
     required:
       - content
+      - resultType
     type: object
   CallToolResultResponse:
     description: A successful response from the server for a {@link CallToolRequesttools/call} request.
@@ -189,7 +200,9 @@ $defs:
         const: '2.0'
         type: string
       result:
-        $ref: '#/$defs/CallToolResult'
+        anyOf:
+          - $ref: '#/$defs/InputRequiredResult'
+          - $ref: '#/$defs/CallToolResult'
     required:
       - id
       - jsonrpc
@@ -376,6 +389,7 @@ $defs:
       - $ref: '#/$defs/CallToolRequest'
       - $ref: '#/$defs/GetTaskRequest'
       - $ref: '#/$defs/GetTaskPayloadRequest'
+      - $ref: '#/$defs/TaskInputResponseRequest'
       - $ref: '#/$defs/CancelTaskRequest'
       - $ref: '#/$defs/ListTasksRequest'
       - $ref: '#/$defs/SetLevelRequest'
@@ -389,9 +403,6 @@ $defs:
       - $ref: '#/$defs/CancelTaskResult'
         description: The result returned for a {@link CancelTaskRequesttasks/cancel} request.
       - $ref: '#/$defs/ListTasksResult'
-      - $ref: '#/$defs/CreateMessageResult'
-      - $ref: '#/$defs/ListRootsResult'
-      - $ref: '#/$defs/ElicitResult'
   CompleteRequest:
     description: A request from the client to the server, to ask for completion options.
     properties:
@@ -468,8 +479,15 @@ $defs:
         required:
           - values
         type: object
+      resultType:
+        $ref: '#/$defs/ResultType'
+        default: complete
+        description: |-
+          Indicates the type of the result, which allows the client to determine
+          how to parse the result object.
     required:
       - completion
+      - resultType
     type: object
   CompleteResultResponse:
     description: A successful response from the server for a {@link CompleteRequestcompletion/complete} request.
@@ -496,27 +514,18 @@ $defs:
   CreateMessageRequest:
     description: A request from the server to sample an LLM via the client. The client has full discretion over which model to select. The client should also inform the user before beginning sampling, to allow them to inspect the request (human in the loop) and decide whether to approve it.
     properties:
-      id:
-        $ref: '#/$defs/RequestId'
-      jsonrpc:
-        const: '2.0'
-        type: string
       method:
         const: sampling/createMessage
         type: string
       params:
         $ref: '#/$defs/CreateMessageRequestParams'
     required:
-      - id
-      - jsonrpc
       - method
       - params
     type: object
   CreateMessageRequestParams:
     description: Parameters for a `sampling/createMessage` request.
     properties:
-      _meta:
-        $ref: '#/$defs/RequestMetaObject'
       includeContext:
         description: |-
           A request to include context from one or more MCP servers (including the caller), to be attached to the prompt.
@@ -552,15 +561,6 @@ $defs:
       systemPrompt:
         description: An optional system prompt the server wants to use for sampling. The client MAY modify or omit this prompt.
         type: string
-      task:
-        $ref: '#/$defs/TaskMetadata'
-        description: |-
-          If specified, the caller is requesting task-augmented execution for this request.
-          The request will return a {@link CreateTaskResult} immediately, and the actual result can be
-          retrieved later via {@link GetTaskPayloadRequesttasks/result}.
-
-          Task augmentation is subject to capability negotiation - receivers MUST declare support
-          for task augmentation of specific request types in their capabilities.
       temperature:
         type: number
       toolChoice:
@@ -620,29 +620,21 @@ $defs:
       - model
       - role
     type: object
-  CreateMessageResultResponse:
-    description: A successful response from the client for a {@link CreateMessageRequestsampling/createMessage} request.
-    properties:
-      id:
-        $ref: '#/$defs/RequestId'
-      jsonrpc:
-        const: '2.0'
-        type: string
-      result:
-        $ref: '#/$defs/CreateMessageResult'
-    required:
-      - id
-      - jsonrpc
-      - result
-    type: object
   CreateTaskResult:
     description: The result returned for a task-augmented request.
     properties:
       _meta:
         $ref: '#/$defs/MetaObject'
+      resultType:
+        $ref: '#/$defs/ResultType'
+        default: complete
+        description: |-
+          Indicates the type of the result, which allows the client to determine
+          how to parse the result object.
       task:
         $ref: '#/$defs/Task'
     required:
+      - resultType
       - task
     type: object
   CreateTaskResultResponse:
@@ -666,27 +658,18 @@ $defs:
   ElicitRequest:
     description: A request from the server to elicit additional information from the user via the client.
     properties:
-      id:
-        $ref: '#/$defs/RequestId'
-      jsonrpc:
-        const: '2.0'
-        type: string
       method:
         const: elicitation/create
         type: string
       params:
         $ref: '#/$defs/ElicitRequestParams'
     required:
-      - id
-      - jsonrpc
       - method
       - params
     type: object
   ElicitRequestFormParams:
     description: The parameters for a request to elicit non-sensitive information from the user via a form in the client.
     properties:
-      _meta:
-        $ref: '#/$defs/RequestMetaObject'
       message:
         description: The message to present to the user describing what information is being requested.
         type: string
@@ -716,29 +699,18 @@ $defs:
           - properties
           - type
         type: object
-      task:
-        $ref: '#/$defs/TaskMetadata'
-        description: |-
-          If specified, the caller is requesting task-augmented execution for this request.
-          The request will return a {@link CreateTaskResult} immediately, and the actual result can be
-          retrieved later via {@link GetTaskPayloadRequesttasks/result}.
-
-          Task augmentation is subject to capability negotiation - receivers MUST declare support
-          for task augmentation of specific request types in their capabilities.
     required:
       - message
       - requestedSchema
     type: object
   ElicitRequestParams:
     anyOf:
-      - $ref: '#/$defs/ElicitRequestURLParams'
       - $ref: '#/$defs/ElicitRequestFormParams'
+      - $ref: '#/$defs/ElicitRequestURLParams'
     description: The parameters for a request to elicit additional information from the user via the client.
   ElicitRequestURLParams:
     description: The parameters for a request to elicit information from the user via a URL in the client.
     properties:
-      _meta:
-        $ref: '#/$defs/RequestMetaObject'
       elicitationId:
         description: |-
           The ID of the elicitation, which must be unique within the context of the server.
@@ -751,15 +723,6 @@ $defs:
         const: url
         description: The elicitation mode.
         type: string
-      task:
-        $ref: '#/$defs/TaskMetadata'
-        description: |-
-          If specified, the caller is requesting task-augmented execution for this request.
-          The request will return a {@link CreateTaskResult} immediately, and the actual result can be
-          retrieved later via {@link GetTaskPayloadRequesttasks/result}.
-
-          Task augmentation is subject to capability negotiation - receivers MUST declare support
-          for task augmentation of specific request types in their capabilities.
       url:
         description: The URL that the user should navigate to.
         format: uri
@@ -773,8 +736,6 @@ $defs:
   ElicitResult:
     description: The result returned by the client for an {@link ElicitRequestelicitation/create} request.
     properties:
-      _meta:
-        $ref: '#/$defs/MetaObject'
       action:
         description: |-
           The user action in response to the elicitation.
@@ -803,21 +764,6 @@ $defs:
         type: object
     required:
       - action
-    type: object
-  ElicitResultResponse:
-    description: A successful response from the client for a {@link ElicitRequestelicitation/create} request.
-    properties:
-      id:
-        $ref: '#/$defs/RequestId'
-      jsonrpc:
-        const: '2.0'
-        type: string
-      result:
-        $ref: '#/$defs/ElicitResult'
-    required:
-      - id
-      - jsonrpc
-      - result
     type: object
   ElicitationCompleteNotification:
     description: An optional notification from the server to the client, informing it of a completion of a out-of-band elicitation request.
@@ -917,8 +863,12 @@ $defs:
           type: string
         description: Arguments to use for templating the prompt.
         type: object
+      inputResponses:
+        $ref: '#/$defs/InputResponses'
       name:
         description: The name of the prompt or prompt template.
+        type: string
+      requestState:
         type: string
     required:
       - name
@@ -935,8 +885,15 @@ $defs:
         items:
           $ref: '#/$defs/PromptMessage'
         type: array
+      resultType:
+        $ref: '#/$defs/ResultType'
+        default: complete
+        description: |-
+          Indicates the type of the result, which allows the client to determine
+          how to parse the result object.
     required:
       - messages
+      - resultType
     type: object
   GetPromptResultResponse:
     description: A successful response from the server for a {@link GetPromptRequestprompts/get} request.
@@ -947,14 +904,18 @@ $defs:
         const: '2.0'
         type: string
       result:
-        $ref: '#/$defs/GetPromptResult'
+        anyOf:
+          - $ref: '#/$defs/InputRequiredResult'
+          - $ref: '#/$defs/GetPromptResult'
     required:
       - id
       - jsonrpc
       - result
     type: object
   GetTaskPayloadRequest:
-    description: A request to retrieve the result of a completed task.
+    description: |-
+      A request to retrieve the result of a completed task, or to discover
+      what input is needed for a task in `input_required` status.
     properties:
       id:
         $ref: '#/$defs/RequestId'
@@ -984,12 +945,27 @@ $defs:
       The result returned for a {@link GetTaskPayloadRequesttasks/result} request.
       The structure matches the result type of the original request.
       For example, a {@link CallToolRequesttools/call} task would return the {@link CallToolResult} structure.
+
+      When the task is in `input_required` status, the server MUST return an
+      {@link InputRequiredResult} containing `inputRequests` that the client must
+      fulfill via a {@link TaskInputResponseRequesttasks/input_response} request.
     properties:
       _meta:
         $ref: '#/$defs/MetaObject'
+      resultType:
+        $ref: '#/$defs/ResultType'
+        default: complete
+        description: |-
+          Indicates the type of the result, which allows the client to determine
+          how to parse the result object.
+    required:
+      - resultType
     type: object
   GetTaskPayloadResultResponse:
-    description: A successful response for a {@link GetTaskPayloadRequesttasks/result} request.
+    description: |-
+      A successful response for a {@link GetTaskPayloadRequesttasks/result} request.
+      May be either a complete result or an {@link InputRequiredResult} indicating
+      that additional input is needed via {@link TaskInputResponseRequesttasks/input_response}.
     properties:
       id:
         $ref: '#/$defs/RequestId'
@@ -997,7 +973,9 @@ $defs:
         const: '2.0'
         type: string
       result:
-        $ref: '#/$defs/GetTaskPayloadResult'
+        anyOf:
+          - $ref: '#/$defs/InputRequiredResult'
+          - $ref: '#/$defs/GetTaskPayloadResult'
     required:
       - id
       - jsonrpc
@@ -1234,11 +1212,18 @@ $defs:
       protocolVersion:
         description: The version of the Model Context Protocol that the server wants to use. This may not match the version that the client requested. If the client cannot support this version, it MUST disconnect.
         type: string
+      resultType:
+        $ref: '#/$defs/ResultType'
+        default: complete
+        description: |-
+          Indicates the type of the result, which allows the client to determine
+          how to parse the result object.
       serverInfo:
         $ref: '#/$defs/Implementation'
     required:
       - capabilities
       - protocolVersion
+      - resultType
       - serverInfo
     type: object
   InitializeResultResponse:
@@ -1270,6 +1255,62 @@ $defs:
     required:
       - jsonrpc
       - method
+    type: object
+  InputRequest:
+    anyOf:
+      - $ref: '#/$defs/CreateMessageRequest'
+      - $ref: '#/$defs/ListRootsRequest'
+      - $ref: '#/$defs/ElicitRequest'
+  InputRequests:
+    additionalProperties:
+      $ref: '#/$defs/InputRequest'
+    description: |-
+      A map of server-initiated requests that the client must fulfill.
+      Keys are server-assigned identifiers; values are the request objects.
+    type: object
+  InputRequiredResult:
+    description: |-
+      An InputRequiredResult sent by the server to indicate that additional input is needed
+      before the request can be completed.
+
+      At least one of `inputRequests` or `requestState` MUST be present.
+    properties:
+      _meta:
+        $ref: '#/$defs/MetaObject'
+      inputRequests:
+        $ref: '#/$defs/InputRequests'
+      requestState:
+        type: string
+      resultType:
+        $ref: '#/$defs/ResultType'
+        default: complete
+        description: |-
+          Indicates the type of the result, which allows the client to determine
+          how to parse the result object.
+    required:
+      - resultType
+    type: object
+  InputResponse:
+    anyOf:
+      - $ref: '#/$defs/CreateMessageResult'
+      - $ref: '#/$defs/ListRootsResult'
+      - $ref: '#/$defs/ElicitResult'
+  InputResponseRequestParams:
+    properties:
+      _meta:
+        $ref: '#/$defs/RequestMetaObject'
+      inputResponses:
+        $ref: '#/$defs/InputResponses'
+      requestState:
+        type: string
+    type: object
+  InputResponses:
+    additionalProperties:
+      $ref: '#/$defs/InputResponse'
+    description: |-
+      A map of client responses to server-initiated requests.
+      Keys correspond to the keys in the {@link InputRequests} map;
+      values are the client's result for each request.
     type: object
   InternalError:
     description: A JSON-RPC error indicating that an internal error occurred on the receiver. This error is returned when the receiver encounters an unexpected condition that prevents it from fulfilling the request.
@@ -1483,8 +1524,15 @@ $defs:
         items:
           $ref: '#/$defs/Prompt'
         type: array
+      resultType:
+        $ref: '#/$defs/ResultType'
+        default: complete
+        description: |-
+          Indicates the type of the result, which allows the client to determine
+          how to parse the result object.
     required:
       - prompts
+      - resultType
     type: object
   ListPromptsResultResponse:
     description: A successful response from the server for a {@link ListPromptsRequestprompts/list} request.
@@ -1533,8 +1581,15 @@ $defs:
         items:
           $ref: '#/$defs/ResourceTemplate'
         type: array
+      resultType:
+        $ref: '#/$defs/ResultType'
+        default: complete
+        description: |-
+          Indicates the type of the result, which allows the client to determine
+          how to parse the result object.
     required:
       - resourceTemplates
+      - resultType
     type: object
   ListResourceTemplatesResultResponse:
     description: A successful response from the server for a {@link ListResourceTemplatesRequestresources/templates/list} request.
@@ -1583,8 +1638,15 @@ $defs:
         items:
           $ref: '#/$defs/Resource'
         type: array
+      resultType:
+        $ref: '#/$defs/ResultType'
+        default: complete
+        description: |-
+          Indicates the type of the result, which allows the client to determine
+          how to parse the result object.
     required:
       - resources
+      - resultType
     type: object
   ListResourcesResultResponse:
     description: A successful response from the server for a {@link ListResourcesRequestresources/list} request.
@@ -1611,19 +1673,12 @@ $defs:
       This request is typically used when the server needs to understand the file system
       structure or access specific locations that the client has permission to read from.
     properties:
-      id:
-        $ref: '#/$defs/RequestId'
-      jsonrpc:
-        const: '2.0'
-        type: string
       method:
         const: roots/list
         type: string
       params:
         $ref: '#/$defs/RequestParams'
     required:
-      - id
-      - jsonrpc
       - method
     type: object
   ListRootsResult:
@@ -1632,29 +1687,12 @@ $defs:
       This result contains an array of {@link Root} objects, each representing a root directory
       or file that the server can operate on.
     properties:
-      _meta:
-        $ref: '#/$defs/MetaObject'
       roots:
         items:
           $ref: '#/$defs/Root'
         type: array
     required:
       - roots
-    type: object
-  ListRootsResultResponse:
-    description: A successful response from the client for a {@link ListRootsRequestroots/list} request.
-    properties:
-      id:
-        $ref: '#/$defs/RequestId'
-      jsonrpc:
-        const: '2.0'
-        type: string
-      result:
-        $ref: '#/$defs/ListRootsResult'
-    required:
-      - id
-      - jsonrpc
-      - result
     type: object
   ListTasksRequest:
     description: A request to retrieve a list of tasks.
@@ -1684,11 +1722,18 @@ $defs:
           An opaque token representing the pagination position after the last returned result.
           If present, there may be more results available.
         type: string
+      resultType:
+        $ref: '#/$defs/ResultType'
+        default: complete
+        description: |-
+          Indicates the type of the result, which allows the client to determine
+          how to parse the result object.
       tasks:
         items:
           $ref: '#/$defs/Task'
         type: array
     required:
+      - resultType
       - tasks
     type: object
   ListTasksResultResponse:
@@ -1734,11 +1779,18 @@ $defs:
           An opaque token representing the pagination position after the last returned result.
           If present, there may be more results available.
         type: string
+      resultType:
+        $ref: '#/$defs/ResultType'
+        default: complete
+        description: |-
+          Indicates the type of the result, which allows the client to determine
+          how to parse the result object.
       tools:
         items:
           $ref: '#/$defs/Tool'
         type: array
     required:
+      - resultType
       - tools
     type: object
   ListToolsResultResponse:
@@ -1991,6 +2043,14 @@ $defs:
           An opaque token representing the pagination position after the last returned result.
           If present, there may be more results available.
         type: string
+      resultType:
+        $ref: '#/$defs/ResultType'
+        default: complete
+        description: |-
+          Indicates the type of the result, which allows the client to determine
+          how to parse the result object.
+    required:
+      - resultType
     type: object
   ParseError:
     description: A JSON-RPC error indicating that invalid JSON was received by the server. This error is returned when the server cannot parse the JSON text of a message.
@@ -2238,6 +2298,10 @@ $defs:
     properties:
       _meta:
         $ref: '#/$defs/RequestMetaObject'
+      inputResponses:
+        $ref: '#/$defs/InputResponses'
+      requestState:
+        type: string
       uri:
         description: The URI of the resource. The URI can use any protocol; it is up to the server how to interpret it.
         format: uri
@@ -2256,8 +2320,15 @@ $defs:
             - $ref: '#/$defs/TextResourceContents'
             - $ref: '#/$defs/BlobResourceContents'
         type: array
+      resultType:
+        $ref: '#/$defs/ResultType'
+        default: complete
+        description: |-
+          Indicates the type of the result, which allows the client to determine
+          how to parse the result object.
     required:
       - contents
+      - resultType
     type: object
   ReadResourceResultResponse:
     description: A successful response from the server for a {@link ReadResourceRequestresources/read} request.
@@ -2268,7 +2339,9 @@ $defs:
         const: '2.0'
         type: string
       result:
-        $ref: '#/$defs/ReadResourceResult'
+        anyOf:
+          - $ref: '#/$defs/InputRequiredResult'
+          - $ref: '#/$defs/ReadResourceResult'
     required:
       - id
       - jsonrpc
@@ -2575,7 +2648,26 @@ $defs:
     properties:
       _meta:
         $ref: '#/$defs/MetaObject'
+      resultType:
+        $ref: '#/$defs/ResultType'
+        default: complete
+        description: |-
+          Indicates the type of the result, which allows the client to determine
+          how to parse the result object.
+    required:
+      - resultType
     type: object
+  ResultType:
+    description: |-
+      Indicates the type of a {@link Result} object, allowing the client to
+      determine how to parse the response.
+
+      complete - the request completed successfully and the result contains the final content.
+      input_required - the request requires additional input and the result contains an {@link InputRequiredResult} object with instructions for the client to provide additional input before retrying the original request.
+    enum:
+      - complete
+      - input_required
+    type: string
   Role:
     description: The sender or recipient of messages and data in a conversation.
     enum:
@@ -2735,12 +2827,10 @@ $defs:
       - $ref: '#/$defs/GetTaskPayloadRequest'
       - $ref: '#/$defs/CancelTaskRequest'
       - $ref: '#/$defs/ListTasksRequest'
-      - $ref: '#/$defs/CreateMessageRequest'
-      - $ref: '#/$defs/ListRootsRequest'
-      - $ref: '#/$defs/ElicitRequest'
   ServerResult:
     anyOf:
       - $ref: '#/$defs/Result'
+      - $ref: '#/$defs/InputRequiredResult'
       - $ref: '#/$defs/InitializeResult'
       - $ref: '#/$defs/ListResourcesResult'
       - $ref: '#/$defs/ListResourceTemplatesResult'
@@ -2929,6 +3019,55 @@ $defs:
 
           Task augmentation is subject to capability negotiation - receivers MUST declare support
           for task augmentation of specific request types in their capabilities.
+    type: object
+  TaskInputResponseRequest:
+    description: |-
+      A request from the client to deliver input responses for a task
+      that is in `input_required` status.
+    properties:
+      id:
+        $ref: '#/$defs/RequestId'
+      jsonrpc:
+        const: '2.0'
+        type: string
+      method:
+        const: tasks/input_response
+        type: string
+      params:
+        $ref: '#/$defs/TaskInputResponseRequestParams'
+    required:
+      - id
+      - jsonrpc
+      - method
+      - params
+    type: object
+  TaskInputResponseRequestParams:
+    description: Parameters for a `tasks/input_response` request.
+    properties:
+      _meta:
+        $ref: '#/$defs/RequestMetaObject'
+      inputResponses:
+        $ref: '#/$defs/InputResponses'
+        description: |-
+          The client's responses to the server's input requests from
+          the {@link InputRequiredResult} returned by {@link GetTaskPayloadRequesttasks/result}.
+    required:
+      - inputResponses
+    type: object
+  TaskInputResponseResultResponse:
+    description: A successful response for a {@link TaskInputResponseRequesttasks/input_response} request.
+    properties:
+      id:
+        $ref: '#/$defs/RequestId'
+      jsonrpc:
+        const: '2.0'
+        type: string
+      result:
+        $ref: '#/$defs/Result'
+    required:
+      - id
+      - jsonrpc
+      - result
     type: object
   TaskMetadata:
     description: |-
@@ -3352,39 +3491,6 @@ $defs:
       - input
       - name
       - type
-    type: object
-  URLElicitationRequiredError:
-    description: An error response that indicates that the server requires the client to provide additional information via an elicitation request.
-    properties:
-      error:
-        allOf:
-          - $ref: '#/$defs/Error'
-          - properties:
-              code:
-                const: -32042
-                type: integer
-              data:
-                additionalProperties: {}
-                properties:
-                  elicitations:
-                    items:
-                      $ref: '#/$defs/ElicitRequestURLParams'
-                    type: array
-                required:
-                  - elicitations
-                type: object
-            required:
-              - code
-              - data
-            type: object
-      id:
-        $ref: '#/$defs/RequestId'
-      jsonrpc:
-        const: '2.0'
-        type: string
-    required:
-      - error
-      - jsonrpc
     type: object
   UnsubscribeRequest:
     description: Sent from the client to request cancellation of {@link ResourceUpdatedNotificationresources/updated} notifications from the server. This should follow a previous {@link SubscribeRequestresources/subscribe} request.
