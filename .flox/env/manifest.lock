@@ -5,15 +5,15 @@
     "install": {
       "buf": {
         "pkg-path": "buf",
-        "version": "^1.64.0"
+        "version": "^1.68.4"
       },
       "claude-code": {
         "pkg-path": "claude-code",
-        "version": "^2.1.59"
+        "version": "^2.1.123"
       },
       "go": {
         "pkg-path": "go",
-        "version": "1.25.7"
+        "version": "1.26.2"
       },
       "go-task": {
         "pkg-path": "go-task",
@@ -21,7 +21,7 @@
       },
       "nodejs_24": {
         "pkg-path": "nodejs_24",
-        "version": "^24.13.0"
+        "version": "^24.14.1"
       },
       "prettier": {
         "pkg-path": "prettier",
@@ -29,7 +29,7 @@
       },
       "protobuf": {
         "pkg-path": "protobuf",
-        "version": "^33.5"
+        "version": "^34.1"
       }
     },
     "options": {}
@@ -38,27 +38,27 @@
     {
       "attr_path": "buf",
       "broken": false,
-      "derivation": "/nix/store/9m58pxp9c56my8b5n0z72v8m87snw8rs-buf-1.64.0.drv",
+      "derivation": "/nix/store/s35rxbks4z74iap6pcsbnfz1yd8fzjwq-buf-1.68.4.drv",
       "description": "Create consistent Protobuf APIs that preserve compatibility and comply with design best-practices",
       "install_id": "buf",
       "license": "Apache-2.0",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "name": "buf-1.64.0",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "name": "buf-1.68.4",
       "pname": "buf",
-      "rev": "80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "rev_count": 958232,
-      "rev_date": "2026-03-04T11:34:51Z",
-      "scrape_date": "2026-03-06T04:40:03.529186Z",
+      "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "rev_count": 992384,
+      "rev_date": "2026-05-05T04:14:16Z",
+      "scrape_date": "2026-05-06T08:07:15.429172Z",
       "stabilities": [
         "unstable"
       ],
       "unfree": false,
-      "version": "1.64.0",
+      "version": "1.68.4",
       "outputs_to_install": [
         "out"
       ],
       "outputs": {
-        "out": "/nix/store/bgq6plqczbhnw07d0x6vsmj7l24rni0d-buf-1.64.0"
+        "out": "/nix/store/7l5bivywzp0kx0dz8nm56hqf59mijzrv-buf-1.68.4"
       },
       "system": "aarch64-darwin",
       "group": "toplevel",
@@ -67,27 +67,27 @@
     {
       "attr_path": "buf",
       "broken": false,
-      "derivation": "/nix/store/0mcqkdw4bryqvma079a45lbykjbiqywx-buf-1.64.0.drv",
+      "derivation": "/nix/store/jjmfd3czqhpb4h0i877fakcjv9yj9pyi-buf-1.68.4.drv",
       "description": "Create consistent Protobuf APIs that preserve compatibility and comply with design best-practices",
       "install_id": "buf",
       "license": "Apache-2.0",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "name": "buf-1.64.0",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "name": "buf-1.68.4",
       "pname": "buf",
-      "rev": "80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "rev_count": 958232,
-      "rev_date": "2026-03-04T11:34:51Z",
-      "scrape_date": "2026-03-06T05:10:49.181895Z",
+      "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "rev_count": 992384,
+      "rev_date": "2026-05-05T04:14:16Z",
+      "scrape_date": "2026-05-06T08:43:44.370016Z",
       "stabilities": [
         "unstable"
       ],
       "unfree": false,
-      "version": "1.64.0",
+      "version": "1.68.4",
       "outputs_to_install": [
         "out"
       ],
       "outputs": {
-        "out": "/nix/store/4ghm2b7xzm7fhrnfrqn760kd7g9pwv7q-buf-1.64.0"
+        "out": "/nix/store/3lillhgps7ksqi17xmgb1bdvjwlj03g5-buf-1.68.4"
       },
       "system": "aarch64-linux",
       "group": "toplevel",
@@ -96,27 +96,27 @@
     {
       "attr_path": "buf",
       "broken": false,
-      "derivation": "/nix/store/pl99ap0i9qjmsrj2ds9i8m3y9ijnysfj-buf-1.64.0.drv",
+      "derivation": "/nix/store/hrz2dmihsq8rgp40kdka5afgxjblz434-buf-1.68.4.drv",
       "description": "Create consistent Protobuf APIs that preserve compatibility and comply with design best-practices",
       "install_id": "buf",
       "license": "Apache-2.0",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "name": "buf-1.64.0",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "name": "buf-1.68.4",
       "pname": "buf",
-      "rev": "80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "rev_count": 958232,
-      "rev_date": "2026-03-04T11:34:51Z",
-      "scrape_date": "2026-03-06T05:39:41.189003Z",
+      "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "rev_count": 992384,
+      "rev_date": "2026-05-05T04:14:16Z",
+      "scrape_date": "2026-05-06T09:16:09.370982Z",
       "stabilities": [
         "unstable"
       ],
       "unfree": false,
-      "version": "1.64.0",
+      "version": "1.68.4",
       "outputs_to_install": [
         "out"
       ],
       "outputs": {
-        "out": "/nix/store/yqf9xljnmv858dpzsrlx85vmgnr6lyml-buf-1.64.0"
+        "out": "/nix/store/x8kki1gbcsv39d84y09gx5zsz2r34vw9-buf-1.68.4"
       },
       "system": "x86_64-darwin",
       "group": "toplevel",
@@ -125,27 +125,27 @@
     {
       "attr_path": "buf",
       "broken": false,
-      "derivation": "/nix/store/nkv36p36cygcc4djrnznrpkqrgjry0l9-buf-1.64.0.drv",
+      "derivation": "/nix/store/w4mdqhivbf3n5gkk79zqid1jd576fns9-buf-1.68.4.drv",
       "description": "Create consistent Protobuf APIs that preserve compatibility and comply with design best-practices",
       "install_id": "buf",
       "license": "Apache-2.0",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "name": "buf-1.64.0",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "name": "buf-1.68.4",
       "pname": "buf",
-      "rev": "80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "rev_count": 958232,
-      "rev_date": "2026-03-04T11:34:51Z",
-      "scrape_date": "2026-03-06T06:13:29.818239Z",
+      "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "rev_count": 992384,
+      "rev_date": "2026-05-05T04:14:16Z",
+      "scrape_date": "2026-05-06T09:52:23.056803Z",
       "stabilities": [
         "unstable"
       ],
       "unfree": false,
-      "version": "1.64.0",
+      "version": "1.68.4",
       "outputs_to_install": [
         "out"
       ],
       "outputs": {
-        "out": "/nix/store/6yg20bbxmb4ywymd3s32zgjc1aq2dfsm-buf-1.64.0"
+        "out": "/nix/store/73chfh1km75bghda0wr6gj7w12l79gwq-buf-1.68.4"
       },
       "system": "x86_64-linux",
       "group": "toplevel",
@@ -154,27 +154,27 @@
     {
       "attr_path": "claude-code",
       "broken": false,
-      "derivation": "/nix/store/cnhpcvr7564gnlj9kj26fa0i7p28fmpb-claude-code-2.1.59.drv",
+      "derivation": "/nix/store/sqhbcwkh8s3qsrnjnk8sgwa9j3bgvp62-claude-code-2.1.123.drv",
       "description": "Agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster",
       "install_id": "claude-code",
       "license": "Unfree",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "name": "claude-code-2.1.59",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "name": "claude-code-2.1.123",
       "pname": "claude-code",
-      "rev": "80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "rev_count": 958232,
-      "rev_date": "2026-03-04T11:34:51Z",
-      "scrape_date": "2026-03-06T04:40:03.729528Z",
+      "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "rev_count": 992384,
+      "rev_date": "2026-05-05T04:14:16Z",
+      "scrape_date": "2026-05-06T08:07:15.637676Z",
       "stabilities": [
         "unstable"
       ],
       "unfree": true,
-      "version": "2.1.59",
+      "version": "2.1.123",
       "outputs_to_install": [
         "out"
       ],
       "outputs": {
-        "out": "/nix/store/m22wwnn4b3hlzgfq9c45ayinzljbc183-claude-code-2.1.59"
+        "out": "/nix/store/djgx1vfrnsi0wwb2jsazjmh3nsslz4y3-claude-code-2.1.123"
       },
       "system": "aarch64-darwin",
       "group": "toplevel",
@@ -183,27 +183,27 @@
     {
       "attr_path": "claude-code",
       "broken": false,
-      "derivation": "/nix/store/hf5m0ay3cmwy7fidsbkyml7jaaw0bwlp-claude-code-2.1.59.drv",
+      "derivation": "/nix/store/1d38qsp7gj47cvxcq76yqglcpyz14n0j-claude-code-2.1.123.drv",
       "description": "Agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster",
       "install_id": "claude-code",
       "license": "Unfree",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "name": "claude-code-2.1.59",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "name": "claude-code-2.1.123",
       "pname": "claude-code",
-      "rev": "80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "rev_count": 958232,
-      "rev_date": "2026-03-04T11:34:51Z",
-      "scrape_date": "2026-03-06T05:10:49.438227Z",
+      "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "rev_count": 992384,
+      "rev_date": "2026-05-05T04:14:16Z",
+      "scrape_date": "2026-05-06T08:43:44.633314Z",
       "stabilities": [
         "unstable"
       ],
       "unfree": true,
-      "version": "2.1.59",
+      "version": "2.1.123",
       "outputs_to_install": [
         "out"
       ],
       "outputs": {
-        "out": "/nix/store/xgv9664p3q8nmzlkkgsbzfljh4n8nz8j-claude-code-2.1.59"
+        "out": "/nix/store/zpg2i7hz2aqxgv78ad7mm9lrc810ns5z-claude-code-2.1.123"
       },
       "system": "aarch64-linux",
       "group": "toplevel",
@@ -212,27 +212,27 @@
     {
       "attr_path": "claude-code",
       "broken": false,
-      "derivation": "/nix/store/8f2763wmy0w0x4skr14qlc3cgrly2qgg-claude-code-2.1.59.drv",
+      "derivation": "/nix/store/ddvpvb2xpszgxkv4413754hm2s5l6l61-claude-code-2.1.123.drv",
       "description": "Agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster",
       "install_id": "claude-code",
       "license": "Unfree",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "name": "claude-code-2.1.59",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "name": "claude-code-2.1.123",
       "pname": "claude-code",
-      "rev": "80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "rev_count": 958232,
-      "rev_date": "2026-03-04T11:34:51Z",
-      "scrape_date": "2026-03-06T05:39:41.387931Z",
+      "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "rev_count": 992384,
+      "rev_date": "2026-05-05T04:14:16Z",
+      "scrape_date": "2026-05-06T09:16:09.572217Z",
       "stabilities": [
         "unstable"
       ],
       "unfree": true,
-      "version": "2.1.59",
+      "version": "2.1.123",
       "outputs_to_install": [
         "out"
       ],
       "outputs": {
-        "out": "/nix/store/xyhc4ys8ng585dbvriximicqkbrg5yda-claude-code-2.1.59"
+        "out": "/nix/store/yk7ggq0wwmqjlg73dl351zzh24z4ls4i-claude-code-2.1.123"
       },
       "system": "x86_64-darwin",
       "group": "toplevel",
@@ -241,27 +241,27 @@
     {
       "attr_path": "claude-code",
       "broken": false,
-      "derivation": "/nix/store/mx7blr6qz0rizq5z436pphddyiy2mq6z-claude-code-2.1.59.drv",
+      "derivation": "/nix/store/r48prv7455khjkl6sj53wfy4kxl5rg61-claude-code-2.1.123.drv",
       "description": "Agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster",
       "install_id": "claude-code",
       "license": "Unfree",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "name": "claude-code-2.1.59",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "name": "claude-code-2.1.123",
       "pname": "claude-code",
-      "rev": "80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "rev_count": 958232,
-      "rev_date": "2026-03-04T11:34:51Z",
-      "scrape_date": "2026-03-06T06:13:30.098309Z",
+      "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "rev_count": 992384,
+      "rev_date": "2026-05-05T04:14:16Z",
+      "scrape_date": "2026-05-06T09:52:23.378414Z",
       "stabilities": [
         "unstable"
       ],
       "unfree": true,
-      "version": "2.1.59",
+      "version": "2.1.123",
       "outputs_to_install": [
         "out"
       ],
       "outputs": {
-        "out": "/nix/store/c0szkvghm2knwa6i1lgvbxjl8mlg34x5-claude-code-2.1.59"
+        "out": "/nix/store/bp04wf9h91a2rr9r8xc4n4r02y9zwkfx-claude-code-2.1.123"
       },
       "system": "x86_64-linux",
       "group": "toplevel",
@@ -270,27 +270,27 @@
     {
       "attr_path": "go",
       "broken": false,
-      "derivation": "/nix/store/3hac85v8ifdj7khc9ygw17ncqh3cifdm-go-1.25.7.drv",
+      "derivation": "/nix/store/97qfa61h35q0nqppixvxknsq6wj612gv-go-1.26.2.drv",
       "description": "Go Programming language",
       "install_id": "go",
       "license": "BSD-3-Clause",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "name": "go-1.25.7",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "name": "go-1.26.2",
       "pname": "go",
-      "rev": "80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "rev_count": 958232,
-      "rev_date": "2026-03-04T11:34:51Z",
-      "scrape_date": "2026-03-06T04:40:04.789485Z",
+      "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "rev_count": 992384,
+      "rev_date": "2026-05-05T04:14:16Z",
+      "scrape_date": "2026-05-06T08:07:16.645106Z",
       "stabilities": [
         "unstable"
       ],
       "unfree": false,
-      "version": "1.25.7",
+      "version": "1.26.2",
       "outputs_to_install": [
         "out"
       ],
       "outputs": {
-        "out": "/nix/store/hj3rkkp4azj65qvalnbl6ax0sgrfgmgh-go-1.25.7"
+        "out": "/nix/store/fkzywh7rg8lg1n2p0r161iqjwhz540wx-go-1.26.2"
       },
       "system": "aarch64-darwin",
       "group": "toplevel",
@@ -299,27 +299,27 @@
     {
       "attr_path": "go",
       "broken": false,
-      "derivation": "/nix/store/rygzd1f3h7cza5p7y0ja3nzcyyx4h7zx-go-1.25.7.drv",
+      "derivation": "/nix/store/79wmlk24kqdnxmpj5l833ib2fsxpwca0-go-1.26.2.drv",
       "description": "Go Programming language",
       "install_id": "go",
       "license": "BSD-3-Clause",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "name": "go-1.25.7",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "name": "go-1.26.2",
       "pname": "go",
-      "rev": "80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "rev_count": 958232,
-      "rev_date": "2026-03-04T11:34:51Z",
-      "scrape_date": "2026-03-06T05:10:51.811029Z",
+      "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "rev_count": 992384,
+      "rev_date": "2026-05-05T04:14:16Z",
+      "scrape_date": "2026-05-06T08:43:46.665236Z",
       "stabilities": [
         "unstable"
       ],
       "unfree": false,
-      "version": "1.25.7",
+      "version": "1.26.2",
       "outputs_to_install": [
         "out"
       ],
       "outputs": {
-        "out": "/nix/store/2i6kcj0f0xirrblpl43k2yr673bhf2c5-go-1.25.7"
+        "out": "/nix/store/w4i7p78y3735jcy69sk4lcy9zyxr0cav-go-1.26.2"
       },
       "system": "aarch64-linux",
       "group": "toplevel",
@@ -328,27 +328,27 @@
     {
       "attr_path": "go",
       "broken": false,
-      "derivation": "/nix/store/5r4cbkbvffn0pm253y15gfwvxhf2dm8i-go-1.25.7.drv",
+      "derivation": "/nix/store/7f579nxnclv9nql5z2d5g2qyv7zfdl16-go-1.26.2.drv",
       "description": "Go Programming language",
       "install_id": "go",
       "license": "BSD-3-Clause",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "name": "go-1.25.7",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "name": "go-1.26.2",
       "pname": "go",
-      "rev": "80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "rev_count": 958232,
-      "rev_date": "2026-03-04T11:34:51Z",
-      "scrape_date": "2026-03-06T05:39:42.371223Z",
+      "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "rev_count": 992384,
+      "rev_date": "2026-05-05T04:14:16Z",
+      "scrape_date": "2026-05-06T09:16:10.581225Z",
       "stabilities": [
         "unstable"
       ],
       "unfree": false,
-      "version": "1.25.7",
+      "version": "1.26.2",
       "outputs_to_install": [
         "out"
       ],
       "outputs": {
-        "out": "/nix/store/8yk4r9kmb00ra1r22cxvdwghr8v987nf-go-1.25.7"
+        "out": "/nix/store/g0b45l45nlb1kqiywzja7fh49yn7lla5-go-1.26.2"
       },
       "system": "x86_64-darwin",
       "group": "toplevel",
@@ -357,27 +357,27 @@
     {
       "attr_path": "go",
       "broken": false,
-      "derivation": "/nix/store/fq8965avl2cbgcx0ni9xp7ixh8b8k2ki-go-1.25.7.drv",
+      "derivation": "/nix/store/5a501r66jxszbpw9af1q1a5z3rnrcmfs-go-1.26.2.drv",
       "description": "Go Programming language",
       "install_id": "go",
       "license": "BSD-3-Clause",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "name": "go-1.25.7",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "name": "go-1.26.2",
       "pname": "go",
-      "rev": "80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "rev_count": 958232,
-      "rev_date": "2026-03-04T11:34:51Z",
-      "scrape_date": "2026-03-06T06:13:32.330201Z",
+      "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "rev_count": 992384,
+      "rev_date": "2026-05-05T04:14:16Z",
+      "scrape_date": "2026-05-06T09:52:25.557961Z",
       "stabilities": [
         "unstable"
       ],
       "unfree": false,
-      "version": "1.25.7",
+      "version": "1.26.2",
       "outputs_to_install": [
         "out"
       ],
       "outputs": {
-        "out": "/nix/store/pz4pxhmlqd3q72crp2sx90k85gf2rqyp-go-1.25.7"
+        "out": "/nix/store/dimnagks1qsp7180yw74z0npp7z2ihs3-go-1.26.2"
       },
       "system": "x86_64-linux",
       "group": "toplevel",
@@ -386,17 +386,17 @@
     {
       "attr_path": "go-task",
       "broken": false,
-      "derivation": "/nix/store/418ddzp6yxz2s45dxjarwwldrnagf3q4-go-task-3.48.0.drv",
+      "derivation": "/nix/store/nb7wzw4x040dz0zxvg987i0vv89fa6ck-go-task-3.48.0.drv",
       "description": "Task runner / simpler Make alternative written in Go",
       "install_id": "go-task",
       "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=80bdc1e5ce51f56b19791b52b2901187931f5353",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=549bd84d6279f9852cae6225e372cc67fb91a4c1",
       "name": "go-task-3.48.0",
       "pname": "go-task",
-      "rev": "80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "rev_count": 958232,
-      "rev_date": "2026-03-04T11:34:51Z",
-      "scrape_date": "2026-03-06T04:40:04.809940Z",
+      "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "rev_count": 992384,
+      "rev_date": "2026-05-05T04:14:16Z",
+      "scrape_date": "2026-05-06T08:07:16.665937Z",
       "stabilities": [
         "unstable"
       ],
@@ -406,7 +406,7 @@
         "out"
       ],
       "outputs": {
-        "out": "/nix/store/lwkw29yi53lijzfjqcp01jkaqa5493wi-go-task-3.48.0"
+        "out": "/nix/store/gx97hxd28ymbxf2nj4kq6masld4qk7yw-go-task-3.48.0"
       },
       "system": "aarch64-darwin",
       "group": "toplevel",
@@ -415,17 +415,17 @@
     {
       "attr_path": "go-task",
       "broken": false,
-      "derivation": "/nix/store/6is4xc27c6i4sgp2pcx568ciqljziwi2-go-task-3.48.0.drv",
+      "derivation": "/nix/store/y3q5bpvw5smpm2y97azm4sp8cin7l9vg-go-task-3.48.0.drv",
       "description": "Task runner / simpler Make alternative written in Go",
       "install_id": "go-task",
       "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=80bdc1e5ce51f56b19791b52b2901187931f5353",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=549bd84d6279f9852cae6225e372cc67fb91a4c1",
       "name": "go-task-3.48.0",
       "pname": "go-task",
-      "rev": "80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "rev_count": 958232,
-      "rev_date": "2026-03-04T11:34:51Z",
-      "scrape_date": "2026-03-06T05:10:51.840926Z",
+      "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "rev_count": 992384,
+      "rev_date": "2026-05-05T04:14:16Z",
+      "scrape_date": "2026-05-06T08:43:46.695792Z",
       "stabilities": [
         "unstable"
       ],
@@ -435,7 +435,7 @@
         "out"
       ],
       "outputs": {
-        "out": "/nix/store/f6g3n71njj281hawy8chz56c6dy6icb9-go-task-3.48.0"
+        "out": "/nix/store/di0pkf2d113g9nkcbm4p51sgivfbkcxg-go-task-3.48.0"
       },
       "system": "aarch64-linux",
       "group": "toplevel",
@@ -444,17 +444,17 @@
     {
       "attr_path": "go-task",
       "broken": false,
-      "derivation": "/nix/store/wyfrmjz0l6i3gqj53ccyai42cdn713xs-go-task-3.48.0.drv",
+      "derivation": "/nix/store/31ix4zbv7rw8zrw0m4qkqb8pjlpd7nrp-go-task-3.48.0.drv",
       "description": "Task runner / simpler Make alternative written in Go",
       "install_id": "go-task",
       "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=80bdc1e5ce51f56b19791b52b2901187931f5353",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=549bd84d6279f9852cae6225e372cc67fb91a4c1",
       "name": "go-task-3.48.0",
       "pname": "go-task",
-      "rev": "80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "rev_count": 958232,
-      "rev_date": "2026-03-04T11:34:51Z",
-      "scrape_date": "2026-03-06T05:39:42.392039Z",
+      "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "rev_count": 992384,
+      "rev_date": "2026-05-05T04:14:16Z",
+      "scrape_date": "2026-05-06T09:16:10.602588Z",
       "stabilities": [
         "unstable"
       ],
@@ -464,7 +464,7 @@
         "out"
       ],
       "outputs": {
-        "out": "/nix/store/8ncbi1skdp8x0h5abwxrawffknrascmq-go-task-3.48.0"
+        "out": "/nix/store/4mdamkq6v7xi11525ah95nb4psdd1a9m-go-task-3.48.0"
       },
       "system": "x86_64-darwin",
       "group": "toplevel",
@@ -473,17 +473,17 @@
     {
       "attr_path": "go-task",
       "broken": false,
-      "derivation": "/nix/store/6bjbx0dl6kss0s12n0mbsgwja0yl521g-go-task-3.48.0.drv",
+      "derivation": "/nix/store/48fsygvnlrh7g8na7y0wxc750bqwpzpc-go-task-3.48.0.drv",
       "description": "Task runner / simpler Make alternative written in Go",
       "install_id": "go-task",
       "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=80bdc1e5ce51f56b19791b52b2901187931f5353",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=549bd84d6279f9852cae6225e372cc67fb91a4c1",
       "name": "go-task-3.48.0",
       "pname": "go-task",
-      "rev": "80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "rev_count": 958232,
-      "rev_date": "2026-03-04T11:34:51Z",
-      "scrape_date": "2026-03-06T06:13:32.362024Z",
+      "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "rev_count": 992384,
+      "rev_date": "2026-05-05T04:14:16Z",
+      "scrape_date": "2026-05-06T09:52:25.589580Z",
       "stabilities": [
         "unstable"
       ],
@@ -493,7 +493,7 @@
         "out"
       ],
       "outputs": {
-        "out": "/nix/store/5divyc7qn687x3cyq5gnyh46vgx7g9by-go-task-3.48.0"
+        "out": "/nix/store/gak3jfx9splyph60r0vvvv24vjcwyakx-go-task-3.48.0"
       },
       "system": "x86_64-linux",
       "group": "toplevel",
@@ -502,290 +502,296 @@
     {
       "attr_path": "nodejs_24",
       "broken": false,
-      "derivation": "/nix/store/4r8pl1c0vr0wmvng3jpnajgd37cnxfcl-nodejs-24.13.0.drv",
+      "derivation": "/nix/store/1m7745r13n7wk43fzx5yr3jjr3vdc1db-nodejs-24.14.1.drv",
       "description": "Event-driven I/O framework for the V8 JavaScript engine",
       "install_id": "nodejs_24",
       "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "name": "nodejs-24.13.0",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "name": "nodejs-24.14.1",
       "pname": "nodejs_24",
-      "rev": "80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "rev_count": 958232,
-      "rev_date": "2026-03-04T11:34:51Z",
-      "scrape_date": "2026-03-06T04:40:27.499273Z",
+      "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "rev_count": 992384,
+      "rev_date": "2026-05-05T04:14:16Z",
+      "scrape_date": "2026-05-06T08:07:39.839427Z",
       "stabilities": [
         "unstable"
       ],
       "unfree": false,
-      "version": "24.13.0",
-      "outputs_to_install": [
-        "out"
-      ],
-      "outputs": {
-        "out": "/nix/store/cx0jd5mwhn7ihryyv0qp9d33f8s1iwb7-nodejs-24.13.0"
-      },
-      "system": "aarch64-darwin",
-      "group": "toplevel",
-      "priority": 5
-    },
-    {
-      "attr_path": "nodejs_24",
-      "broken": false,
-      "derivation": "/nix/store/pnwyrkhq53vm22yf620im61d2hmwdg0j-nodejs-24.13.0.drv",
-      "description": "Event-driven I/O framework for the V8 JavaScript engine",
-      "install_id": "nodejs_24",
-      "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "name": "nodejs-24.13.0",
-      "pname": "nodejs_24",
-      "rev": "80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "rev_count": 958232,
-      "rev_date": "2026-03-04T11:34:51Z",
-      "scrape_date": "2026-03-06T05:11:27.556710Z",
-      "stabilities": [
-        "unstable"
-      ],
-      "unfree": false,
-      "version": "24.13.0",
-      "outputs_to_install": [
-        "out"
-      ],
-      "outputs": {
-        "out": "/nix/store/8dsjz52869ygjd6xdvibgk3ysl3fg6zp-nodejs-24.13.0"
-      },
-      "system": "aarch64-linux",
-      "group": "toplevel",
-      "priority": 5
-    },
-    {
-      "attr_path": "nodejs_24",
-      "broken": false,
-      "derivation": "/nix/store/0ymmyc8xzrbn2psvx4phljpqzs8r9z72-nodejs-24.13.0.drv",
-      "description": "Event-driven I/O framework for the V8 JavaScript engine",
-      "install_id": "nodejs_24",
-      "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "name": "nodejs-24.13.0",
-      "pname": "nodejs_24",
-      "rev": "80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "rev_count": 958232,
-      "rev_date": "2026-03-04T11:34:51Z",
-      "scrape_date": "2026-03-06T05:40:05.229759Z",
-      "stabilities": [
-        "unstable"
-      ],
-      "unfree": false,
-      "version": "24.13.0",
-      "outputs_to_install": [
-        "out"
-      ],
-      "outputs": {
-        "out": "/nix/store/i9bak02hsrywwba0apxdn7ldvkf9jl6a-nodejs-24.13.0"
-      },
-      "system": "x86_64-darwin",
-      "group": "toplevel",
-      "priority": 5
-    },
-    {
-      "attr_path": "nodejs_24",
-      "broken": false,
-      "derivation": "/nix/store/nmzkrbm7lr655sc0xnl4yjch1lgc5jqh-nodejs-24.13.0.drv",
-      "description": "Event-driven I/O framework for the V8 JavaScript engine",
-      "install_id": "nodejs_24",
-      "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "name": "nodejs-24.13.0",
-      "pname": "nodejs_24",
-      "rev": "80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "rev_count": 958232,
-      "rev_date": "2026-03-04T11:34:51Z",
-      "scrape_date": "2026-03-06T06:14:10.683674Z",
-      "stabilities": [
-        "unstable"
-      ],
-      "unfree": false,
-      "version": "24.13.0",
-      "outputs_to_install": [
-        "out"
-      ],
-      "outputs": {
-        "out": "/nix/store/sy0c7j0npsq33d9zhnnzvjnzc52f4y0p-nodejs-24.13.0"
-      },
-      "system": "x86_64-linux",
-      "group": "toplevel",
-      "priority": 5
-    },
-    {
-      "attr_path": "prettier",
-      "broken": false,
-      "derivation": "/nix/store/i2hm973vfbaghr5pc327mwnj12irp9j6-prettier-3.6.2.drv",
-      "description": "Code formatter",
-      "install_id": "prettier",
-      "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "name": "prettier-3.6.2",
-      "pname": "prettier",
-      "rev": "80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "rev_count": 958232,
-      "rev_date": "2026-03-04T11:34:51Z",
-      "scrape_date": "2026-03-06T04:40:42.429467Z",
-      "stabilities": [
-        "unstable"
-      ],
-      "unfree": false,
-      "version": "3.6.2",
-      "outputs_to_install": [
-        "out"
-      ],
-      "outputs": {
-        "out": "/nix/store/l86nrx4d2bcxrz9f5f8wiw0189zwvbjd-prettier-3.6.2"
-      },
-      "system": "aarch64-darwin",
-      "group": "toplevel",
-      "priority": 5
-    },
-    {
-      "attr_path": "prettier",
-      "broken": false,
-      "derivation": "/nix/store/cgl88h6vzi5jqca758bkxdnrmq4ylzn0-prettier-3.6.2.drv",
-      "description": "Code formatter",
-      "install_id": "prettier",
-      "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "name": "prettier-3.6.2",
-      "pname": "prettier",
-      "rev": "80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "rev_count": 958232,
-      "rev_date": "2026-03-04T11:34:51Z",
-      "scrape_date": "2026-03-06T05:11:48.470433Z",
-      "stabilities": [
-        "unstable"
-      ],
-      "unfree": false,
-      "version": "3.6.2",
-      "outputs_to_install": [
-        "out"
-      ],
-      "outputs": {
-        "out": "/nix/store/c6l4hgmvv9rqq7wghhh47qb35p1mchk4-prettier-3.6.2"
-      },
-      "system": "aarch64-linux",
-      "group": "toplevel",
-      "priority": 5
-    },
-    {
-      "attr_path": "prettier",
-      "broken": false,
-      "derivation": "/nix/store/lyhgbknw5jcy385v1kmajjh1680ma7vw-prettier-3.6.2.drv",
-      "description": "Code formatter",
-      "install_id": "prettier",
-      "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "name": "prettier-3.6.2",
-      "pname": "prettier",
-      "rev": "80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "rev_count": 958232,
-      "rev_date": "2026-03-04T11:34:51Z",
-      "scrape_date": "2026-03-06T05:40:20.334762Z",
-      "stabilities": [
-        "unstable"
-      ],
-      "unfree": false,
-      "version": "3.6.2",
-      "outputs_to_install": [
-        "out"
-      ],
-      "outputs": {
-        "out": "/nix/store/nsx3ll4njmm16x0h3nddscq5f7wgnq81-prettier-3.6.2"
-      },
-      "system": "x86_64-darwin",
-      "group": "toplevel",
-      "priority": 5
-    },
-    {
-      "attr_path": "prettier",
-      "broken": false,
-      "derivation": "/nix/store/7l8yqsv8qvim6vfxzspwsdgvfbv7mi77-prettier-3.6.2.drv",
-      "description": "Code formatter",
-      "install_id": "prettier",
-      "license": "MIT",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "name": "prettier-3.6.2",
-      "pname": "prettier",
-      "rev": "80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "rev_count": 958232,
-      "rev_date": "2026-03-04T11:34:51Z",
-      "scrape_date": "2026-03-06T06:14:32.088948Z",
-      "stabilities": [
-        "unstable"
-      ],
-      "unfree": false,
-      "version": "3.6.2",
-      "outputs_to_install": [
-        "out"
-      ],
-      "outputs": {
-        "out": "/nix/store/xdfb5f50gczga54xyaz79v4wj9hz21d3-prettier-3.6.2"
-      },
-      "system": "x86_64-linux",
-      "group": "toplevel",
-      "priority": 5
-    },
-    {
-      "attr_path": "protobuf",
-      "broken": false,
-      "derivation": "/nix/store/nmcc5xc0nmyzng7939jl9w4zkqdbp6zp-protobuf-33.5.drv",
-      "description": "Google's data interchange format",
-      "install_id": "protobuf",
-      "license": "BSD-3-Clause",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "name": "protobuf-33.5",
-      "pname": "protobuf",
-      "rev": "80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "rev_count": 958232,
-      "rev_date": "2026-03-04T11:34:51Z",
-      "scrape_date": "2026-03-06T04:40:42.722748Z",
-      "stabilities": [
-        "unstable"
-      ],
-      "unfree": false,
-      "version": "33.5",
-      "outputs_to_install": [
-        "out"
-      ],
-      "outputs": {
-        "out": "/nix/store/w7ixs70mwsbkr6h7x158s28wxj5ksqlz-protobuf-33.5"
-      },
-      "system": "aarch64-darwin",
-      "group": "toplevel",
-      "priority": 5
-    },
-    {
-      "attr_path": "protobuf",
-      "broken": false,
-      "derivation": "/nix/store/f6f0sbx5gqqxr4fb23akwiw4w014jk6j-protobuf-33.5.drv",
-      "description": "Google's data interchange format",
-      "install_id": "protobuf",
-      "license": "BSD-3-Clause",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "name": "protobuf-33.5",
-      "pname": "protobuf",
-      "rev": "80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "rev_count": 958232,
-      "rev_date": "2026-03-04T11:34:51Z",
-      "scrape_date": "2026-03-06T05:11:48.915207Z",
-      "stabilities": [
-        "unstable"
-      ],
-      "unfree": false,
-      "version": "33.5",
+      "version": "24.14.1",
       "outputs_to_install": [
         "out",
         "out"
       ],
       "outputs": {
-        "debug": "/nix/store/d90d9v8m7d9ldz92ivhgq0wqqch2rxhr-protobuf-33.5-debug",
-        "out": "/nix/store/600hwaz4l959b7lxzxd4hjyml9rzjkgb-protobuf-33.5"
+        "out": "/nix/store/sf85v1qd1glkmsyfxwn9p8wridb4qf6y-nodejs-24.14.1"
+      },
+      "system": "aarch64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "nodejs_24",
+      "broken": false,
+      "derivation": "/nix/store/3h5ymdg61db3f9xwhwclj05afipbxiq2-nodejs-24.14.1.drv",
+      "description": "Event-driven I/O framework for the V8 JavaScript engine",
+      "install_id": "nodejs_24",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "name": "nodejs-24.14.1",
+      "pname": "nodejs_24",
+      "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "rev_count": 992384,
+      "rev_date": "2026-05-05T04:14:16Z",
+      "scrape_date": "2026-05-06T08:44:22.691490Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "24.14.1",
+      "outputs_to_install": [
+        "out",
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/amh21igq2gjg6ai42f3ksan8fh89qvpm-nodejs-24.14.1"
+      },
+      "system": "aarch64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "nodejs_24",
+      "broken": false,
+      "derivation": "/nix/store/aarkp2y0aj12skgji58mbf5va0dcf9bd-nodejs-24.14.1.drv",
+      "description": "Event-driven I/O framework for the V8 JavaScript engine",
+      "install_id": "nodejs_24",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "name": "nodejs-24.14.1",
+      "pname": "nodejs_24",
+      "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "rev_count": 992384,
+      "rev_date": "2026-05-05T04:14:16Z",
+      "scrape_date": "2026-05-06T09:16:33.777239Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "24.14.1",
+      "outputs_to_install": [
+        "out",
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/w9axwcpzxv1cd78d6v748az2j08k6vfw-nodejs-24.14.1"
+      },
+      "system": "x86_64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "nodejs_24",
+      "broken": false,
+      "derivation": "/nix/store/8l6p07vmrcj7lsry0jz2ayp1rmpyjdai-nodejs-24.14.1.drv",
+      "description": "Event-driven I/O framework for the V8 JavaScript engine",
+      "install_id": "nodejs_24",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "name": "nodejs-24.14.1",
+      "pname": "nodejs_24",
+      "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "rev_count": 992384,
+      "rev_date": "2026-05-05T04:14:16Z",
+      "scrape_date": "2026-05-06T09:53:02.385479Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "24.14.1",
+      "outputs_to_install": [
+        "out",
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/785jidgnryzj566s25s3rb262d4g5znb-nodejs-24.14.1"
+      },
+      "system": "x86_64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "prettier",
+      "broken": false,
+      "derivation": "/nix/store/p4nw2c5m2m7r35f3z4hq8if7pyfj7p7v-prettier-3.6.2.drv",
+      "description": "Code formatter",
+      "install_id": "prettier",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "name": "prettier-3.6.2",
+      "pname": "prettier",
+      "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "rev_count": 992384,
+      "rev_date": "2026-05-05T04:14:16Z",
+      "scrape_date": "2026-05-06T08:07:54.926091Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "3.6.2",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/knbvzb4pjrnczbqa46qav0qav24a1ik3-prettier-3.6.2"
+      },
+      "system": "aarch64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "prettier",
+      "broken": false,
+      "derivation": "/nix/store/2k45fmj7ix9rnxzslbx06cdzhjxn9r7x-prettier-3.6.2.drv",
+      "description": "Code formatter",
+      "install_id": "prettier",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "name": "prettier-3.6.2",
+      "pname": "prettier",
+      "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "rev_count": 992384,
+      "rev_date": "2026-05-05T04:14:16Z",
+      "scrape_date": "2026-05-06T08:44:43.739405Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "3.6.2",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/lgrfjzfzqsf377w1qgw5ppp98jwd7xjj-prettier-3.6.2"
+      },
+      "system": "aarch64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "prettier",
+      "broken": false,
+      "derivation": "/nix/store/71zwca4n5d3giz4j3c574h65x369gy55-prettier-3.6.2.drv",
+      "description": "Code formatter",
+      "install_id": "prettier",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "name": "prettier-3.6.2",
+      "pname": "prettier",
+      "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "rev_count": 992384,
+      "rev_date": "2026-05-05T04:14:16Z",
+      "scrape_date": "2026-05-06T09:16:49.013757Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "3.6.2",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/2hrxz98f09l2l45l28aimn43475xb5fb-prettier-3.6.2"
+      },
+      "system": "x86_64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "prettier",
+      "broken": false,
+      "derivation": "/nix/store/8za96cjd2i3f4pxi8pq7wcwr7hcr7ai6-prettier-3.6.2.drv",
+      "description": "Code formatter",
+      "install_id": "prettier",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "name": "prettier-3.6.2",
+      "pname": "prettier",
+      "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "rev_count": 992384,
+      "rev_date": "2026-05-05T04:14:16Z",
+      "scrape_date": "2026-05-06T09:53:23.376178Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "3.6.2",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/981pqf7wq6p2m4g6yvrkb1d06gsh8z32-prettier-3.6.2"
+      },
+      "system": "x86_64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "protobuf",
+      "broken": false,
+      "derivation": "/nix/store/hkiwr13gszv64rjfv4i83ddlnn8pjqwx-protobuf-34.1.drv",
+      "description": "Google's data interchange format",
+      "install_id": "protobuf",
+      "license": "BSD-3-Clause",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "name": "protobuf-34.1",
+      "pname": "protobuf",
+      "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "rev_count": 992384,
+      "rev_date": "2026-05-05T04:14:16Z",
+      "scrape_date": "2026-05-06T08:07:55.218939Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "34.1",
+      "outputs_to_install": [
+        "out",
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/8sznlbjn2dlq29x9s01lx3616f46xgby-protobuf-34.1"
+      },
+      "system": "aarch64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "protobuf",
+      "broken": false,
+      "derivation": "/nix/store/knaz2drs2ncg2fw52nbsxjs4l8hxizyq-protobuf-34.1.drv",
+      "description": "Google's data interchange format",
+      "install_id": "protobuf",
+      "license": "BSD-3-Clause",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "name": "protobuf-34.1",
+      "pname": "protobuf",
+      "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "rev_count": 992384,
+      "rev_date": "2026-05-05T04:14:16Z",
+      "scrape_date": "2026-05-06T08:44:44.196871Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "34.1",
+      "outputs_to_install": [
+        "out",
+        "out",
+        "out"
+      ],
+      "outputs": {
+        "debug": "/nix/store/b0lfjj1mxxldbg9c08w7zib75lywsmh5-protobuf-34.1-debug",
+        "out": "/nix/store/9nhaq7n5l6r6dq110a3qf9slnrbggyml-protobuf-34.1"
       },
       "system": "aarch64-linux",
       "group": "toplevel",
@@ -794,27 +800,28 @@
     {
       "attr_path": "protobuf",
       "broken": false,
-      "derivation": "/nix/store/0jhl810mnnjbpwrsxffz7i995xjfs411-protobuf-33.5.drv",
+      "derivation": "/nix/store/1xybqzmjkvdg3dm5j3asbvni2vqbhzv1-protobuf-34.1.drv",
       "description": "Google's data interchange format",
       "install_id": "protobuf",
       "license": "BSD-3-Clause",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "name": "protobuf-33.5",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "name": "protobuf-34.1",
       "pname": "protobuf",
-      "rev": "80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "rev_count": 958232,
-      "rev_date": "2026-03-04T11:34:51Z",
-      "scrape_date": "2026-03-06T05:40:20.629938Z",
+      "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "rev_count": 992384,
+      "rev_date": "2026-05-05T04:14:16Z",
+      "scrape_date": "2026-05-06T09:16:49.309915Z",
       "stabilities": [
         "unstable"
       ],
       "unfree": false,
-      "version": "33.5",
+      "version": "34.1",
       "outputs_to_install": [
+        "out",
         "out"
       ],
       "outputs": {
-        "out": "/nix/store/k3akiv87fwy0vp4i83yr24lg5j56ccgc-protobuf-33.5"
+        "out": "/nix/store/wpklc2ahh4vfip8i8zjkj47qc05kcn45-protobuf-34.1"
       },
       "system": "x86_64-darwin",
       "group": "toplevel",
@@ -823,29 +830,30 @@
     {
       "attr_path": "protobuf",
       "broken": false,
-      "derivation": "/nix/store/jbwdfv5v151cdgxanpmrczkymv9y3fcr-protobuf-33.5.drv",
+      "derivation": "/nix/store/3gmq2sjwmsj4brcsjw55d309ijdgf64m-protobuf-34.1.drv",
       "description": "Google's data interchange format",
       "install_id": "protobuf",
       "license": "BSD-3-Clause",
-      "locked_url": "https://github.com/flox/nixpkgs?rev=80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "name": "protobuf-33.5",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "name": "protobuf-34.1",
       "pname": "protobuf",
-      "rev": "80bdc1e5ce51f56b19791b52b2901187931f5353",
-      "rev_count": 958232,
-      "rev_date": "2026-03-04T11:34:51Z",
-      "scrape_date": "2026-03-06T06:14:32.541659Z",
+      "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
+      "rev_count": 992384,
+      "rev_date": "2026-05-05T04:14:16Z",
+      "scrape_date": "2026-05-06T09:53:23.828987Z",
       "stabilities": [
         "unstable"
       ],
       "unfree": false,
-      "version": "33.5",
+      "version": "34.1",
       "outputs_to_install": [
+        "out",
         "out",
         "out"
       ],
       "outputs": {
-        "debug": "/nix/store/vappv4dq10ka28ypl2df8czfffmnmv35-protobuf-33.5-debug",
-        "out": "/nix/store/8sbmq3x389mnh8kz3lp3m2r43p4xp33h-protobuf-33.5"
+        "debug": "/nix/store/4jsldb2c4b49y0vlfy0nkwm0174cf6kw-protobuf-34.1-debug",
+        "out": "/nix/store/ccj85ihhvb51dx0ql1kanwd31my50zwr-protobuf-34.1"
       },
       "system": "x86_64-linux",
       "group": "toplevel",
