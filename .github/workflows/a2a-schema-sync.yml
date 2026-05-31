@@ -48,7 +48,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "chore: Sync A2A schema"
-          title: "chore: Sync A2A schema"
+          title: "chore(a2a): sync A2A schema"
           body: |
             Automated update of A2A schema from google-a2a/A2A.
 
