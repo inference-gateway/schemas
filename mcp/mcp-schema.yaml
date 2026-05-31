@@ -125,7 +125,6 @@ $defs:
           - public
         type: string
       resultType:
-        $ref: '#/$defs/ResultType'
         description: |-
           Indicates the type of the result, which allows the client to determine
           how to parse the result object.
@@ -134,6 +133,7 @@ $defs:
           For backward compatibility, when a client receives a result from a
           server implementing an earlier protocol version (which does not include
           `resultType`), the client MUST treat the absent field as `"complete"`.
+        type: string
       ttlMs:
         description: |-
           A hint from the server indicating how long (in milliseconds) the
@@ -216,7 +216,6 @@ $defs:
           should be reported as an MCP error response.
         type: boolean
       resultType:
-        $ref: '#/$defs/ResultType'
         description: |-
           Indicates the type of the result, which allows the client to determine
           how to parse the result object.
@@ -225,6 +224,7 @@ $defs:
           For backward compatibility, when a client receives a result from a
           server implementing an earlier protocol version (which does not include
           `resultType`), the client MUST treat the absent field as `"complete"`.
+        type: string
       structuredContent:
         description: |-
           An optional JSON value that represents the structured result of the tool call.
@@ -426,7 +426,6 @@ $defs:
           - values
         type: object
       resultType:
-        $ref: '#/$defs/ResultType'
         description: |-
           Indicates the type of the result, which allows the client to determine
           how to parse the result object.
@@ -435,6 +434,7 @@ $defs:
           For backward compatibility, when a client receives a result from a
           server implementing an earlier protocol version (which does not include
           `resultType`), the client MUST treat the absent field as `"complete"`.
+        type: string
     required:
       - completion
       - resultType
@@ -481,8 +481,9 @@ $defs:
           A request to include context from one or more MCP servers (including the caller), to be attached to the prompt.
           The client MAY ignore this request.
 
-          Default is `"none"`. Values `"thisServer"` and `"allServers"` are soft-deprecated. Servers SHOULD only use these values if the client
-          declares {@link ClientCapabilities.sampling.context}. These values may be removed in future spec releases.
+          Default is `"none"`. The values `"thisServer"` and `"allServers"` are deprecated (SEP-2596): servers SHOULD
+          omit this field or use `"none"`, and SHOULD only use the deprecated values if the client declares
+          {@link ClientCapabilities.sampling.context}.
         enum:
           - allServers
           - none
@@ -614,7 +615,6 @@ $defs:
           and should not duplicate information already in tool descriptions.
         type: string
       resultType:
-        $ref: '#/$defs/ResultType'
         description: |-
           Indicates the type of the result, which allows the client to determine
           how to parse the result object.
@@ -623,6 +623,7 @@ $defs:
           For backward compatibility, when a client receives a result from a
           server implementing an earlier protocol version (which does not include
           `resultType`), the client MUST treat the absent field as `"complete"`.
+        type: string
       serverInfo:
         $ref: '#/$defs/Implementation'
         description: Information about the server software implementation.
@@ -886,7 +887,6 @@ $defs:
           $ref: '#/$defs/PromptMessage'
         type: array
       resultType:
-        $ref: '#/$defs/ResultType'
         description: |-
           Indicates the type of the result, which allows the client to determine
           how to parse the result object.
@@ -895,6 +895,7 @@ $defs:
           For backward compatibility, when a client receives a result from a
           server implementing an earlier protocol version (which does not include
           `resultType`), the client MUST treat the absent field as `"complete"`.
+        type: string
     required:
       - messages
       - resultType
@@ -1074,7 +1075,6 @@ $defs:
       requestState:
         type: string
       resultType:
-        $ref: '#/$defs/ResultType'
         description: |-
           Indicates the type of the result, which allows the client to determine
           how to parse the result object.
@@ -1083,6 +1083,7 @@ $defs:
           For backward compatibility, when a client receives a result from a
           server implementing an earlier protocol version (which does not include
           `resultType`), the client MUST treat the absent field as `"complete"`.
+        type: string
     required:
       - resultType
     type: object
@@ -1337,7 +1338,6 @@ $defs:
           $ref: '#/$defs/Prompt'
         type: array
       resultType:
-        $ref: '#/$defs/ResultType'
         description: |-
           Indicates the type of the result, which allows the client to determine
           how to parse the result object.
@@ -1346,6 +1346,7 @@ $defs:
           For backward compatibility, when a client receives a result from a
           server implementing an earlier protocol version (which does not include
           `resultType`), the client MUST treat the absent field as `"complete"`.
+        type: string
       ttlMs:
         description: |-
           A hint from the server indicating how long (in milliseconds) the
@@ -1427,7 +1428,6 @@ $defs:
           $ref: '#/$defs/ResourceTemplate'
         type: array
       resultType:
-        $ref: '#/$defs/ResultType'
         description: |-
           Indicates the type of the result, which allows the client to determine
           how to parse the result object.
@@ -1436,6 +1436,7 @@ $defs:
           For backward compatibility, when a client receives a result from a
           server implementing an earlier protocol version (which does not include
           `resultType`), the client MUST treat the absent field as `"complete"`.
+        type: string
       ttlMs:
         description: |-
           A hint from the server indicating how long (in milliseconds) the
@@ -1517,7 +1518,6 @@ $defs:
           $ref: '#/$defs/Resource'
         type: array
       resultType:
-        $ref: '#/$defs/ResultType'
         description: |-
           Indicates the type of the result, which allows the client to determine
           how to parse the result object.
@@ -1526,6 +1526,7 @@ $defs:
           For backward compatibility, when a client receives a result from a
           server implementing an earlier protocol version (which does not include
           `resultType`), the client MUST treat the absent field as `"complete"`.
+        type: string
       ttlMs:
         description: |-
           A hint from the server indicating how long (in milliseconds) the
@@ -1634,7 +1635,6 @@ $defs:
           If present, there may be more results available.
         type: string
       resultType:
-        $ref: '#/$defs/ResultType'
         description: |-
           Indicates the type of the result, which allows the client to determine
           how to parse the result object.
@@ -1643,6 +1643,7 @@ $defs:
           For backward compatibility, when a client receives a result from a
           server implementing an earlier protocol version (which does not include
           `resultType`), the client MUST treat the absent field as `"complete"`.
+        type: string
       tools:
         items:
           $ref: '#/$defs/Tool'
@@ -1751,10 +1752,9 @@ $defs:
     description: |-
       A JSON-RPC error indicating that the requested method does not exist or is not available.
 
-      In MCP, this error is returned when a request is made for a method that requires a capability that has not been declared. This can occur in either direction:
+      In MCP, a server returns this error when a client invokes a method the server does not implement — either a genuinely unknown method, or one gated behind a server capability the server did not advertise (e.g., calling `prompts/list` when the `prompts` capability was not advertised).
 
-      - A server returning this error when the client requests a capability it doesn't support (e.g., requesting completions when the `completions` capability was not advertised)
-      - A client returning this error when the server requests a capability it doesn't support (e.g., requesting roots when the client did not declare the `roots` capability)
+      A request that requires a client capability the client did not declare is signalled instead by {@link MissingRequiredClientCapabilityError} (`-32003`).
     properties:
       code:
         const: -32601
@@ -1897,13 +1897,13 @@ $defs:
   NumberSchema:
     properties:
       default:
-        type: integer
+        type: number
       description:
         type: string
       maximum:
-        type: integer
+        type: number
       minimum:
-        type: integer
+        type: number
       title:
         type: string
       type:
@@ -1954,7 +1954,6 @@ $defs:
           If present, there may be more results available.
         type: string
       resultType:
-        $ref: '#/$defs/ResultType'
         description: |-
           Indicates the type of the result, which allows the client to determine
           how to parse the result object.
@@ -1963,6 +1962,7 @@ $defs:
           For backward compatibility, when a client receives a result from a
           server implementing an earlier protocol version (which does not include
           `resultType`), the client MUST treat the absent field as `"complete"`.
+        type: string
     required:
       - resultType
     type: object
@@ -2217,7 +2217,6 @@ $defs:
             - $ref: '#/$defs/BlobResourceContents'
         type: array
       resultType:
-        $ref: '#/$defs/ResultType'
         description: |-
           Indicates the type of the result, which allows the client to determine
           how to parse the result object.
@@ -2226,6 +2225,7 @@ $defs:
           For backward compatibility, when a client receives a result from a
           server implementing an earlier protocol version (which does not include
           `resultType`), the client MUST treat the absent field as `"complete"`.
+        type: string
       ttlMs:
         description: |-
           A hint from the server indicating how long (in milliseconds) the
@@ -2591,7 +2591,6 @@ $defs:
       _meta:
         $ref: '#/$defs/MetaObject'
       resultType:
-        $ref: '#/$defs/ResultType'
         description: |-
           Indicates the type of the result, which allows the client to determine
           how to parse the result object.
@@ -2600,6 +2599,7 @@ $defs:
           For backward compatibility, when a client receives a result from a
           server implementing an earlier protocol version (which does not include
           `resultType`), the client MUST treat the absent field as `"complete"`.
+        type: string
     required:
       - resultType
     type: object
@@ -2610,9 +2610,6 @@ $defs:
 
       complete - the request completed successfully and the result contains the final content.
       input_required - the request requires additional input and the result contains an {@link InputRequiredResult} object with instructions for the client to provide additional input before retrying the original request.
-    enum:
-      - complete
-      - input_required
     type: string
   Role:
     description: The sender or recipient of messages and data in a conversation.
@@ -2685,7 +2682,7 @@ $defs:
           $ref: '#/$defs/JSONObject'
         description: |-
           Optional MCP extensions that the server supports. Keys are extension identifiers
-          (e.g., "io.modelcontextprotocol/apps"), and values are per-extension settings
+          (e.g., "io.modelcontextprotocol/tasks"), and values are per-extension settings
           objects. An empty object indicates support with no settings.
         type: object
       logging:
