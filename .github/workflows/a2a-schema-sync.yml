@@ -26,13 +26,10 @@ jobs:
         uses: actions/setup-go@v6.4.0
         with:
           go-version: "1.26.2"
-          cache: true
+          cache: false
 
-      - name: Install task
-        uses: arduino/setup-task@v2.0.0
-        with:
-          version: 3.48.0
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install Task
+        run: sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin v3.48.0
 
       - name: Install buf
         run: |
