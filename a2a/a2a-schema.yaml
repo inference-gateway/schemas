@@ -77,7 +77,7 @@ definitions:
        Next ID: 20
     properties:
       additionalInterfaces:
-        description: 'DEPRECATED: Use ''supported_interfaces'' instead.'
+        description: "DEPRECATED: Use 'supported_interfaces' instead."
         items:
           $ref: '#/definitions/AgentInterface'
         type: array
@@ -115,7 +115,7 @@ definitions:
            Example: "Recipe Agent"
         type: string
       preferredTransport:
-        description: 'DEPRECATED: Use ''supported_interfaces'' instead.'
+        description: "DEPRECATED: Use 'supported_interfaces' instead."
         type: string
       protocolVersion:
         description: |-
@@ -161,7 +161,7 @@ definitions:
         description: Whether the agent supports providing an extended agent card when authenticated.
         type: boolean
       url:
-        description: 'DEPRECATED: Use ''supported_interfaces'' instead.'
+        description: "DEPRECATED: Use 'supported_interfaces' instead."
         type: string
       version:
         description: |-

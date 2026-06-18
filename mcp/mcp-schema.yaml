@@ -115,11 +115,13 @@ $defs:
           Indicates the intended scope of the cached response, analogous to HTTP
           `Cache-Control: public` vs `Cache-Control: private`.
 
-          - `"public"`: Any client or intermediary (e.g., shared gateway, proxy)
-            MAY cache the response and serve it to any user.
-          - `"private"`: Only the requesting user's client MAY cache the response.
-            Shared caches (e.g., multi-tenant gateways) MUST NOT serve a cached
-            copy to a different user.
+          - `"public"`: The response does not contain user-specific data. Any
+            client or intermediary (e.g., shared gateway, caching proxy) MAY cache
+            the response and serve it across authorization contexts.
+          - `"private"`: The response MAY be cached and reused only within the
+            same authorization context. Caches MUST NOT be shared across
+            authorization contexts (e.g., a different access token requires a
+            different cache).
         enum:
           - private
           - public
@@ -254,7 +256,9 @@ $defs:
     type: object
   CancelledNotification:
     description: |-
-      This notification can be sent by either side to indicate that it is cancelling a previously-issued request.
+      This notification is sent by the client to indicate that it is cancelling a request it previously issued.
+
+      On stdio, the server also sends this notification, solely to terminate a {@link SubscriptionsListenRequestsubscriptions/listen} stream: it references the ID of the `subscriptions/listen` request that opened the stream. Servers MUST NOT use this notification to cancel any other request.
 
       The request SHOULD still be in-flight, but due to communication latency, it is always possible that this notification MAY arrive after the request has already finished.
 
@@ -277,7 +281,7 @@ $defs:
     description: Parameters for a `notifications/cancelled` notification.
     properties:
       _meta:
-        $ref: '#/$defs/MetaObject'
+        $ref: '#/$defs/NotificationMetaObject'
       reason:
         description: An optional string describing the reason for the cancellation. This MAY be logged or presented to the user.
         type: string
@@ -286,7 +290,9 @@ $defs:
         description: |-
           The ID of the request to cancel.
 
-          This MUST correspond to the ID of a request previously issued in the same direction.
+          This MUST correspond to the ID of a request the client previously issued.
+    required:
+      - requestId
     type: object
   ClientCapabilities:
     description: 'Capabilities a client may support. Known capabilities are defined here, in this schema, but this is not a closed set: any client can define its own, additional capabilities.'
@@ -311,6 +317,9 @@ $defs:
           Optional MCP extensions that the client supports. Keys are extension identifiers
           (e.g., "io.modelcontextprotocol/oauth-client-credentials"), and values are
           per-extension settings objects. An empty object indicates support with no settings.
+
+          Keys MUST follow the {@link MetaObject`_meta` key naming rules}, with a
+          mandatory prefix.
         type: object
       roots:
         description: Present if the client supports listing roots.
@@ -330,9 +339,28 @@ $defs:
         type: object
     type: object
   ClientNotification:
-    anyOf:
-      - $ref: '#/$defs/CancelledNotification'
-      - $ref: '#/$defs/ProgressNotification'
+    description: |-
+      This notification is sent by the client to indicate that it is cancelling a request it previously issued.
+
+      On stdio, the server also sends this notification, solely to terminate a {@link SubscriptionsListenRequestsubscriptions/listen} stream: it references the ID of the `subscriptions/listen` request that opened the stream. Servers MUST NOT use this notification to cancel any other request.
+
+      The request SHOULD still be in-flight, but due to communication latency, it is always possible that this notification MAY arrive after the request has already finished.
+
+      This notification indicates that the result will be unused, so any associated processing SHOULD cease.
+    properties:
+      jsonrpc:
+        const: '2.0'
+        type: string
+      method:
+        const: notifications/cancelled
+        type: string
+      params:
+        $ref: '#/$defs/CancelledNotificationParams'
+    required:
+      - jsonrpc
+      - method
+      - params
+    type: object
   ClientRequest:
     anyOf:
       - $ref: '#/$defs/DiscoverRequest'
@@ -602,6 +630,22 @@ $defs:
     properties:
       _meta:
         $ref: '#/$defs/MetaObject'
+      cacheScope:
+        description: |-
+          Indicates the intended scope of the cached response, analogous to HTTP
+          `Cache-Control: public` vs `Cache-Control: private`.
+
+          - `"public"`: The response does not contain user-specific data. Any
+            client or intermediary (e.g., shared gateway, caching proxy) MAY cache
+            the response and serve it across authorization contexts.
+          - `"private"`: The response MAY be cached and reused only within the
+            same authorization context. Caches MUST NOT be shared across
+            authorization contexts (e.g., a different access token requires a
+            different cache).
+        enum:
+          - private
+          - public
+        type: string
       capabilities:
         $ref: '#/$defs/ServerCapabilities'
         description: The capabilities of the server.
@@ -634,11 +678,25 @@ $defs:
         items:
           type: string
         type: array
+      ttlMs:
+        description: |-
+          A hint from the server indicating how long (in milliseconds) the
+          client MAY cache this response before re-fetching. Semantics are
+          analogous to HTTP Cache-Control max-age.
+
+          - If 0, The response SHOULD be considered immediately stale,
+            The client MAY re-fetch every time the result is needed.
+          - If positive, the client SHOULD consider the result fresh for this many
+            milliseconds after receiving the response.
+        minimum: 0
+        type: integer
     required:
+      - cacheScope
       - capabilities
       - resultType
       - serverInfo
       - supportedVersions
+      - ttlMs
     type: object
   DiscoverResultResponse:
     description: A successful response from the server for a {@link DiscoverRequestserver/discover} request.
@@ -711,11 +769,6 @@ $defs:
   ElicitRequestURLParams:
     description: The parameters for a request to elicit information from the user via a URL in the client.
     properties:
-      elicitationId:
-        description: |-
-          The ID of the elicitation, which must be unique within the context of the server.
-          The client MUST treat this ID as an opaque value.
-        type: string
       message:
         description: The message to present to the user explaining why the interaction is needed.
         type: string
@@ -728,7 +781,6 @@ $defs:
         format: uri
         type: string
     required:
-      - elicitationId
       - message
       - mode
       - url
@@ -764,28 +816,6 @@ $defs:
         type: object
     required:
       - action
-    type: object
-  ElicitationCompleteNotification:
-    description: An optional notification from the server to the client, informing it of a completion of a out-of-band elicitation request.
-    properties:
-      jsonrpc:
-        const: '2.0'
-        type: string
-      method:
-        const: notifications/elicitation/complete
-        type: string
-      params:
-        properties:
-          elicitationId:
-            description: The ID of the elicitation that completed.
-            type: string
-        required:
-          - elicitationId
-        type: object
-    required:
-      - jsonrpc
-      - method
-      - params
     type: object
   EmbeddedResource:
     description: |-
@@ -916,6 +946,32 @@ $defs:
       - id
       - jsonrpc
       - result
+    type: object
+  HeaderMismatchError:
+    description: |-
+      Returned when a server rejects a request because the values in the HTTP
+      headers do not match the corresponding values in the request body, or
+      because required headers are missing or malformed. For HTTP, the response
+      status code MUST be `400 Bad Request`.
+    properties:
+      error:
+        allOf:
+          - $ref: '#/$defs/Error'
+          - properties:
+              code:
+                const: -32020
+                type: integer
+            required:
+              - code
+            type: object
+      id:
+        $ref: '#/$defs/RequestId'
+      jsonrpc:
+        const: '2.0'
+        type: string
+    required:
+      - error
+      - jsonrpc
     type: object
   Icon:
     description: An optionally-sized icon that can be displayed in a user interface.
@@ -1319,11 +1375,13 @@ $defs:
           Indicates the intended scope of the cached response, analogous to HTTP
           `Cache-Control: public` vs `Cache-Control: private`.
 
-          - `"public"`: Any client or intermediary (e.g., shared gateway, proxy)
-            MAY cache the response and serve it to any user.
-          - `"private"`: Only the requesting user's client MAY cache the response.
-            Shared caches (e.g., multi-tenant gateways) MUST NOT serve a cached
-            copy to a different user.
+          - `"public"`: The response does not contain user-specific data. Any
+            client or intermediary (e.g., shared gateway, caching proxy) MAY cache
+            the response and serve it across authorization contexts.
+          - `"private"`: The response MAY be cached and reused only within the
+            same authorization context. Caches MUST NOT be shared across
+            authorization contexts (e.g., a different access token requires a
+            different cache).
         enum:
           - private
           - public
@@ -1409,11 +1467,13 @@ $defs:
           Indicates the intended scope of the cached response, analogous to HTTP
           `Cache-Control: public` vs `Cache-Control: private`.
 
-          - `"public"`: Any client or intermediary (e.g., shared gateway, proxy)
-            MAY cache the response and serve it to any user.
-          - `"private"`: Only the requesting user's client MAY cache the response.
-            Shared caches (e.g., multi-tenant gateways) MUST NOT serve a cached
-            copy to a different user.
+          - `"public"`: The response does not contain user-specific data. Any
+            client or intermediary (e.g., shared gateway, caching proxy) MAY cache
+            the response and serve it across authorization contexts.
+          - `"private"`: The response MAY be cached and reused only within the
+            same authorization context. Caches MUST NOT be shared across
+            authorization contexts (e.g., a different access token requires a
+            different cache).
         enum:
           - private
           - public
@@ -1499,11 +1559,13 @@ $defs:
           Indicates the intended scope of the cached response, analogous to HTTP
           `Cache-Control: public` vs `Cache-Control: private`.
 
-          - `"public"`: Any client or intermediary (e.g., shared gateway, proxy)
-            MAY cache the response and serve it to any user.
-          - `"private"`: Only the requesting user's client MAY cache the response.
-            Shared caches (e.g., multi-tenant gateways) MUST NOT serve a cached
-            copy to a different user.
+          - `"public"`: The response does not contain user-specific data. Any
+            client or intermediary (e.g., shared gateway, caching proxy) MAY cache
+            the response and serve it across authorization contexts.
+          - `"private"`: The response MAY be cached and reused only within the
+            same authorization context. Caches MUST NOT be shared across
+            authorization contexts (e.g., a different access token requires a
+            different cache).
         enum:
           - private
           - public
@@ -1574,7 +1636,10 @@ $defs:
         const: roots/list
         type: string
       params:
-        $ref: '#/$defs/RequestParams'
+        properties:
+          _meta:
+            $ref: '#/$defs/MetaObject'
+        type: object
     required:
       - method
     type: object
@@ -1620,11 +1685,13 @@ $defs:
           Indicates the intended scope of the cached response, analogous to HTTP
           `Cache-Control: public` vs `Cache-Control: private`.
 
-          - `"public"`: Any client or intermediary (e.g., shared gateway, proxy)
-            MAY cache the response and serve it to any user.
-          - `"private"`: Only the requesting user's client MAY cache the response.
-            Shared caches (e.g., multi-tenant gateways) MUST NOT serve a cached
-            copy to a different user.
+          - `"public"`: The response does not contain user-specific data. Any
+            client or intermediary (e.g., shared gateway, caching proxy) MAY cache
+            the response and serve it across authorization contexts.
+          - `"private"`: The response MAY be cached and reused only within the
+            same authorization context. Caches MUST NOT be shared across
+            authorization contexts (e.g., a different access token requires a
+            different cache).
         enum:
           - private
           - public
@@ -1717,7 +1784,7 @@ $defs:
     description: Parameters for a `notifications/message` notification.
     properties:
       _meta:
-        $ref: '#/$defs/MetaObject'
+        $ref: '#/$defs/NotificationMetaObject'
       data:
         description: The data to be logged, such as a string message or an object. Any JSON serializable type is allowed here.
       level:
@@ -1754,7 +1821,7 @@ $defs:
 
       In MCP, a server returns this error when a client invokes a method the server does not implement — either a genuinely unknown method, or one gated behind a server capability the server did not advertise (e.g., calling `prompts/list` when the `prompts` capability was not advertised).
 
-      A request that requires a client capability the client did not declare is signalled instead by {@link MissingRequiredClientCapabilityError} (`-32003`).
+      A request that requires a client capability the client did not declare is signalled instead by {@link MissingRequiredClientCapabilityError} (`-32021`).
     properties:
       code:
         const: -32601
@@ -1780,7 +1847,7 @@ $defs:
           - $ref: '#/$defs/Error'
           - properties:
               code:
-                const: -32003
+                const: -32021
                 type: integer
               data:
                 properties:
@@ -1888,11 +1955,28 @@ $defs:
     required:
       - method
     type: object
+  NotificationMetaObject:
+    description: Extends {@link MetaObject} with additional notification-specific fields. All key naming rules from `MetaObject` apply.
+    properties:
+      io.modelcontextprotocol/subscriptionId:
+        $ref: '#/$defs/RequestId'
+        description: |-
+          Identifies the subscription stream a notification was delivered on. The
+          server MUST include this key on every notification delivered via a
+          {@link SubscriptionsListenRequestsubscriptions/listen} stream, so the
+          client can correlate the notification with the originating subscription.
+          The key is absent on notifications not delivered via a subscription
+          stream (e.g. progress notifications for an in-flight request), which is
+          why it is optional here.
+
+          The value is the JSON-RPC ID of the `subscriptions/listen` request that
+          opened the stream.
+    type: object
   NotificationParams:
     description: Common params for any notification.
     properties:
       _meta:
-        $ref: '#/$defs/MetaObject'
+        $ref: '#/$defs/NotificationMetaObject'
     type: object
   NumberSchema:
     properties:
@@ -2015,7 +2099,7 @@ $defs:
     description: Parameters for a {@link ProgressNotificationnotifications/progress} notification.
     properties:
       _meta:
-        $ref: '#/$defs/MetaObject'
+        $ref: '#/$defs/NotificationMetaObject'
       message:
         description: An optional message describing the current progress.
         type: string
@@ -2104,7 +2188,7 @@ $defs:
       - name
     type: object
   PromptListChangedNotification:
-    description: An optional notification from the server to the client, informing it that the list of prompts it offers has changed. This may be issued by servers without any previous subscription from the client.
+    description: An optional notification from the server to the client, informing it that the list of prompts it offers has changed. This is only delivered on a {@link SubscriptionsListenRequestsubscriptions/listen} stream when the client requested it via the `promptsListChanged` filter field.
     properties:
       jsonrpc:
         const: '2.0'
@@ -2201,11 +2285,13 @@ $defs:
           Indicates the intended scope of the cached response, analogous to HTTP
           `Cache-Control: public` vs `Cache-Control: private`.
 
-          - `"public"`: Any client or intermediary (e.g., shared gateway, proxy)
-            MAY cache the response and serve it to any user.
-          - `"private"`: Only the requesting user's client MAY cache the response.
-            Shared caches (e.g., multi-tenant gateways) MUST NOT serve a cached
-            copy to a different user.
+          - `"public"`: The response does not contain user-specific data. Any
+            client or intermediary (e.g., shared gateway, caching proxy) MAY cache
+            the response and serve it across authorization contexts.
+          - `"private"`: The response MAY be cached and reused only within the
+            same authorization context. Caches MUST NOT be shared across
+            authorization contexts (e.g., a different access token requires a
+            different cache).
         enum:
           - private
           - public
@@ -2464,7 +2550,7 @@ $defs:
       - uri
     type: object
   ResourceListChangedNotification:
-    description: An optional notification from the server to the client, informing it that the list of resources it can read from has changed. This may be issued by servers without any previous subscription from the client.
+    description: An optional notification from the server to the client, informing it that the list of resources it can read from has changed. This is only delivered on a {@link SubscriptionsListenRequestsubscriptions/listen} stream when the client requested it via the `resourcesListChanged` filter field.
     properties:
       jsonrpc:
         const: '2.0'
@@ -2576,7 +2662,7 @@ $defs:
     description: Parameters for a `notifications/resources/updated` notification.
     properties:
       _meta:
-        $ref: '#/$defs/MetaObject'
+        $ref: '#/$defs/NotificationMetaObject'
       uri:
         description: The URI of the resource that has been updated. This might be a sub-resource of the one that the client actually subscribed to.
         format: uri
@@ -2684,6 +2770,9 @@ $defs:
           Optional MCP extensions that the server supports. Keys are extension identifiers
           (e.g., "io.modelcontextprotocol/tasks"), and values are per-extension settings
           objects. An empty object indicates support with no settings.
+
+          Keys MUST follow the {@link MetaObject`_meta` key naming rules}, with a
+          mandatory prefix.
         type: object
       logging:
         $ref: '#/$defs/JSONObject'
@@ -2723,7 +2812,6 @@ $defs:
       - $ref: '#/$defs/PromptListChangedNotification'
       - $ref: '#/$defs/ToolListChangedNotification'
       - $ref: '#/$defs/LoggingMessageNotification'
-      - $ref: '#/$defs/ElicitationCompleteNotification'
   ServerResult:
     anyOf:
       - $ref: '#/$defs/Result'
@@ -2815,7 +2903,7 @@ $defs:
     description: Parameters for a {@link SubscriptionsAcknowledgedNotificationnotifications/subscriptions/acknowledged} notification.
     properties:
       _meta:
-        $ref: '#/$defs/MetaObject'
+        $ref: '#/$defs/NotificationMetaObject'
       notifications:
         $ref: '#/$defs/SubscriptionFilter'
         description: |-
@@ -3023,6 +3111,11 @@ $defs:
           (`if`/`then`/`else`), reference keywords (`$ref`, `$defs`, `$anchor`), and any other
           standard validation or annotation keywords.
 
+          Property schemas may carry an `x-mcp-header` annotation to mirror the
+          argument value into an HTTP header on the Streamable HTTP transport. See
+          the Streamable HTTP transport specification for the validity and
+          extraction rules.
+
           Defaults to JSON Schema 2020-12 when no explicit `$schema` is provided.
         properties:
           $schema:
@@ -3124,7 +3217,7 @@ $defs:
         type: string
     type: object
   ToolListChangedNotification:
-    description: An optional notification from the server to the client, informing it that the list of tools it offers has changed. This may be issued by servers without any previous subscription from the client.
+    description: An optional notification from the server to the client, informing it that the list of tools it offers has changed. This is only delivered on a {@link SubscriptionsListenRequestsubscriptions/listen} stream when the client requested it via the `toolsListChanged` filter field.
     properties:
       jsonrpc:
         const: '2.0'
@@ -3224,7 +3317,7 @@ $defs:
           - $ref: '#/$defs/Error'
           - properties:
               code:
-                const: -32004
+                const: -32022
                 type: integer
               data:
                 properties:
