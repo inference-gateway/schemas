@@ -10,11 +10,11 @@ tasks:
   mcp-schema-download:
     desc: "Download the latest MCP schema and convert to YAML"
     cmds:
-      - npm install js-yaml
+      - bun install
       - curl -o mcp/mcp-schema.json https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/refs/heads/main/schema/draft/schema.json
       - |
         echo "Converting JSON schema to YAML format"
-        NODE_PATH=./node_modules:${NODE_PATH:-/usr/lib/node_modules} node -e "
+        bun -e "
           const fs = require('fs');
           const yaml = require('js-yaml');
           const json = JSON.parse(fs.readFileSync('mcp/mcp-schema.json', 'utf8'));
@@ -25,7 +25,7 @@ tasks:
   a2a-schema-download:
     desc: "Generate JSON schema from A2A proto and convert to YAML"
     cmds:
-      - npm install js-yaml
+      - bun install
       - go install github.com/bufbuild/protoschema-plugins/cmd/protoc-gen-jsonschema@latest
       - mkdir -p a2a/tmp
       - cp a2a/a2a.proto a2a/tmp/a2a.proto
@@ -45,10 +45,10 @@ tasks:
         cd ../..
       - |
         echo "Processing bundled schema"
-        NODE_PATH=./node_modules:${NODE_PATH:-/usr/lib/node_modules} node scripts/process-bundle.js
+        bun scripts/process-bundle.js
       - |
         echo "Adding required fields from proto annotations"
-        NODE_PATH=./node_modules:${NODE_PATH:-/usr/lib/node_modules} node scripts/add-required-fields.js
+        bun scripts/add-required-fields.js
       - rm -rf a2a/tmp
       - task: format
 
@@ -71,5 +71,5 @@ tasks:
   release:dry:
     desc: "Preview the next release locally (semantic-release dry run)"
     cmds:
-      - npm ci
-      - npx semantic-release --dry-run --no-ci
+      - bun install
+      - bunx semantic-release --dry-run --no-ci
