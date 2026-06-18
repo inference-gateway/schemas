@@ -20,6 +20,7 @@ tasks:
           const json = JSON.parse(fs.readFileSync('mcp/mcp-schema.json', 'utf8'));
           fs.writeFileSync('mcp/mcp-schema.yaml', yaml.dump(json, {lineWidth: -1}));
         "
+      - task: format
 
   a2a-schema-download:
     desc: "Generate JSON schema from A2A proto and convert to YAML"
@@ -49,6 +50,13 @@ tasks:
         echo "Adding required fields from proto annotations"
         NODE_PATH=./node_modules:${NODE_PATH:-/usr/lib/node_modules} node scripts/add-required-fields.js
       - rm -rf a2a/tmp
+      - task: format
+
+  format:
+    desc: "Format all YAML files"
+    cmds:
+      - markdownlint "**/*.md" --fix
+      - prettier --write "**/*.yaml"
 
   openapi:format:
     desc: "Format OpenAPI Spec"
