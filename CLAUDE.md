@@ -22,10 +22,13 @@ All tasks go through `Taskfile.yml`. `task --list` enumerates them; the load-bea
 | `task openapi:format` | `prettier --write openapi.yaml` (single quotes, 2-space). |
 | `task mcp-schema-download` | Fetches latest MCP JSON schema from upstream, regenerates the YAML. |
 | `task a2a-schema-download` | Runs `buf generate` on `a2a/a2a.proto` → bundled JSON schema → post-processed `a2a-schema.{json,yaml}`. Requires Go + `buf` on PATH. |
+| `task release:dry` | Previews the next semantic-release version + notes locally (`npx semantic-release --dry-run`); publishes nothing. |
 
 `node scripts/check-reachable.js [path]` — sanity-checks that streaming-payload schemas (`CreateChatCompletionStreamResponse` and friends) are still reachable from operations in `openapi.yaml`. `oapi-codegen` drops unreachable schemas during code generation; this prevents regressions of issue #31.
 
 The two schema-sync tasks are also exposed as `workflow_dispatch` GitHub Actions (`a2a-schema-sync.yml`, `mcp-schema-sync.yml`) that open a `chore: Sync …` PR automatically.
+
+Releases are automated with **semantic-release** (config in `.releaserc.yaml`), triggered manually via the `workflow_dispatch` `Release` workflow (`release.yml`). It derives the version from Conventional Commits, updates `CHANGELOG.md`, tags, and creates a GitHub Release. Nothing is published to a package registry. See `RELEASING.md`.
 
 ## Generated files — do not hand-edit
 
