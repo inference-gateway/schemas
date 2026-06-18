@@ -59,3 +59,9 @@ tasks:
     desc: "Lint OpenAPI spec"
     cmds:
       - spectral lint --verbose openapi.yaml
+
+  release:dry:
+    desc: "Preview the next release locally (semantic-release dry run)"
+    cmds:
+      - npm ci
+      - npx semantic-release --dry-run --no-ci

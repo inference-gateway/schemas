@@ -1,5 +1,23 @@
 {
+  "name": "schemas",
+  "version": "0.0.0-semantically-released",
+  "description": "Shared schemas (OpenAPI, A2A, MCP) for the Inference Gateway ecosystem",
+  "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/inference-gateway/schemas.git"
+  },
+  "scripts": {
+    "release": "semantic-release"
+  },
   "dependencies": {
     "js-yaml": "^4.2.0"
+  },
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "conventional-changelog-conventionalcommits": "^9.3.1",
+    "semantic-release": "^25.0.5"
   }
 }
