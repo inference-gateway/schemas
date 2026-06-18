@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env bun
 // One-shot reachability checker for the OAS spec.
 //
 // Walks every $ref starting from operations under `paths.*` and reports
@@ -7,7 +7,7 @@
 // that isn't reachable from an operation is dropped from the generated
 // types. We use it to verify the fix for issue #31.
 //
-// Usage: node scripts/check-reachable.js [path/to/openapi.yaml]
+// Usage: bun scripts/check-reachable.js [path/to/openapi.yaml]
 
 const fs = require('fs');
 const path = require('path');
