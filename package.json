@@ -14,7 +14,7 @@
   "scripts": {
     "lint": "markdownlint '**/*.md'",
     "lint:fix": "markdownlint '**/*.md' --fix",
-    "format": "prettier --write .",
+    "format": "prettier --write '**/*.yaml'",
     "openapi:format": "prettier --write openapi.yaml",
     "openapi:lint": "bunx @stoplight/spectral-cli lint --verbose openapi.yaml",
     "check-reachable": "bun scripts/check-reachable.js",
@@ -31,6 +31,7 @@
     "@semantic-release/github": "^12.0.8",
     "conventional-changelog-conventionalcommits": "^9.3.1",
     "markdownlint-cli": "^0.49.0",
+    "prettier": "3.8.3",
     "semantic-release": "^25.0.5"
   }
 }

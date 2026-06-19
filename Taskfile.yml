@@ -53,7 +53,7 @@ tasks:
       - task: format
 
   format:
-    desc: "Format all files with Prettier"
+    desc: "Format all YAML files"
     cmds:
       - bun run format
 
