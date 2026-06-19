@@ -12,7 +12,14 @@
     "bun": ">=1.3.13"
   },
   "scripts": {
-    "release": "semantic-release"
+    "lint": "markdownlint '**/*.md'",
+    "lint:fix": "markdownlint '**/*.md' --fix",
+    "format": "prettier --write .",
+    "openapi:format": "prettier --write openapi.yaml",
+    "openapi:lint": "bunx @stoplight/spectral-cli lint --verbose openapi.yaml",
+    "check-reachable": "bun scripts/check-reachable.js",
+    "release": "semantic-release",
+    "release:dry": "semantic-release --dry-run --no-ci"
   },
   "dependencies": {
     "js-yaml": "^4.2.0"

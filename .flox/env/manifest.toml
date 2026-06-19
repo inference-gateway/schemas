@@ -25,3 +25,8 @@ claude-code.pkg-group = "claude-code"
 codex.pkg-path = "codex"
 codex.version = "^0.139.0"
 codex.pkg-group = "codex"
+
+[hook]
+on-activate = '''
+    bun install --frozen-lockfile
+'''

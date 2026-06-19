@@ -58,7 +58,7 @@ If you touch any of these scripts, run `task a2a-schema-download` end-to-end and
 - **Commits:** Conventional Commits, capitalized description (`chore: Sync MCP schema`, `feat(openapi): Add foo endpoint`). Semantic-release downstream depends on this.
 - **YAML/Markdown style:** 2-space indent, single quotes, LF endings, final newline (`.editorconfig` + `.prettierrc`).
 - **CODEOWNERS:** `a2a/*` is owned by `@inference-gateway/a2a` — expect that team on any A2A-touching PR.
-- **CI:** the only check is `spectral lint openapi.yaml`. There's no test suite; the sync workflows themselves are the regression net for the generated schemas.
+- **CI:** runs `bun run lint` (markdownlint) and `bun run openapi:lint` (Spectral) on every push/PR. There's no test suite; the sync workflows themselves are the regression net for the generated schemas.
 
 ## Ecosystem context
 

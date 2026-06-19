@@ -27,5 +27,11 @@ jobs:
         with:
           bun-version-file: "package.json"
 
-      - name: Validate OpenAPI with Spectral
-        run: bunx @stoplight/spectral-cli lint openapi.yaml
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Lint Markdown
+        run: bun run lint
+
+      - name: Lint OpenAPI
+        run: bun run openapi:lint
