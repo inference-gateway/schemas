@@ -3,7 +3,7 @@
   "version": "0.0.0-semantically-released",
   "description": "Shared schemas (OpenAPI, A2A, MCP) for the Inference Gateway ecosystem",
   "private": true,
-  "license": "MIT",
+  "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/inference-gateway/schemas.git"
