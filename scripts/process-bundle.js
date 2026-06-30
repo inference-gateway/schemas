@@ -1,7 +1,11 @@
 const fs = require('fs');
 const yaml = require('js-yaml');
+const sortKeysDeep = require('./sort-keys.js');
 
-const files = fs.readdirSync('a2a').filter(f => f.endsWith('.jsonschema.strict.bundle.json'));
+const files = fs
+  .readdirSync('a2a')
+  .filter(f => f.endsWith('.jsonschema.strict.bundle.json'))
+  .sort();
 if (files.length === 0) throw new Error('No bundle files found');
 
 const schema = {
@@ -75,8 +79,9 @@ const removePatternProps = (obj) => {
 };
 removePatternProps(schema);
 
-fs.writeFileSync('a2a/a2a-schema.json', JSON.stringify(schema, null, 2));
-fs.writeFileSync('a2a/a2a-schema.yaml', yaml.dump(schema, {lineWidth: -1}));
+const sortedSchema = sortKeysDeep(schema);
+fs.writeFileSync('a2a/a2a-schema.json', JSON.stringify(sortedSchema, null, 2));
+fs.writeFileSync('a2a/a2a-schema.yaml', yaml.dump(sortedSchema, {lineWidth: -1}));
 
 files.forEach(f => fs.unlinkSync('a2a/' + f));
 

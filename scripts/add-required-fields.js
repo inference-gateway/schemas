@@ -1,5 +1,6 @@
 const fs = require('fs');
 const yaml = require('js-yaml');
+const sortKeysDeep = require('./sort-keys.js');
 
 const requiredFieldsMap = require('./parse-proto-required.js');
 
@@ -14,7 +15,8 @@ for (const [typeName, fields] of Object.entries(requiredFieldsMap)) {
   }
 }
 
-fs.writeFileSync('a2a/a2a-schema.yaml', yaml.dump(schema, {lineWidth: -1}));
-fs.writeFileSync('a2a/a2a-schema.json', JSON.stringify(schema, null, 2));
+const sortedSchema = sortKeysDeep(schema);
+fs.writeFileSync('a2a/a2a-schema.yaml', yaml.dump(sortedSchema, {lineWidth: -1}));
+fs.writeFileSync('a2a/a2a-schema.json', JSON.stringify(sortedSchema, null, 2));
 
 console.log('\n✓ Schema updated with required fields');
