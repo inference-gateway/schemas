@@ -1,278 +1,24 @@
 $schema: http://json-schema.org/draft-07/schema#
 definitions:
-  DataPart:
+  APIKeySecurityScheme:
     $schema: https://json-schema.org/draft/2020-12/schema
     additionalProperties: false
-    description: DataPart represents a structured blob.
+    description: Defines a security scheme using an API key.
     properties:
-      data:
-        $ref: '#/definitions/Struct'
-        description: A JSON object containing arbitrary data.
-    title: Data Part
-    type: object
-    required:
-      - data
-  Struct:
-    $schema: https://json-schema.org/draft/2020-12/schema
-    title: Struct
-    type: object
-  Artifact:
-    $schema: https://json-schema.org/draft/2020-12/schema
-    additionalProperties: false
-    description: Artifacts represent task outputs.
-    properties:
-      artifactId:
-        description: |-
-          Unique identifier (e.g. UUID) for the artifact. It must be at least unique
-           within a task.
-        type: string
       description:
-        description: A human readable description of the artifact, optional.
+        description: An optional description for the security scheme.
         type: string
-      extensions:
-        description: The URIs of extensions that are present or contributed to this Artifact.
-        items:
-          type: string
-        type: array
-      metadata:
-        $ref: '#/definitions/Struct'
-        description: Optional metadata included with the artifact.
-      name:
-        description: A human readable name for the artifact.
-        type: string
-      parts:
-        description: The content of the artifact. Must contain at least one part.
-        items:
-          $ref: '#/definitions/Part'
-        type: array
-    required:
-      - artifactId
-      - parts
-    title: Artifact
-    type: object
-  FilePart:
-    $schema: https://json-schema.org/draft/2020-12/schema
-    additionalProperties: false
-    description: |-
-      FilePart represents the different ways files can be provided. If files are
-       small, directly feeding the bytes is supported via file_with_bytes. If the
-       file is large, the agent should read the content as appropriate directly
-       from the file_with_uri source.
-    properties:
-      fileWithBytes:
-        description: The base64-encoded content of the file.
-        pattern: ^[A-Za-z0-9+/]*={0,2}$
-        type: string
-      fileWithUri:
-        description: A URL pointing to the file's content.
-        type: string
-      mediaType:
-        description: The media type of the file (e.g., "application/pdf").
+      location:
+        description: The location of the API key. Valid values are "query", "header", or "cookie".
         type: string
       name:
-        description: An optional name for the file (e.g., "document.pdf").
+        description: The name of the header, query, or cookie parameter to be used.
         type: string
     required:
-      - mediaType
+      - location
       - name
-    title: File Part
+    title: API Key Security Scheme
     type: object
-  ListTasksResponse:
-    $schema: https://json-schema.org/draft/2020-12/schema
-    additionalProperties: false
-    description: Result object for tasks/list method containing an array of tasks and pagination information.
-    properties:
-      nextPageToken:
-        description: Token for retrieving the next page. Empty string if no more results.
-        type: string
-      pageSize:
-        description: The size of page requested.
-        maximum: 2147483647
-        minimum: -2147483648
-        type: integer
-      tasks:
-        description: Array of tasks matching the specified criteria.
-        items:
-          $ref: '#/definitions/Task'
-        type: array
-      totalSize:
-        description: Total number of tasks available (before pagination).
-        maximum: 2147483647
-        minimum: -2147483648
-        type: integer
-    required:
-      - tasks
-      - nextPageToken
-      - pageSize
-      - totalSize
-    title: List Tasks Response
-    type: object
-  Message:
-    $schema: https://json-schema.org/draft/2020-12/schema
-    additionalProperties: false
-    description: |-
-      Message is one unit of communication between client and server. It is
-       associated with a context and optionally a task. Since the server is
-       responsible for the context definition, it must always provide a context_id
-       in its messages. The client can optionally provide the context_id if it
-       knows the context to associate the message to. Similarly for task_id,
-       except the server decides if a task is created and whether to include the
-       task_id.
-    properties:
-      contextId:
-        description: |-
-          The context id of the message. This is optional and if set, the message
-           will be associated with the given context.
-        type: string
-      extensions:
-        description: The URIs of extensions that are present or contributed to this Message.
-        items:
-          type: string
-        type: array
-      messageId:
-        description: |-
-          The unique identifier (e.g. UUID) of the message. This is required and
-           created by the message creator.
-        type: string
-      metadata:
-        $ref: '#/definitions/Struct'
-        description: |-
-          protolint:enable REPEATED_FIELD_NAMES_PLURALIZED
-           Any optional metadata to provide along with the message.
-      parts:
-        description: |-
-          protolint:disable REPEATED_FIELD_NAMES_PLURALIZED
-           Parts is the container of the message content.
-        items:
-          $ref: '#/definitions/Part'
-        type: array
-      referenceTaskIds:
-        description: A list of task IDs that this message references for additional context.
-        items:
-          type: string
-        type: array
-      role:
-        description: Identifies the sender of the message.
-        enum:
-          - ROLE_UNSPECIFIED
-          - ROLE_USER
-          - ROLE_AGENT
-        title: Role
-        type: string
-      taskId:
-        description: |-
-          The task id of the message. This is optional and if set, the message
-           will be associated with the given task.
-        type: string
-    required:
-      - messageId
-      - role
-      - parts
-    title: Message
-    type: object
-  Part:
-    $schema: https://json-schema.org/draft/2020-12/schema
-    additionalProperties: false
-    description: |-
-      Part represents a container for a section of communication content.
-       Parts can be purely textual, some sort of file (image, video, etc) or
-       a structured data blob (i.e. JSON).
-    properties:
-      data:
-        $ref: '#/definitions/DataPart'
-        description: The structured data content.
-      file:
-        $ref: '#/definitions/FilePart'
-        description: The file content, represented as either a URI or as base64-encoded bytes.
-      metadata:
-        $ref: '#/definitions/Struct'
-        description: Optional metadata associated with this part.
-      text:
-        description: The string content of the text part.
-        type: string
-    title: Part
-    type: object
-  Task:
-    $schema: https://json-schema.org/draft/2020-12/schema
-    additionalProperties: false
-    description: |-
-      Task is the core unit of action for A2A. It has a current status
-       and when results are created for the task they are stored in the
-       artifact. If there are multiple turns for a task, these are stored in
-       history.
-    properties:
-      artifacts:
-        description: A set of output artifacts for a Task.
-        items:
-          $ref: '#/definitions/Artifact'
-        type: array
-      contextId:
-        description: |-
-          Unique identifier (e.g. UUID) for the contextual collection of interactions
-           (tasks and messages). Created by the A2A server.
-        type: string
-      history:
-        description: |-
-          protolint:disable REPEATED_FIELD_NAMES_PLURALIZED
-           The history of interactions from a task.
-        items:
-          $ref: '#/definitions/Message'
-        type: array
-      id:
-        description: |-
-          Unique identifier (e.g. UUID) for the task, generated by the server for a
-           new task.
-        type: string
-      metadata:
-        $ref: '#/definitions/Struct'
-        description: |-
-          protolint:enable REPEATED_FIELD_NAMES_PLURALIZED
-           A key/value object to store custom metadata about a task.
-      status:
-        $ref: '#/definitions/TaskStatus'
-        description: The current status of a Task, including state and a message.
-    required:
-      - id
-      - contextId
-      - status
-    title: Task
-    type: object
-  TaskStatus:
-    $schema: https://json-schema.org/draft/2020-12/schema
-    additionalProperties: false
-    description: A container for the status of a task
-    properties:
-      message:
-        $ref: '#/definitions/Message'
-        description: A message associated with the status.
-      state:
-        description: The current state of this task.
-        enum:
-          - TASK_STATE_UNSPECIFIED
-          - TASK_STATE_SUBMITTED
-          - TASK_STATE_WORKING
-          - TASK_STATE_COMPLETED
-          - TASK_STATE_FAILED
-          - TASK_STATE_CANCELLED
-          - TASK_STATE_INPUT_REQUIRED
-          - TASK_STATE_REJECTED
-          - TASK_STATE_AUTH_REQUIRED
-        title: Task State
-        type: string
-      timestamp:
-        $ref: '#/definitions/Timestamp'
-        description: |-
-          ISO 8601 Timestamp when the status was recorded.
-           Example: "2023-10-27T10:00:00Z"
-    required:
-      - state
-    title: Task Status
-    type: object
-  Timestamp:
-    $schema: https://json-schema.org/draft/2020-12/schema
-    format: date-time
-    title: Timestamp
-    type: string
   AgentCapabilities:
     $schema: https://json-schema.org/draft/2020-12/schema
     additionalProperties: false
@@ -293,351 +39,6 @@ definitions:
         description: Indicates if the agent supports streaming responses.
         type: boolean
     title: Agent Capabilities
-    type: object
-  AgentExtension:
-    $schema: https://json-schema.org/draft/2020-12/schema
-    additionalProperties: false
-    description: A declaration of a protocol extension supported by an Agent.
-    properties:
-      description:
-        description: A human-readable description of how this agent uses the extension.
-        type: string
-      params:
-        $ref: '#/definitions/Struct'
-        description: Optional, extension-specific configuration parameters.
-      required:
-        description: If true, the client must understand and comply with the extension's requirements.
-        type: boolean
-      uri:
-        description: The unique URI identifying the extension.
-        type: string
-    required:
-      - uri
-      - description
-      - required
-    title: Agent Extension
-    type: object
-  AgentSkill:
-    $schema: https://json-schema.org/draft/2020-12/schema
-    additionalProperties: false
-    description: Represents a distinct capability or function that an agent can perform.
-    properties:
-      description:
-        description: A detailed description of the skill.
-        type: string
-      examples:
-        description: Example prompts or scenarios that this skill can handle.
-        items:
-          type: string
-        type: array
-      id:
-        description: A unique identifier for the agent's skill.
-        type: string
-      inputModes:
-        description: The set of supported input media types for this skill, overriding the agent's defaults.
-        items:
-          type: string
-        type: array
-      name:
-        description: A human-readable name for the skill.
-        type: string
-      outputModes:
-        description: The set of supported output media types for this skill, overriding the agent's defaults.
-        items:
-          type: string
-        type: array
-      security:
-        description: |-
-          protolint:disable REPEATED_FIELD_NAMES_PLURALIZED
-           Security schemes necessary for this skill.
-        items:
-          $ref: '#/definitions/Security'
-        type: array
-      tags:
-        description: A set of keywords describing the skill's capabilities.
-        items:
-          type: string
-        type: array
-    required:
-      - id
-      - name
-      - description
-      - tags
-    title: Agent Skill
-    type: object
-  Security:
-    $schema: https://json-schema.org/draft/2020-12/schema
-    additionalProperties: false
-    properties:
-      schemes:
-        additionalProperties:
-          $ref: '#/definitions/StringList'
-        propertyNames:
-          type: string
-        type: object
-    title: Security
-    type: object
-  StringList:
-    $schema: https://json-schema.org/draft/2020-12/schema
-    additionalProperties: false
-    description: protolint:disable REPEATED_FIELD_NAMES_PLURALIZED
-    properties:
-      list:
-        items:
-          type: string
-        type: array
-    title: String List
-    type: object
-  DeleteTaskPushNotificationConfigRequest:
-    $schema: https://json-schema.org/draft/2020-12/schema
-    additionalProperties: false
-    description: Represents a request for the `tasks/pushNotificationConfig/delete` method.
-    properties:
-      name:
-        description: |-
-          The resource name of the config to delete.
-           Format: tasks/{task_id}/pushNotificationConfigs/{config_id}
-        type: string
-      tenant:
-        description: Optional tenant, provided as a path parameter.
-        type: string
-    required:
-      - tenant
-      - name
-    title: Delete Task Push Notification Config Request
-    type: object
-  AuthenticationInfo:
-    $schema: https://json-schema.org/draft/2020-12/schema
-    additionalProperties: false
-    description: Defines authentication details, used for push notifications.
-    properties:
-      credentials:
-        description: Optional credentials
-        type: string
-      schemes:
-        description: A list of supported authentication schemes (e.g., 'Basic', 'Bearer').
-        items:
-          type: string
-        type: array
-    required:
-      - schemes
-    title: Authentication Info
-    type: object
-  TaskStatusUpdateEvent:
-    $schema: https://json-schema.org/draft/2020-12/schema
-    additionalProperties: false
-    description: |-
-      An event sent by the agent to notify the client of a change in a task's
-       status.
-    properties:
-      contextId:
-        description: The id of the context that the task belongs to
-        type: string
-      final:
-        description: If true, this is the final event in the stream for this interaction.
-        type: boolean
-      metadata:
-        $ref: '#/definitions/Struct'
-        description: Optional metadata to associate with the task update.
-      status:
-        $ref: '#/definitions/TaskStatus'
-        description: The new status of the task.
-      taskId:
-        description: The id of the task that is changed
-        type: string
-    required:
-      - taskId
-      - contextId
-      - status
-      - final
-    title: Task Status Update Event
-    type: object
-  GetTaskRequest:
-    $schema: https://json-schema.org/draft/2020-12/schema
-    additionalProperties: false
-    description: Represents a request for the `tasks/get` method.
-    properties:
-      historyLength:
-        description: The maximum number of messages to include in the history.
-        maximum: 2147483647
-        minimum: -2147483648
-        type: integer
-      name:
-        description: |-
-          The resource name of the task.
-           Format: tasks/{task_id}
-        type: string
-      tenant:
-        description: Optional tenant, provided as a path parameter.
-        type: string
-    required:
-      - name
-    title: Get Task Request
-    type: object
-  PushNotificationConfig:
-    $schema: https://json-schema.org/draft/2020-12/schema
-    additionalProperties: false
-    description: Configuration for setting up push notifications for task updates.
-    properties:
-      authentication:
-        $ref: '#/definitions/AuthenticationInfo'
-        description: Information about the authentication to sent with the notification
-      id:
-        description: A unique identifier (e.g. UUID) for this push notification.
-        type: string
-      token:
-        description: Token unique for this task/session
-        type: string
-      url:
-        description: Url to send the notification too
-        type: string
-    required:
-      - url
-    title: Push Notification Config
-    type: object
-  TaskPushNotificationConfig:
-    $schema: https://json-schema.org/draft/2020-12/schema
-    additionalProperties: false
-    description: |-
-      A container associating a push notification configuration with a specific
-       task.
-    properties:
-      name:
-        description: |-
-          The resource name of the config.
-           Format: tasks/{task_id}/pushNotificationConfigs/{config_id}
-        type: string
-      pushNotificationConfig:
-        $ref: '#/definitions/PushNotificationConfig'
-        description: The push notification configuration details.
-    required:
-      - name
-      - pushNotificationConfig
-    title: Task Push Notification Config
-    type: object
-  AgentProvider:
-    $schema: https://json-schema.org/draft/2020-12/schema
-    additionalProperties: false
-    description: Represents the service provider of an agent.
-    properties:
-      organization:
-        description: |-
-          The name of the agent provider's organization.
-           Example: "Google"
-        type: string
-      url:
-        description: |-
-          A URL for the agent provider's website or relevant documentation.
-           Example: "https://ai.google.dev"
-        type: string
-    required:
-      - url
-      - organization
-    title: Agent Provider
-    type: object
-  ListTaskPushNotificationConfigRequest:
-    $schema: https://json-schema.org/draft/2020-12/schema
-    additionalProperties: false
-    properties:
-      pageSize:
-        description: The maximum number of configurations to return.
-        maximum: 2147483647
-        minimum: -2147483648
-        type: integer
-      pageToken:
-        description: A page token received from a previous ListTaskPushNotificationConfigRequest call.
-        type: string
-      parent:
-        description: |-
-          The parent task resource.
-           Format: tasks/{task_id}
-        type: string
-      tenant:
-        description: Optional tenant, provided as a path parameter.
-        type: string
-    required:
-      - tenant
-      - parent
-      - pageSize
-      - pageToken
-    title: List Task Push Notification Config Request
-    type: object
-  ListTasksRequest:
-    $schema: https://json-schema.org/draft/2020-12/schema
-    additionalProperties: false
-    description: Parameters for listing tasks with optional filtering criteria.
-    properties:
-      contextId:
-        description: Filter tasks by context ID to get tasks from a specific conversation or session.
-        type: string
-      historyLength:
-        description: The maximum number of messages to include in each task's history.
-        maximum: 2147483647
-        minimum: -2147483648
-        type: integer
-      includeArtifacts:
-        description: |-
-          Whether to include artifacts in the returned tasks.
-           Defaults to false to reduce payload size.
-        type: boolean
-      lastUpdatedAfter:
-        description: |-
-          Filter tasks updated after this timestamp (milliseconds since epoch).
-           Only tasks with a last updated time greater than or equal to this value will be returned.
-        type: integer
-      pageSize:
-        description: |-
-          Maximum number of tasks to return. Must be between 1 and 100.
-           Defaults to 50 if not specified.
-        maximum: 2147483647
-        minimum: -2147483648
-        type: integer
-      pageToken:
-        description: Token for pagination. Use the next_page_token from a previous ListTasksResponse.
-        type: string
-      status:
-        description: Filter tasks by their current status state.
-        enum:
-          - TASK_STATE_UNSPECIFIED
-          - TASK_STATE_SUBMITTED
-          - TASK_STATE_WORKING
-          - TASK_STATE_COMPLETED
-          - TASK_STATE_FAILED
-          - TASK_STATE_CANCELLED
-          - TASK_STATE_INPUT_REQUIRED
-          - TASK_STATE_REJECTED
-          - TASK_STATE_AUTH_REQUIRED
-        title: Task State
-        type: string
-      tenant:
-        description: Optional tenant, provided as a path parameter.
-        type: string
-    required:
-      - tenant
-      - contextId
-      - status
-      - pageToken
-      - lastUpdatedAfter
-    title: List Tasks Request
-    type: object
-  APIKeySecurityScheme:
-    $schema: https://json-schema.org/draft/2020-12/schema
-    additionalProperties: false
-    description: Defines a security scheme using an API key.
-    properties:
-      description:
-        description: An optional description for the security scheme.
-        type: string
-      location:
-        description: The location of the API key. Valid values are "query", "header", or "cookie".
-        type: string
-      name:
-        description: The name of the header, query, or cookie parameter to be used.
-        type: string
-    required:
-      - location
-      - name
-    title: API Key Security Scheme
     type: object
   AgentCard:
     $schema: https://json-schema.org/draft/2020-12/schema
@@ -774,6 +175,29 @@ definitions:
       - signature
     title: Agent Card Signature
     type: object
+  AgentExtension:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    additionalProperties: false
+    description: A declaration of a protocol extension supported by an Agent.
+    properties:
+      description:
+        description: A human-readable description of how this agent uses the extension.
+        type: string
+      params:
+        $ref: '#/definitions/Struct'
+        description: Optional, extension-specific configuration parameters.
+      required:
+        description: If true, the client must understand and comply with the extension's requirements.
+        type: boolean
+      uri:
+        description: The unique URI identifying the extension.
+        type: string
+    required:
+      - uri
+      - description
+      - required
+    title: Agent Extension
+    type: object
   AgentInterface:
     $schema: https://json-schema.org/draft/2020-12/schema
     additionalProperties: false
@@ -799,6 +223,125 @@ definitions:
       - url
       - protocolBinding
     title: Agent Interface
+    type: object
+  AgentProvider:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    additionalProperties: false
+    description: Represents the service provider of an agent.
+    properties:
+      organization:
+        description: |-
+          The name of the agent provider's organization.
+           Example: "Google"
+        type: string
+      url:
+        description: |-
+          A URL for the agent provider's website or relevant documentation.
+           Example: "https://ai.google.dev"
+        type: string
+    required:
+      - url
+      - organization
+    title: Agent Provider
+    type: object
+  AgentSkill:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    additionalProperties: false
+    description: Represents a distinct capability or function that an agent can perform.
+    properties:
+      description:
+        description: A detailed description of the skill.
+        type: string
+      examples:
+        description: Example prompts or scenarios that this skill can handle.
+        items:
+          type: string
+        type: array
+      id:
+        description: A unique identifier for the agent's skill.
+        type: string
+      inputModes:
+        description: The set of supported input media types for this skill, overriding the agent's defaults.
+        items:
+          type: string
+        type: array
+      name:
+        description: A human-readable name for the skill.
+        type: string
+      outputModes:
+        description: The set of supported output media types for this skill, overriding the agent's defaults.
+        items:
+          type: string
+        type: array
+      security:
+        description: |-
+          protolint:disable REPEATED_FIELD_NAMES_PLURALIZED
+           Security schemes necessary for this skill.
+        items:
+          $ref: '#/definitions/Security'
+        type: array
+      tags:
+        description: A set of keywords describing the skill's capabilities.
+        items:
+          type: string
+        type: array
+    required:
+      - id
+      - name
+      - description
+      - tags
+    title: Agent Skill
+    type: object
+  Artifact:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    additionalProperties: false
+    description: Artifacts represent task outputs.
+    properties:
+      artifactId:
+        description: |-
+          Unique identifier (e.g. UUID) for the artifact. It must be at least unique
+           within a task.
+        type: string
+      description:
+        description: A human readable description of the artifact, optional.
+        type: string
+      extensions:
+        description: The URIs of extensions that are present or contributed to this Artifact.
+        items:
+          type: string
+        type: array
+      metadata:
+        $ref: '#/definitions/Struct'
+        description: Optional metadata included with the artifact.
+      name:
+        description: A human readable name for the artifact.
+        type: string
+      parts:
+        description: The content of the artifact. Must contain at least one part.
+        items:
+          $ref: '#/definitions/Part'
+        type: array
+    required:
+      - artifactId
+      - parts
+    title: Artifact
+    type: object
+  AuthenticationInfo:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    additionalProperties: false
+    description: Defines authentication details, used for push notifications.
+    properties:
+      credentials:
+        description: Optional credentials
+        type: string
+      schemes:
+        description: A list of supported authentication schemes (e.g., 'Basic', 'Bearer').
+        items:
+          type: string
+        type: array
+    required:
+      - schemes
+    title: Authentication Info
     type: object
   AuthorizationCodeOAuthFlow:
     $schema: https://json-schema.org/draft/2020-12/schema
@@ -827,6 +370,24 @@ definitions:
       - scopes
     title: Authorization CodeO Auth Flow
     type: object
+  CancelTaskRequest:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    additionalProperties: false
+    description: Represents a request for the `tasks/cancel` method.
+    properties:
+      name:
+        description: |-
+          The resource name of the task to cancel.
+           Format: tasks/{task_id}
+        type: string
+      tenant:
+        description: Optional tenant, provided as a path parameter.
+        type: string
+    required:
+      - tenant
+      - name
+    title: Cancel Task Request
+    type: object
   ClientCredentialsOAuthFlow:
     $schema: https://json-schema.org/draft/2020-12/schema
     additionalProperties: false
@@ -849,6 +410,113 @@ definitions:
       - tokenUrl
       - scopes
     title: Client CredentialsO Auth Flow
+    type: object
+  DataPart:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    additionalProperties: false
+    description: DataPart represents a structured blob.
+    properties:
+      data:
+        $ref: '#/definitions/Struct'
+        description: A JSON object containing arbitrary data.
+    required:
+      - data
+    title: Data Part
+    type: object
+  DeleteTaskPushNotificationConfigRequest:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    additionalProperties: false
+    description: Represents a request for the `tasks/pushNotificationConfig/delete` method.
+    properties:
+      name:
+        description: |-
+          The resource name of the config to delete.
+           Format: tasks/{task_id}/pushNotificationConfigs/{config_id}
+        type: string
+      tenant:
+        description: Optional tenant, provided as a path parameter.
+        type: string
+    required:
+      - tenant
+      - name
+    title: Delete Task Push Notification Config Request
+    type: object
+  FilePart:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    additionalProperties: false
+    description: |-
+      FilePart represents the different ways files can be provided. If files are
+       small, directly feeding the bytes is supported via file_with_bytes. If the
+       file is large, the agent should read the content as appropriate directly
+       from the file_with_uri source.
+    properties:
+      fileWithBytes:
+        description: The base64-encoded content of the file.
+        pattern: ^[A-Za-z0-9+/]*={0,2}$
+        type: string
+      fileWithUri:
+        description: A URL pointing to the file's content.
+        type: string
+      mediaType:
+        description: The media type of the file (e.g., "application/pdf").
+        type: string
+      name:
+        description: An optional name for the file (e.g., "document.pdf").
+        type: string
+    required:
+      - mediaType
+      - name
+    title: File Part
+    type: object
+  GetExtendedAgentCardRequest:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    additionalProperties: false
+    properties:
+      tenant:
+        description: Optional tenant, provided as a path parameter.
+        type: string
+    required:
+      - tenant
+    title: Get Extended Agent Card Request
+    type: object
+  GetTaskPushNotificationConfigRequest:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    additionalProperties: false
+    properties:
+      name:
+        description: |-
+          The resource name of the config to retrieve.
+           Format: tasks/{task_id}/pushNotificationConfigs/{config_id}
+        type: string
+      tenant:
+        description: Optional tenant, provided as a path parameter.
+        type: string
+    required:
+      - tenant
+      - name
+    title: Get Task Push Notification Config Request
+    type: object
+  GetTaskRequest:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    additionalProperties: false
+    description: Represents a request for the `tasks/get` method.
+    properties:
+      historyLength:
+        description: The maximum number of messages to include in the history.
+        maximum: 2147483647
+        minimum: -2147483648
+        type: integer
+      name:
+        description: |-
+          The resource name of the task.
+           Format: tasks/{task_id}
+        type: string
+      tenant:
+        description: Optional tenant, provided as a path parameter.
+        type: string
+    required:
+      - name
+    title: Get Task Request
     type: object
   HTTPAuthSecurityScheme:
     $schema: https://json-schema.org/draft/2020-12/schema
@@ -895,6 +563,205 @@ definitions:
       - authorizationUrl
       - scopes
     title: ImplicitO Auth Flow
+    type: object
+  ListTaskPushNotificationConfigRequest:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    additionalProperties: false
+    properties:
+      pageSize:
+        description: The maximum number of configurations to return.
+        maximum: 2147483647
+        minimum: -2147483648
+        type: integer
+      pageToken:
+        description: A page token received from a previous ListTaskPushNotificationConfigRequest call.
+        type: string
+      parent:
+        description: |-
+          The parent task resource.
+           Format: tasks/{task_id}
+        type: string
+      tenant:
+        description: Optional tenant, provided as a path parameter.
+        type: string
+    required:
+      - tenant
+      - parent
+      - pageSize
+      - pageToken
+    title: List Task Push Notification Config Request
+    type: object
+  ListTaskPushNotificationConfigResponse:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    additionalProperties: false
+    description: |-
+      Represents a successful response for the `tasks/pushNotificationConfig/list`
+       method.
+    properties:
+      configs:
+        description: The list of push notification configurations.
+        items:
+          $ref: '#/definitions/TaskPushNotificationConfig'
+        type: array
+      nextPageToken:
+        description: |-
+          A token, which can be sent as `page_token` to retrieve the next page.
+           If this field is omitted, there are no subsequent pages.
+        type: string
+    required:
+      - nextPageToken
+    title: List Task Push Notification Config Response
+    type: object
+  ListTasksRequest:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    additionalProperties: false
+    description: Parameters for listing tasks with optional filtering criteria.
+    properties:
+      contextId:
+        description: Filter tasks by context ID to get tasks from a specific conversation or session.
+        type: string
+      historyLength:
+        description: The maximum number of messages to include in each task's history.
+        maximum: 2147483647
+        minimum: -2147483648
+        type: integer
+      includeArtifacts:
+        description: |-
+          Whether to include artifacts in the returned tasks.
+           Defaults to false to reduce payload size.
+        type: boolean
+      lastUpdatedAfter:
+        description: |-
+          Filter tasks updated after this timestamp (milliseconds since epoch).
+           Only tasks with a last updated time greater than or equal to this value will be returned.
+        type: integer
+      pageSize:
+        description: |-
+          Maximum number of tasks to return. Must be between 1 and 100.
+           Defaults to 50 if not specified.
+        maximum: 2147483647
+        minimum: -2147483648
+        type: integer
+      pageToken:
+        description: Token for pagination. Use the next_page_token from a previous ListTasksResponse.
+        type: string
+      status:
+        description: Filter tasks by their current status state.
+        enum:
+          - TASK_STATE_UNSPECIFIED
+          - TASK_STATE_SUBMITTED
+          - TASK_STATE_WORKING
+          - TASK_STATE_COMPLETED
+          - TASK_STATE_FAILED
+          - TASK_STATE_CANCELLED
+          - TASK_STATE_INPUT_REQUIRED
+          - TASK_STATE_REJECTED
+          - TASK_STATE_AUTH_REQUIRED
+        title: Task State
+        type: string
+      tenant:
+        description: Optional tenant, provided as a path parameter.
+        type: string
+    required:
+      - tenant
+      - contextId
+      - status
+      - pageToken
+      - lastUpdatedAfter
+    title: List Tasks Request
+    type: object
+  ListTasksResponse:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    additionalProperties: false
+    description: Result object for tasks/list method containing an array of tasks and pagination information.
+    properties:
+      nextPageToken:
+        description: Token for retrieving the next page. Empty string if no more results.
+        type: string
+      pageSize:
+        description: The size of page requested.
+        maximum: 2147483647
+        minimum: -2147483648
+        type: integer
+      tasks:
+        description: Array of tasks matching the specified criteria.
+        items:
+          $ref: '#/definitions/Task'
+        type: array
+      totalSize:
+        description: Total number of tasks available (before pagination).
+        maximum: 2147483647
+        minimum: -2147483648
+        type: integer
+    required:
+      - tasks
+      - nextPageToken
+      - pageSize
+      - totalSize
+    title: List Tasks Response
+    type: object
+  Message:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    additionalProperties: false
+    description: |-
+      Message is one unit of communication between client and server. It is
+       associated with a context and optionally a task. Since the server is
+       responsible for the context definition, it must always provide a context_id
+       in its messages. The client can optionally provide the context_id if it
+       knows the context to associate the message to. Similarly for task_id,
+       except the server decides if a task is created and whether to include the
+       task_id.
+    properties:
+      contextId:
+        description: |-
+          The context id of the message. This is optional and if set, the message
+           will be associated with the given context.
+        type: string
+      extensions:
+        description: The URIs of extensions that are present or contributed to this Message.
+        items:
+          type: string
+        type: array
+      messageId:
+        description: |-
+          The unique identifier (e.g. UUID) of the message. This is required and
+           created by the message creator.
+        type: string
+      metadata:
+        $ref: '#/definitions/Struct'
+        description: |-
+          protolint:enable REPEATED_FIELD_NAMES_PLURALIZED
+           Any optional metadata to provide along with the message.
+      parts:
+        description: |-
+          protolint:disable REPEATED_FIELD_NAMES_PLURALIZED
+           Parts is the container of the message content.
+        items:
+          $ref: '#/definitions/Part'
+        type: array
+      referenceTaskIds:
+        description: A list of task IDs that this message references for additional context.
+        items:
+          type: string
+        type: array
+      role:
+        description: Identifies the sender of the message.
+        enum:
+          - ROLE_UNSPECIFIED
+          - ROLE_USER
+          - ROLE_AGENT
+        title: Role
+        type: string
+      taskId:
+        description: |-
+          The task id of the message. This is optional and if set, the message
+           will be associated with the given task.
+        type: string
+    required:
+      - messageId
+      - role
+      - parts
+    title: Message
     type: object
   MutualTlsSecurityScheme:
     $schema: https://json-schema.org/draft/2020-12/schema
@@ -964,6 +831,28 @@ definitions:
       - openIdConnectUrl
     title: Open Id Connect Security Scheme
     type: object
+  Part:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    additionalProperties: false
+    description: |-
+      Part represents a container for a section of communication content.
+       Parts can be purely textual, some sort of file (image, video, etc) or
+       a structured data blob (i.e. JSON).
+    properties:
+      data:
+        $ref: '#/definitions/DataPart'
+        description: The structured data content.
+      file:
+        $ref: '#/definitions/FilePart'
+        description: The file content, represented as either a URI or as base64-encoded bytes.
+      metadata:
+        $ref: '#/definitions/Struct'
+        description: Optional metadata associated with this part.
+      text:
+        description: The string content of the text part.
+        type: string
+    title: Part
+    type: object
   PasswordOAuthFlow:
     $schema: https://json-schema.org/draft/2020-12/schema
     additionalProperties: false
@@ -986,6 +875,39 @@ definitions:
       - tokenUrl
       - scopes
     title: PasswordO Auth Flow
+    type: object
+  PushNotificationConfig:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    additionalProperties: false
+    description: Configuration for setting up push notifications for task updates.
+    properties:
+      authentication:
+        $ref: '#/definitions/AuthenticationInfo'
+        description: Information about the authentication to sent with the notification
+      id:
+        description: A unique identifier (e.g. UUID) for this push notification.
+        type: string
+      token:
+        description: Token unique for this task/session
+        type: string
+      url:
+        description: Url to send the notification too
+        type: string
+    required:
+      - url
+    title: Push Notification Config
+    type: object
+  Security:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    additionalProperties: false
+    properties:
+      schemes:
+        additionalProperties:
+          $ref: '#/definitions/StringList'
+        propertyNames:
+          type: string
+        type: object
+    title: Security
     type: object
   SecurityScheme:
     $schema: https://json-schema.org/draft/2020-12/schema
@@ -1011,120 +933,6 @@ definitions:
         $ref: '#/definitions/OpenIdConnectSecurityScheme'
         description: OpenID Connect authentication.
     title: Security Scheme
-    type: object
-  SendMessageResponse:
-    $schema: https://json-schema.org/draft/2020-12/schema
-    additionalProperties: false
-    description: ////// Response Messages ///////////
-    properties:
-      message:
-        $ref: '#/definitions/Message'
-      task:
-        $ref: '#/definitions/Task'
-    title: Send Message Response
-    type: object
-  TaskArtifactUpdateEvent:
-    $schema: https://json-schema.org/draft/2020-12/schema
-    additionalProperties: false
-    description: |-
-      TaskArtifactUpdateEvent represents a task delta where an artifact has
-       been generated.
-    properties:
-      append:
-        description: |-
-          If true, the content of this artifact should be appended to a previously
-           sent artifact with the same ID.
-        type: boolean
-      artifact:
-        $ref: '#/definitions/Artifact'
-        description: The artifact that was generated or updated.
-      contextId:
-        description: The id of the context that this task belongs to.
-        type: string
-      lastChunk:
-        description: If true, this is the final chunk of the artifact.
-        type: boolean
-      metadata:
-        $ref: '#/definitions/Struct'
-        description: Optional metadata associated with the artifact update.
-      taskId:
-        description: The id of the task for this artifact.
-        type: string
-    required:
-      - taskId
-      - contextId
-      - artifact
-    title: Task Artifact Update Event
-    type: object
-  SetTaskPushNotificationConfigRequest:
-    $schema: https://json-schema.org/draft/2020-12/schema
-    additionalProperties: false
-    description: Represents a request for the `tasks/pushNotificationConfig/set` method.
-    properties:
-      config:
-        $ref: '#/definitions/TaskPushNotificationConfig'
-        description: The configuration to create.
-      configId:
-        description: The ID for the new config.
-        type: string
-      parent:
-        description: |-
-          The parent task resource for this config.
-           Format: tasks/{task_id}
-        type: string
-      tenant:
-        description: Optional tenant, provided as a path parameter.
-        type: string
-    required:
-      - parent
-      - configId
-      - config
-    title: Set Task Push Notification Config Request
-    type: object
-  GetTaskPushNotificationConfigRequest:
-    $schema: https://json-schema.org/draft/2020-12/schema
-    additionalProperties: false
-    properties:
-      name:
-        description: |-
-          The resource name of the config to retrieve.
-           Format: tasks/{task_id}/pushNotificationConfigs/{config_id}
-        type: string
-      tenant:
-        description: Optional tenant, provided as a path parameter.
-        type: string
-    required:
-      - tenant
-      - name
-    title: Get Task Push Notification Config Request
-    type: object
-  GetExtendedAgentCardRequest:
-    $schema: https://json-schema.org/draft/2020-12/schema
-    additionalProperties: false
-    properties:
-      tenant:
-        description: Optional tenant, provided as a path parameter.
-        type: string
-    required:
-      - tenant
-    title: Get Extended Agent Card Request
-    type: object
-  SubscribeToTaskRequest:
-    $schema: https://json-schema.org/draft/2020-12/schema
-    additionalProperties: false
-    properties:
-      name:
-        description: |-
-          The resource name of the task to subscribe to.
-           Format: tasks/{task_id}
-        type: string
-      tenant:
-        description: Optional tenant, provided as a path parameter.
-        type: string
-    required:
-      - tenant
-      - name
-    title: Subscribe To Task Request
     type: object
   SendMessageConfiguration:
     $schema: https://json-schema.org/draft/2020-12/schema
@@ -1174,26 +982,41 @@ definitions:
       - tenant
     title: Send Message Request
     type: object
-  ListTaskPushNotificationConfigResponse:
+  SendMessageResponse:
     $schema: https://json-schema.org/draft/2020-12/schema
     additionalProperties: false
-    description: |-
-      Represents a successful response for the `tasks/pushNotificationConfig/list`
-       method.
+    description: ////// Response Messages ///////////
     properties:
-      configs:
-        description: The list of push notification configurations.
-        items:
-          $ref: '#/definitions/TaskPushNotificationConfig'
-        type: array
-      nextPageToken:
+      message:
+        $ref: '#/definitions/Message'
+      task:
+        $ref: '#/definitions/Task'
+    title: Send Message Response
+    type: object
+  SetTaskPushNotificationConfigRequest:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    additionalProperties: false
+    description: Represents a request for the `tasks/pushNotificationConfig/set` method.
+    properties:
+      config:
+        $ref: '#/definitions/TaskPushNotificationConfig'
+        description: The configuration to create.
+      configId:
+        description: The ID for the new config.
+        type: string
+      parent:
         description: |-
-          A token, which can be sent as `page_token` to retrieve the next page.
-           If this field is omitted, there are no subsequent pages.
+          The parent task resource for this config.
+           Format: tasks/{task_id}
+        type: string
+      tenant:
+        description: Optional tenant, provided as a path parameter.
         type: string
     required:
-      - nextPageToken
-    title: List Task Push Notification Config Response
+      - parent
+      - configId
+      - config
+    title: Set Task Push Notification Config Request
     type: object
   StreamResponse:
     $schema: https://json-schema.org/draft/2020-12/schema
@@ -1214,14 +1037,28 @@ definitions:
         description: A Task object containing the current state of the task.
     title: Stream Response
     type: object
-  CancelTaskRequest:
+  StringList:
     $schema: https://json-schema.org/draft/2020-12/schema
     additionalProperties: false
-    description: Represents a request for the `tasks/cancel` method.
+    description: protolint:disable REPEATED_FIELD_NAMES_PLURALIZED
+    properties:
+      list:
+        items:
+          type: string
+        type: array
+    title: String List
+    type: object
+  Struct:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    title: Struct
+    type: object
+  SubscribeToTaskRequest:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    additionalProperties: false
     properties:
       name:
         description: |-
-          The resource name of the task to cancel.
+          The resource name of the task to subscribe to.
            Format: tasks/{task_id}
         type: string
       tenant:
@@ -1230,5 +1067,168 @@ definitions:
     required:
       - tenant
       - name
-    title: Cancel Task Request
+    title: Subscribe To Task Request
     type: object
+  Task:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    additionalProperties: false
+    description: |-
+      Task is the core unit of action for A2A. It has a current status
+       and when results are created for the task they are stored in the
+       artifact. If there are multiple turns for a task, these are stored in
+       history.
+    properties:
+      artifacts:
+        description: A set of output artifacts for a Task.
+        items:
+          $ref: '#/definitions/Artifact'
+        type: array
+      contextId:
+        description: |-
+          Unique identifier (e.g. UUID) for the contextual collection of interactions
+           (tasks and messages). Created by the A2A server.
+        type: string
+      history:
+        description: |-
+          protolint:disable REPEATED_FIELD_NAMES_PLURALIZED
+           The history of interactions from a task.
+        items:
+          $ref: '#/definitions/Message'
+        type: array
+      id:
+        description: |-
+          Unique identifier (e.g. UUID) for the task, generated by the server for a
+           new task.
+        type: string
+      metadata:
+        $ref: '#/definitions/Struct'
+        description: |-
+          protolint:enable REPEATED_FIELD_NAMES_PLURALIZED
+           A key/value object to store custom metadata about a task.
+      status:
+        $ref: '#/definitions/TaskStatus'
+        description: The current status of a Task, including state and a message.
+    required:
+      - id
+      - contextId
+      - status
+    title: Task
+    type: object
+  TaskArtifactUpdateEvent:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    additionalProperties: false
+    description: |-
+      TaskArtifactUpdateEvent represents a task delta where an artifact has
+       been generated.
+    properties:
+      append:
+        description: |-
+          If true, the content of this artifact should be appended to a previously
+           sent artifact with the same ID.
+        type: boolean
+      artifact:
+        $ref: '#/definitions/Artifact'
+        description: The artifact that was generated or updated.
+      contextId:
+        description: The id of the context that this task belongs to.
+        type: string
+      lastChunk:
+        description: If true, this is the final chunk of the artifact.
+        type: boolean
+      metadata:
+        $ref: '#/definitions/Struct'
+        description: Optional metadata associated with the artifact update.
+      taskId:
+        description: The id of the task for this artifact.
+        type: string
+    required:
+      - taskId
+      - contextId
+      - artifact
+    title: Task Artifact Update Event
+    type: object
+  TaskPushNotificationConfig:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    additionalProperties: false
+    description: |-
+      A container associating a push notification configuration with a specific
+       task.
+    properties:
+      name:
+        description: |-
+          The resource name of the config.
+           Format: tasks/{task_id}/pushNotificationConfigs/{config_id}
+        type: string
+      pushNotificationConfig:
+        $ref: '#/definitions/PushNotificationConfig'
+        description: The push notification configuration details.
+    required:
+      - name
+      - pushNotificationConfig
+    title: Task Push Notification Config
+    type: object
+  TaskStatus:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    additionalProperties: false
+    description: A container for the status of a task
+    properties:
+      message:
+        $ref: '#/definitions/Message'
+        description: A message associated with the status.
+      state:
+        description: The current state of this task.
+        enum:
+          - TASK_STATE_UNSPECIFIED
+          - TASK_STATE_SUBMITTED
+          - TASK_STATE_WORKING
+          - TASK_STATE_COMPLETED
+          - TASK_STATE_FAILED
+          - TASK_STATE_CANCELLED
+          - TASK_STATE_INPUT_REQUIRED
+          - TASK_STATE_REJECTED
+          - TASK_STATE_AUTH_REQUIRED
+        title: Task State
+        type: string
+      timestamp:
+        $ref: '#/definitions/Timestamp'
+        description: |-
+          ISO 8601 Timestamp when the status was recorded.
+           Example: "2023-10-27T10:00:00Z"
+    required:
+      - state
+    title: Task Status
+    type: object
+  TaskStatusUpdateEvent:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    additionalProperties: false
+    description: |-
+      An event sent by the agent to notify the client of a change in a task's
+       status.
+    properties:
+      contextId:
+        description: The id of the context that the task belongs to
+        type: string
+      final:
+        description: If true, this is the final event in the stream for this interaction.
+        type: boolean
+      metadata:
+        $ref: '#/definitions/Struct'
+        description: Optional metadata to associate with the task update.
+      status:
+        $ref: '#/definitions/TaskStatus'
+        description: The new status of the task.
+      taskId:
+        description: The id of the task that is changed
+        type: string
+    required:
+      - taskId
+      - contextId
+      - status
+      - final
+    title: Task Status Update Event
+    type: object
+  Timestamp:
+    $schema: https://json-schema.org/draft/2020-12/schema
+    format: date-time
+    title: Timestamp
+    type: string
