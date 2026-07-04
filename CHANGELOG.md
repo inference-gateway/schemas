@@ -3,6 +3,8 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.3.0](https://github.com/inference-gateway/schemas/compare/v0.2.0...v0.3.0) (2026-07-04)
+
 ## [0.2.0](https://github.com/inference-gateway/schemas/compare/v0.1.0...v0.2.0) (2026-06-18)
 
 ### Features
