@@ -1,5 +1,5 @@
 ---
-name: Sync MCP Schema and Create PR
+name: Sync MCP Schema
 
 on:
   workflow_dispatch:
@@ -12,15 +12,35 @@ jobs:
   sync-mcp-schema:
     runs-on: ubuntu-24.04
     steps:
+      - uses: actions/create-github-app-token@v3.2.0
+        id: app-token
+        with:
+          client-id: ${{ secrets.INFERENCE_GATEWAY_MAINTAINER_APP_ID }}
+          private-key: ${{ secrets.INFERENCE_GATEWAY_MAINTAINER_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: |
+            ${{ github.event.repository.name }}
+
+      - name: Get GitHub App User ID
+        id: get-user-id
+        run: echo "user-id=$(gh api "/users/${{ steps.app-token.outputs.app-slug }}[bot]" --jq .id)" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+
       - name: Checkout repository
-        uses: actions/checkout@v6.0.3
+        uses: actions/checkout@v7.0.0
         with:
           fetch-depth: 0
+          persist-credentials: true
+          token: ${{ steps.app-token.outputs.token }}
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v6.4.0
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2.2.0
         with:
-          node-version: "24.15.0"
+          bun-version-file: "package.json"
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
 
       - name: Install Task
         run: sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin v3.48.0
@@ -29,9 +49,13 @@ jobs:
         run: task mcp-schema-download
 
       - name: Create Pull Request
+        id: cpr
         uses: peter-evans/create-pull-request@v8.1.1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
+          sign-commits: true
+          author: "${{ steps.app-token.outputs.app-slug }}[bot] <${{ steps.get-user-id.outputs.user-id }}+${{ steps.app-token.outputs.app-slug }}[bot]@users.noreply.github.com>"
+          committer: "${{ steps.app-token.outputs.app-slug }}[bot] <${{ steps.get-user-id.outputs.user-id }}+${{ steps.app-token.outputs.app-slug }}[bot]@users.noreply.github.com>"
           commit-message: "chore: Sync MCP schema"
           title: "chore(mcp): sync MCP schema"
           body: |
@@ -39,6 +63,23 @@ jobs:
 
             This PR updates:
             - MCP schema from modelcontextprotocol/modelcontextprotocol
+          labels: |
+            mcp
+            schema
+            bot
           branch: mcp-schema-sync
           base: main
           delete-branch: true
+
+      - name: Add PR to Roadmap 2026 project (QA)
+        if: steps.cpr.outputs.pull-request-number
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          PR_URL: ${{ steps.cpr.outputs.pull-request-url }}
+        run: |
+          item_id=$(gh project item-add 7 --owner ${{ github.repository_owner }} --url "$PR_URL" --format json --jq '.id')
+          gh project item-edit \
+            --id "$item_id" \
+            --project-id PVT_kwDOC6ve6c4BNnSt \
+            --field-id PVTSSF_lADOC6ve6c4BNnStzg8jqxU \
+            --single-select-option-id 0a18abd7

@@ -10,21 +10,22 @@ tasks:
   mcp-schema-download:
     desc: "Download the latest MCP schema and convert to YAML"
     cmds:
-      - npm install js-yaml
+      - bun install
       - curl -o mcp/mcp-schema.json https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/refs/heads/main/schema/draft/schema.json
       - |
         echo "Converting JSON schema to YAML format"
-        NODE_PATH=./node_modules:${NODE_PATH:-/usr/lib/node_modules} node -e "
+        bun -e "
           const fs = require('fs');
           const yaml = require('js-yaml');
           const json = JSON.parse(fs.readFileSync('mcp/mcp-schema.json', 'utf8'));
           fs.writeFileSync('mcp/mcp-schema.yaml', yaml.dump(json, {lineWidth: -1}));
         "
+      - task: format
 
   a2a-schema-download:
     desc: "Generate JSON schema from A2A proto and convert to YAML"
     cmds:
-      - npm install js-yaml
+      - bun install
       - go install github.com/bufbuild/protoschema-plugins/cmd/protoc-gen-jsonschema@latest
       - mkdir -p a2a/tmp
       - cp a2a/a2a.proto a2a/tmp/a2a.proto
@@ -44,18 +45,45 @@ tasks:
         cd ../..
       - |
         echo "Processing bundled schema"
-        NODE_PATH=./node_modules:${NODE_PATH:-/usr/lib/node_modules} node scripts/process-bundle.js
+        bun scripts/process-bundle.js
       - |
         echo "Adding required fields from proto annotations"
-        NODE_PATH=./node_modules:${NODE_PATH:-/usr/lib/node_modules} node scripts/add-required-fields.js
+        bun scripts/add-required-fields.js
       - rm -rf a2a/tmp
+      - task: format
+
+  format:
+    desc: "Format all YAML files"
+    cmds:
+      - bun run format
 
   openapi:format:
     desc: "Format OpenAPI Spec"
     cmds:
-      - prettier --write openapi.yaml
+      - bun run openapi:format
+
+  lint:
+    desc: "Lint all Markdown files"
+    cmds:
+      - bun run lint
+
+  lint:fix:
+    desc: "Lint and auto-fix all Markdown files"
+    cmds:
+      - bun run lint:fix
 
   openapi:lint:
     desc: "Lint OpenAPI spec"
     cmds:
-      - spectral lint --verbose openapi.yaml
+      - bun run openapi:lint
+
+  check-reachable:
+    desc: "Verify streaming-payload schemas are reachable in openapi.yaml"
+    cmds:
+      - bun run check-reachable
+
+  release:dry:
+    desc: "Preview the next release locally (semantic-release dry run)"
+    cmds:
+      - bun install
+      - bun run release:dry

@@ -9,23 +9,29 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
   ci:
     runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6.0.3
+        uses: actions/checkout@v7.0.0
         with:
           persist-credentials: false
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v6.4.0
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2.2.0
         with:
-          node-version: "24.15.0"
+          bun-version-file: "package.json"
 
-      - name: Install Spectral
-        run: npm install -g @stoplight/spectral-cli
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
 
-      - name: Validate OpenAPI with Spectral
-        run: spectral lint openapi.yaml
+      - name: Lint Markdown
+        run: bun run lint
+
+      - name: Lint OpenAPI
+        run: bun run openapi:lint

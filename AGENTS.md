@@ -13,8 +13,9 @@ Use Taskfile tasks for routine work:
 - `task openapi:lint` runs Spectral against `openapi.yaml`; this is the CI check.
 - `task mcp-schema-download` fetches the latest upstream MCP schema and regenerates YAML.
 - `task a2a-schema-download` regenerates A2A JSON/YAML from `a2a/a2a.proto`; it requires Go and `buf`.
+- `task release:dry` previews the next semantic-release version and notes without publishing.
 
-For OpenAPI codegen reachability checks, run `node scripts/check-reachable.js openapi.yaml`.
+For OpenAPI codegen reachability checks, run `bun scripts/check-reachable.js openapi.yaml`.
 
 ## Coding Style & Naming Conventions
 
@@ -22,11 +23,11 @@ Follow `.editorconfig`: LF endings, UTF-8, final newline, and trimmed trailing w
 
 ## Testing Guidelines
 
-There is no broad unit test suite. Validate OpenAPI changes with `task openapi:lint` and, when touching streaming response schemas, `node scripts/check-reachable.js openapi.yaml`. For A2A generation changes, run `task a2a-schema-download` end to end and inspect the generated diff. Do not hand-edit generated schema outputs unless the corresponding task or source file requires it.
+There is no broad unit test suite. Validate OpenAPI changes with `task openapi:lint` and, when touching streaming response schemas, `bun scripts/check-reachable.js openapi.yaml`. For A2A generation changes, run `task a2a-schema-download` end to end and inspect the generated diff. Do not hand-edit generated schema outputs unless the corresponding task or source file requires it.
 
 ## Commit & Pull Request Guidelines
 
-Use Conventional Commits with a capitalized description, matching project history, for example `chore: Sync MCP schema` or `feat(openapi): Add usage fields`. PRs should describe the schema impact, list validation commands run, and call out downstream effects for SDKs, docs, or gateway code. A2A changes touch CODEOWNERS-managed paths, so expect review from `@inference-gateway/a2a`.
+Use Conventional Commits with a capitalized description, matching project history, for example `chore: Sync MCP schema` or `feat(openapi): Add usage fields`. These commit types drive semantic-release: `feat:` triggers a minor release, `fix:` a patch, and a `BREAKING CHANGE:` footer a major; see `RELEASING.md`. PRs should describe the schema impact, list validation commands run, and call out downstream effects for SDKs, docs, or gateway code. A2A changes touch CODEOWNERS-managed paths, so expect review from `@inference-gateway/a2a`.
 
 ## Security & Configuration Tips
 
