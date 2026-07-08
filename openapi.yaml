@@ -613,6 +613,7 @@ components:
         - minimax
         - moonshot
         - nvidia
+        - zai
       x-provider-configs:
         ollama:
           id: 'ollama'
@@ -791,6 +792,20 @@ components:
         nvidia:
           id: 'nvidia'
           url: 'https://integrate.api.nvidia.com/v1'
+          auth_type: 'bearer'
+          supports_vision: true
+          endpoints:
+            models:
+              name: 'list_models'
+              method: 'GET'
+              endpoint: '/models'
+            chat:
+              name: 'chat_completions'
+              method: 'POST'
+              endpoint: '/chat/completions'
+        zai:
+          id: 'zai'
+          url: 'https://api.z.ai/v1'
           auth_type: 'bearer'
           supports_vision: true
           endpoints:
