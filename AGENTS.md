@@ -29,6 +29,16 @@ There is no broad unit test suite. Validate OpenAPI changes with `task openapi:l
 
 Use Conventional Commits with a capitalized description, matching project history, for example `chore: Sync MCP schema` or `feat(openapi): Add usage fields`. These commit types drive semantic-release: `feat:` triggers a minor release, `fix:` a patch, and a `BREAKING CHANGE:` footer a major; see `RELEASING.md`. PRs should describe the schema impact, list validation commands run, and call out downstream effects for SDKs, docs, or gateway code. A2A changes touch CODEOWNERS-managed paths, so expect review from `@inference-gateway/a2a`.
 
+## Provider Onboarding Checklist
+
+When adding a new provider to the gateway, update `openapi.yaml` in these places:
+
+1. **Provider enum** - Add the provider name to the `Provider` schema's `enum` list (alphabetical order).
+2. **x-provider-configs** - Add a config entry under the `Provider` schema's `x-provider-configs` map with `id`, `url`, `auth_type`, `supports_vision`, and `endpoints`.
+3. **x-config providers section** - Add `{provider}_api_url` and `{provider}_api_key` entries under the `providers` section of `x-config`. The URL entry must have a `default` matching the `url` from `x-provider-configs`. The key entry must have `secret: true`.
+
+The env var naming convention is `{UPPER_SNAKE_PROVIDER}_API_URL` and `{UPPER_SNAKE_PROVIDER}_API_KEY`. Keep entries in alphabetical order by provider name within the providers section.
+
 ## Security & Configuration Tips
 
 Do not commit local `.infer/`, `.flox/`, or generated temporary files. Schema sync tasks download upstream content; review generated diffs carefully before merging automated or manual sync updates.
