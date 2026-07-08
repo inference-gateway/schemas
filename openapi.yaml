@@ -17,13 +17,21 @@ info:
 servers:
   - url: http://localhost:8080
     description: Default server without version prefix for healthcheck and proxy and points
-    x-server-tags: ['Health', 'Proxy']
+    x-server-tags:
+      - Health
+      - Proxy
   - url: http://localhost:8080/v1
     description: Default server with version prefix for listing models and chat completions
-    x-server-tags: ['Models', 'Completions', 'Responses']
+    x-server-tags:
+      - Models
+      - Completions
+      - Responses
   - url: https://api.inference-gateway.local/v1
     description: Local server with version prefix for listing models and chat completions
-    x-server-tags: ['Models', 'Completions', 'Responses']
+    x-server-tags:
+      - Models
+      - Completions
+      - Responses
 tags:
   - name: Models
     description: List and describe the various models available in the API.
@@ -906,6 +914,11 @@ components:
         - user
         - assistant
         - tool
+      x-enum-varnames:
+        - System
+        - User
+        - Assistant
+        - Tool
     Message:
       type: object
       description: Message structure for provider requests
@@ -950,7 +963,8 @@ components:
       properties:
         type:
           type: string
-          enum: [text]
+          enum:
+            - text
           description: Content type identifier
         text:
           type: string
@@ -964,7 +978,8 @@ components:
       properties:
         type:
           type: string
-          enum: [image_url]
+          enum:
+            - image_url
           description: Content type identifier
         image_url:
           $ref: '#/components/schemas/ImageURL'
@@ -980,7 +995,14 @@ components:
           description: URL of the image (data URLs supported)
         detail:
           type: string
-          enum: [auto, low, high]
+          enum:
+            - auto
+            - low
+            - high
+          x-enum-varnames:
+            - ImageURLDetailAuto
+            - ImageURLDetailLow
+            - ImageURLDetailHigh
           default: auto
           description: Image detail level for vision processing
       required:
@@ -1064,7 +1086,8 @@ components:
               file_path:
                 type: 'string'
                 description: 'Path to the file to read'
-            required: ['file_path']
+            required:
+              - file_path
           additionalProperties: true
       required:
         - name
@@ -1332,6 +1355,11 @@ components:
             supported values are `minimal`, `low`, `medium`, and `high`.
             Reducing reasoning effort can result in faster responses and fewer
             tokens used on reasoning in a response.
+          x-enum-varnames:
+            - Minimal
+            - Low
+            - Medium
+            - High
           enum:
             - minimal
             - low
@@ -1710,6 +1738,12 @@ components:
         - tool_calls
         - content_filter
         - function_call
+      x-enum-varnames:
+        - Stop
+        - Length
+        - ToolCalls
+        - ContentFilter
+        - FunctionCall
     CreateChatCompletionStreamResponse:
       type: object
       description: |
@@ -1896,6 +1930,11 @@ components:
         - assistant
         - system
         - developer
+      x-enum-varnames:
+        - ResponseRoleUser
+        - ResponseRoleAssistant
+        - ResponseRoleSystem
+        - ResponseRoleDeveloper
     ResponseInputMessageContent:
       description: >
         Text or multimodal content for an input message. Either a string or a
@@ -1918,7 +1957,8 @@ components:
       properties:
         type:
           type: string
-          enum: [input_text]
+          enum:
+            - input_text
           description: The type of the input item. Always `input_text`.
         text:
           type: string
@@ -1932,14 +1972,22 @@ components:
       properties:
         type:
           type: string
-          enum: [input_image]
+          enum:
+            - input_image
           description: The type of the input item. Always `input_image`.
         image_url:
           type: string
           description: The URL of the image (data URLs supported).
         detail:
           type: string
-          enum: [auto, low, high]
+          enum:
+            - auto
+            - low
+            - high
+          x-enum-varnames:
+            - ResponseInputImageDetailAuto
+            - ResponseInputImageDetailLow
+            - ResponseInputImageDetailHigh
           default: auto
           description: The detail level of the image to send to the model.
       required:
@@ -1954,7 +2002,10 @@ components:
       properties:
         type:
           type: string
-          enum: [function]
+          enum:
+            - function
+          x-enum-varnames:
+            - ResponseToolTypeFunction
           description: The type of the tool. Currently only `function`.
         name:
           type: string
@@ -1980,14 +2031,20 @@ components:
         tool.
       oneOf:
         - type: string
-          enum: [none, auto, required]
+          enum:
+            - none
+            - auto
+            - required
           description: The tool-choice mode.
         - type: object
           description: Forces the model to call a specific function tool.
           properties:
             type:
               type: string
-              enum: [function]
+              enum:
+                - function
+              x-enum-varnames:
+                - ResponseToolChoiceTypeFunction
             name:
               type: string
           required:
@@ -1999,15 +2056,27 @@ components:
       properties:
         effort:
           type: string
-          enum: [minimal, low, medium, high]
+          enum:
+            - minimal
+            - low
+            - medium
+            - high
           default: medium
           nullable: true
+          x-enum-varnames:
+            - ResponseReasoningEffortMinimal
+            - ResponseReasoningEffortLow
+            - ResponseReasoningEffortMedium
+            - ResponseReasoningEffortHigh
           description: >
             Constrains the effort on reasoning for reasoning models. Reducing
             effort can result in faster responses and fewer reasoning tokens.
         summary:
           type: string
-          enum: [auto, concise, detailed]
+          enum:
+            - auto
+            - concise
+            - detailed
           nullable: true
           description: >
             A summary of the reasoning performed by the model, useful for
@@ -2024,7 +2093,14 @@ components:
           properties:
             type:
               type: string
-              enum: [text, json_schema, json_object]
+              enum:
+                - text
+                - json_schema
+                - json_object
+              x-enum-varnames:
+                - ResponseTextConfigFormatTypeText
+                - ResponseTextConfigFormatTypeJSONSchema
+                - ResponseTextConfigFormatTypeJSONObject
               description: The type of response format being defined.
             name:
               type: string
@@ -2155,18 +2231,25 @@ components:
       properties:
         type:
           type: string
-          enum: [message]
+          enum:
+            - message
           description: The type of the output item. Always `message`.
         id:
           type: string
           description: The unique ID of the output message.
         role:
           type: string
-          enum: [assistant]
+          enum:
+            - assistant
+          x-enum-varnames:
+            - ResponseOutputMessageRoleAssistant
           description: The role of the output message. Always `assistant`.
         status:
           type: string
-          enum: [in_progress, completed, incomplete]
+          enum:
+            - in_progress
+            - completed
+            - incomplete
           description: The status of the message.
         content:
           type: array
@@ -2189,7 +2272,8 @@ components:
       properties:
         type:
           type: string
-          enum: [output_text]
+          enum:
+            - output_text
           description: The type of the output text. Always `output_text`.
         text:
           type: string
@@ -2203,7 +2287,8 @@ components:
       properties:
         type:
           type: string
-          enum: [refusal]
+          enum:
+            - refusal
           description: The type of the refusal. Always `refusal`.
         refusal:
           type: string
@@ -2217,7 +2302,10 @@ components:
       properties:
         type:
           type: string
-          enum: [function_call]
+          enum:
+            - function_call
+          x-enum-varnames:
+            - ResponseFunctionToolCallTypeFunctionCall
           description: The type of the output item. Always `function_call`.
         id:
           type: string
@@ -2235,7 +2323,10 @@ components:
           description: A JSON string of the arguments to pass to the function.
         status:
           type: string
-          enum: [in_progress, completed, incomplete]
+          enum:
+            - in_progress
+            - completed
+            - incomplete
           description: The status of the function tool call.
       required:
         - type
@@ -2248,7 +2339,8 @@ components:
       properties:
         type:
           type: string
-          enum: [reasoning]
+          enum:
+            - reasoning
           description: The type of the output item. Always `reasoning`.
         id:
           type: string
@@ -2260,7 +2352,10 @@ components:
             $ref: '#/components/schemas/ResponseReasoningSummary'
         status:
           type: string
-          enum: [in_progress, completed, incomplete]
+          enum:
+            - in_progress
+            - completed
+            - incomplete
           description: The status of the reasoning item.
       required:
         - type
@@ -2268,11 +2363,13 @@ components:
         - summary
     ResponseReasoningSummary:
       type: object
+      x-go-name: ResponseReasoningSummaryPart
       description: A summary part of a reasoning item.
       properties:
         type:
           type: string
-          enum: [summary_text]
+          enum:
+            - summary_text
           description: The type of the summary. Always `summary_text`.
         text:
           type: string
