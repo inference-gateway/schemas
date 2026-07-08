@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.5.1](https://github.com/inference-gateway/schemas/compare/v0.5.0...v0.5.1) (2026-07-08)
+
+### Bug Fixes
+
+* **openapi:** Add NVIDIA and ZAI env vars to x-config providers section ([#113](https://github.com/inference-gateway/schemas/issues/113)) ([46864ea](https://github.com/inference-gateway/schemas/commit/46864eaf40074406e353f5b4196e7a0159d89fed))
+
 ## [0.5.0](https://github.com/inference-gateway/schemas/compare/v0.4.0...v0.5.0) (2026-07-08)
 
 ### Features
