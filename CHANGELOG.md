@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.6.1](https://github.com/inference-gateway/schemas/compare/v0.6.0...v0.6.1) (2026-07-18)
+
+### Bug Fixes
+
+* **llamacpp:** set auth_type to none and default port to 8080 ([#123](https://github.com/inference-gateway/schemas/issues/123)) ([95e9039](https://github.com/inference-gateway/schemas/commit/95e9039740e08eaf959f902479ca93533b0f9ad8))
+
 ## [0.6.0](https://github.com/inference-gateway/schemas/compare/v0.5.1...v0.6.0) (2026-07-18)
 
 ### Features
