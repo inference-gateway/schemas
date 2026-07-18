@@ -27,7 +27,7 @@ There is no broad unit test suite. Validate OpenAPI changes with `task openapi:l
 
 ## Commit & Pull Request Guidelines
 
-Use Conventional Commits with a capitalized description, matching project history, for example `chore: Sync MCP schema` or `feat(openapi): Add usage fields`. These commit types drive semantic-release: `feat:` triggers a minor release, `fix:` a patch, and a `BREAKING CHANGE:` footer a major; see `RELEASING.md`. PRs should describe the schema impact, list validation commands run, and call out downstream effects for SDKs, docs, or gateway code. A2A changes touch CODEOWNERS-managed paths, so expect review from `@inference-gateway/a2a`.
+Use Conventional Commits with a capitalized description, matching project history, for example `chore: sync MCP schema` or `feat(openapi): add usage fields`. These commit types drive semantic-release: `feat:` triggers a minor release, `fix:` a patch, and a `BREAKING CHANGE:` footer a major; see `RELEASING.md`. PRs should describe the schema impact, list validation commands run, and call out downstream effects for SDKs, docs, or gateway code. A2A changes touch CODEOWNERS-managed paths, so expect review from `@inference-gateway/a2a`.
 
 ## Provider Onboarding Checklist
 
