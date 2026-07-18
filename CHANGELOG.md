@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.6.0](https://github.com/inference-gateway/schemas/compare/v0.5.1...v0.6.0) (2026-07-18)
+
+### Features
+
+* **openapi:** add llamacpp provider definition ([#122](https://github.com/inference-gateway/schemas/issues/122)) ([3872a4b](https://github.com/inference-gateway/schemas/commit/3872a4bd97373ffe5d785323c69865c9ece0c884))
+
 ## [0.5.1](https://github.com/inference-gateway/schemas/compare/v0.5.0...v0.5.1) (2026-07-08)
 
 ### Bug Fixes
