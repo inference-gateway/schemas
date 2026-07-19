@@ -699,7 +699,7 @@ components:
         llamacpp:
           id: 'llamacpp'
           url: 'http://llamacpp:8080/v1'
-          auth_type: 'none'
+          auth_type: 'bearer'
           supports_vision: true
           endpoints:
             models:
