@@ -3,6 +3,13 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.6.3](https://github.com/inference-gateway/schemas/compare/v0.6.2...v0.6.3) (2026-07-19)
+
+### Bug Fixes
+
+* **openapi:** correct Z.AI base URL to https://api.z.ai/api/paas/v4 ([#129](https://github.com/inference-gateway/schemas/issues/129)) ([c9189a2](https://github.com/inference-gateway/schemas/commit/c9189a22b5d0e7bbf5127e758ce723c97e322a1b))
+* **openapi:** use bearer auth for llamacpp provider ([#128](https://github.com/inference-gateway/schemas/issues/128)) ([eca157f](https://github.com/inference-gateway/schemas/commit/eca157f5bf55e0f227c02cc9d7b5c27959803bb9))
+
 ## [0.6.2](https://github.com/inference-gateway/schemas/compare/v0.6.1...v0.6.2) (2026-07-18)
 
 ### Bug Fixes
