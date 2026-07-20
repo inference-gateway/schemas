@@ -3,6 +3,13 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.8.0](https://github.com/inference-gateway/schemas/compare/v0.7.0...v0.8.0) (2026-07-20)
+
+### Features
+
+* **openapi:** add community to ContextWindow.source enum and sync Pricing.source ([#134](https://github.com/inference-gateway/schemas/issues/134)) ([dde94fb](https://github.com/inference-gateway/schemas/commit/dde94fba2c2a53ddfaccf67eeb6f71c38f117d9e))
+* **openapi:** add context_window and pricing schemas with include query param ([#132](https://github.com/inference-gateway/schemas/issues/132)) ([3b26288](https://github.com/inference-gateway/schemas/commit/3b26288f91333f6c1f44143bedfd44fab2e5d1e9))
+
 ## [0.7.0](https://github.com/inference-gateway/schemas/compare/v0.6.3...v0.7.0) (2026-07-20)
 
 ### Features
