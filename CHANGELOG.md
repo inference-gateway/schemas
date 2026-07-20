@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.9.0](https://github.com/inference-gateway/schemas/compare/v0.8.0...v0.9.0) (2026-07-20)
+
+### Features
+
+* **openapi:** refactor include query param to typed enum array ([#136](https://github.com/inference-gateway/schemas/issues/136)) ([0b9f25a](https://github.com/inference-gateway/schemas/commit/0b9f25a1511c25b85e45afea8394f373fe6e4805))
+
 ## [0.8.0](https://github.com/inference-gateway/schemas/compare/v0.7.0...v0.8.0) (2026-07-20)
 
 ### Features
