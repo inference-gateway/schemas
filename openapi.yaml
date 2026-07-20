@@ -1136,7 +1136,11 @@ components:
           enum:
             - runtime
             - provider
-            - unknown
+            - community
+          x-enum-varnames:
+            - ContextWindowSourceRuntime
+            - ContextWindowSourceProvider
+            - ContextWindowSourceCommunity
           description: Source of the context window information
       required:
         - tokens
@@ -1162,6 +1166,12 @@ components:
           description: Price per cached input token write
         source:
           type: string
+          enum:
+            - provider
+            - community
+          x-enum-varnames:
+            - PricingSourceProvider
+            - PricingSourceCommunity
           description: Source of the pricing information
         updated_at:
           type: string
