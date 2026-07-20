@@ -71,8 +71,15 @@ paths:
         - name: include
           in: query
           required: false
+          style: form
+          explode: false
           schema:
-            type: string
+            type: array
+            items:
+              type: string
+              enum:
+                - context_window
+                - pricing
           description: |
             Comma-separated list of metadata keys to include in the response.
             Supported values: `pricing`, `context_window`.
