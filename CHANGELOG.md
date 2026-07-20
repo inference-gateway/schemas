@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.7.0](https://github.com/inference-gateway/schemas/compare/v0.6.3...v0.7.0) (2026-07-20)
+
+### Features
+
+* **openapi:** add prompt_tokens_details and completion_tokens_details to CompletionUsage ([#130](https://github.com/inference-gateway/schemas/issues/130)) ([92b88ee](https://github.com/inference-gateway/schemas/commit/92b88ee0b6a2b568e484bca9232118a85f966b7d))
+
 ## [0.6.3](https://github.com/inference-gateway/schemas/compare/v0.6.2...v0.6.3) (2026-07-19)
 
 ### Bug Fixes
