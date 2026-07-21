@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.11.0](https://github.com/inference-gateway/schemas/compare/v0.10.0...v0.11.0) (2026-07-21)
+
+### Features
+
+* **openapi:** add Anthropic Messages API (POST /v1/messages) endpoint ([#140](https://github.com/inference-gateway/schemas/issues/140)) ([f9ff6bc](https://github.com/inference-gateway/schemas/commit/f9ff6bc372e8bcac3d3321e69ccbe6a90b6d979d))
+
 ## [0.10.0](https://github.com/inference-gateway/schemas/compare/v0.9.0...v0.10.0) (2026-07-21)
 
 ### Features
