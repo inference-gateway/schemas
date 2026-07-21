@@ -2806,7 +2806,7 @@ components:
         - type
     MessagesTextBlock:
       type: object
-      description: A text content block in a Messages API request.
+      description: A text content block in a Messages API request or response.
       properties:
         type:
           type: string
@@ -2962,7 +2962,7 @@ components:
         - tool_use_id
     MessagesThinkingBlock:
       type: object
-      description: A thinking content block in a Messages API response.
+      description: A thinking content block in a Messages API request or response.
       properties:
         type:
           type: string
@@ -2981,6 +2981,24 @@ components:
         - type
         - thinking
         - signature
+    MessagesRedactedThinkingBlock:
+      type: object
+      description: |
+        A redacted thinking content block in a Messages API request or
+        response. Emitted when thinking content is encrypted for safety
+        reasons; must be passed back unchanged in multi-turn conversations.
+      properties:
+        type:
+          type: string
+          enum:
+            - redacted_thinking
+          description: Content type identifier. Always `redacted_thinking`.
+        data:
+          type: string
+          description: The encrypted thinking content.
+      required:
+        - type
+        - data
     MessagesRequestContentBlock:
       type: object
       description: A content block within a Messages API request message.
@@ -2990,6 +3008,8 @@ components:
         - $ref: '#/components/schemas/MessagesToolUseBlock'
         - $ref: '#/components/schemas/MessagesToolResultBlock'
         - $ref: '#/components/schemas/MessagesDocumentBlock'
+        - $ref: '#/components/schemas/MessagesThinkingBlock'
+        - $ref: '#/components/schemas/MessagesRedactedThinkingBlock'
     MessagesMessage:
       type: object
       description: A message in a Messages API request.
@@ -3013,23 +3033,6 @@ components:
       required:
         - role
         - content
-    MessagesSystemBlock:
-      type: object
-      description: A system content block with optional cache control.
-      properties:
-        type:
-          type: string
-          enum:
-            - text
-          description: Content type identifier. Always `text`.
-        text:
-          type: string
-          description: The system prompt text.
-        cache_control:
-          $ref: '#/components/schemas/CacheControl'
-      required:
-        - type
-        - text
     MessagesTool:
       type: object
       description: |
@@ -3104,7 +3107,7 @@ components:
               description: System prompt as a string.
             - type: array
               items:
-                $ref: '#/components/schemas/MessagesSystemBlock'
+                $ref: '#/components/schemas/MessagesTextBlock'
         messages:
           type: array
           description: |
@@ -3174,72 +3177,14 @@ components:
         - model
         - max_tokens
         - messages
-    MessagesResponseTextBlock:
-      type: object
-      description: A text content block in a Messages API response.
-      properties:
-        type:
-          type: string
-          enum:
-            - text
-          description: Content type identifier. Always `text`.
-        text:
-          type: string
-          description: The text content.
-      required:
-        - type
-        - text
-    MessagesResponseToolUseBlock:
-      type: object
-      description: A tool use content block in a Messages API response.
-      properties:
-        type:
-          type: string
-          enum:
-            - tool_use
-          description: Content type identifier. Always `tool_use`.
-        id:
-          type: string
-          description: The unique identifier for this tool use block.
-        name:
-          type: string
-          description: The name of the tool being called.
-        input:
-          type: object
-          description: The input parameters for the tool.
-          additionalProperties: true
-      required:
-        - type
-        - id
-        - name
-        - input
-    MessagesResponseThinkingBlock:
-      type: object
-      description: A thinking content block in a Messages API response.
-      properties:
-        type:
-          type: string
-          enum:
-            - thinking
-          description: Content type identifier. Always `thinking`.
-        thinking:
-          type: string
-          description: The thinking content.
-        signature:
-          type: string
-          description: |
-            The signature for verifying the thinking content.
-      required:
-        - type
-        - thinking
-        - signature
     MessagesResponseContentBlock:
       type: object
       description: A content block within a Messages API response.
       oneOf:
-        - $ref: '#/components/schemas/MessagesResponseTextBlock'
-        - $ref: '#/components/schemas/MessagesResponseToolUseBlock'
-        - $ref: '#/components/schemas/MessagesResponseThinkingBlock'
+        - $ref: '#/components/schemas/MessagesTextBlock'
+        - $ref: '#/components/schemas/MessagesToolUseBlock'
+        - $ref: '#/components/schemas/MessagesThinkingBlock'
+        - $ref: '#/components/schemas/MessagesRedactedThinkingBlock'
     MessagesUsage:
       type: object
       description: |
@@ -3304,6 +3249,8 @@ components:
             - max_tokens
             - stop_sequence
             - tool_use
+            - pause_turn
+            - refusal
           description: |
             The reason the model stopped generating.
         stop_sequence:
@@ -3365,17 +3312,23 @@ components:
               type: string
               description: |
                 The type of delta. For text deltas this is `text_delta`,
-                for thinking deltas this is `thinking_delta`,
-                for message deltas this is `message_delta`.
+                for streamed tool inputs this is `input_json_delta`, for
+                thinking deltas this is `thinking_delta`, for thinking
+                signatures this is `signature_delta`.
             text:
               type: string
               description: The incremental text (for `text_delta`).
+            partial_json:
+              type: string
+              description: |
+                The incremental JSON string of the tool input
+                (for `input_json_delta`).
             thinking:
               type: string
               description: The incremental thinking content (for `thinking_delta`).
             signature:
               type: string
-              description: The thinking signature (for `thinking_delta` with signature).
+              description: The thinking signature (for `signature_delta`).
             stop_reason:
               type: string
               description: The stop reason (for `message_delta`).
@@ -3383,9 +3336,11 @@ components:
               type: string
               nullable: true
               description: The stop sequence (for `message_delta`).
-            usage:
-              $ref: '#/components/schemas/MessagesUsage'
-              description: Updated usage (for `message_delta`).
+        usage:
+          $ref: '#/components/schemas/MessagesUsage'
+          description: |
+            Present in `message_delta` events as a sibling of `delta`.
+            Contains cumulative usage for the message.
         error:
           $ref: '#/components/schemas/MessagesError'
           description: |
