@@ -1,0 +1,63 @@
+---
+name: Sync Downstream
+
+# Fans out the deterministic schemas->types sync to every OpenAPI consumer.
+# Each downstream repo hosts a thin `schemas-sync.yml` caller of the org
+# reusable workflow (inference-gateway/.github/.github/workflows/schemas-sync.yml),
+# which runs that repo's `task oas-sync SCHEMAS_REF=<ref>` and opens/updates an
+# idempotent PR on the fixed `schemas-sync` branch. This dispatcher is
+# fire-and-forget and safe to re-run: downstream re-runs update the existing
+# PR in place (or close it when the repo is back in sync).
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'schemas ref to sync (refs/tags/vX.Y.Z, refs/heads/main, or a SHA). Empty = each repo resolves the latest schemas release.'
+        required: false
+        type: string
+        default: ''
+      repository:
+        description: 'Single downstream repo to dispatch (omit = all of: sdk, python-sdk, rust-sdk, typescript-sdk, inference-gateway)'
+        required: false
+        type: string
+        default: ''
+
+permissions:
+  contents: read
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/create-github-app-token@v3.2.0
+        id: app-token
+        with:
+          client-id: ${{ secrets.INFERENCE_GATEWAY_MAINTAINER_APP_ID }}
+          private-key: ${{ secrets.INFERENCE_GATEWAY_MAINTAINER_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: |
+            sdk
+            python-sdk
+            rust-sdk
+            typescript-sdk
+            inference-gateway
+
+      - name: Dispatch schemas-sync to downstream repos
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          REF: ${{ inputs.ref }}
+          ONLY: ${{ inputs.repository }}
+        run: |
+          set -euo pipefail
+          repos="sdk python-sdk rust-sdk typescript-sdk inference-gateway"
+          if [ -n "$ONLY" ]; then
+            case " $repos " in
+              *" $ONLY "*) repos="$ONLY" ;;
+              *) echo "::error::unknown downstream repo '$ONLY' (expected one of: $repos)"; exit 1 ;;
+            esac
+          fi
+          for repo in $repos; do
+            echo "dispatching schemas-sync.yml on inference-gateway/$repo (ref='${REF:-latest release}')"
+            gh workflow run schemas-sync.yml --repo "inference-gateway/$repo" -f ref="$REF"
+          done
