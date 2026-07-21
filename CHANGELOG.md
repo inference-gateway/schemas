@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.10.0](https://github.com/inference-gateway/schemas/compare/v0.9.0...v0.10.0) (2026-07-21)
+
+### Features
+
+* **openapi:** add subscription field to Pricing schema ([#138](https://github.com/inference-gateway/schemas/issues/138)) ([b18e6b8](https://github.com/inference-gateway/schemas/commit/b18e6b88f8c2a5dd292a303be23b2e562da0623d))
+
 ## [0.9.0](https://github.com/inference-gateway/schemas/compare/v0.8.0...v0.9.0) (2026-07-20)
 
 ### Features
