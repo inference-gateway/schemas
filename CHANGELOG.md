@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.11.1](https://github.com/inference-gateway/schemas/compare/v0.11.0...v0.11.1) (2026-07-21)
+
+### Bug Fixes
+
+* **openapi:** add x-enum-varnames to Messages API inline enums ([#143](https://github.com/inference-gateway/schemas/issues/143)) ([a7011e5](https://github.com/inference-gateway/schemas/commit/a7011e553e6771985e629a9cee89186e1fa13007))
+
 ## [0.11.0](https://github.com/inference-gateway/schemas/compare/v0.10.0...v0.11.0) (2026-07-21)
 
 ### Features
