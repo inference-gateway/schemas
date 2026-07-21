@@ -63,7 +63,12 @@ jobs:
               *) echo "::error::unknown downstream repo '$ONLY' (expected one of: $repos)"; exit 1 ;;
             esac
           fi
+          failed=0
           for repo in $repos; do
             echo "dispatching schemas-sync.yml on inference-gateway/$repo (ref='${REF:-latest release}' dry_run=$DRY_RUN)"
-            gh workflow run schemas-sync.yml --repo "inference-gateway/$repo" -f ref="$REF" -f dry_run="$DRY_RUN"
+            if ! gh workflow run schemas-sync.yml --repo "inference-gateway/$repo" -f ref="$REF" -f dry_run="$DRY_RUN"; then
+              echo "::error::failed to dispatch inference-gateway/$repo (is its schemas-sync.yml caller merged to the default branch?)"
+              failed=1
+            fi
           done
+          exit "$failed"
