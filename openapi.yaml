@@ -3019,6 +3019,9 @@ components:
           enum:
             - user
             - assistant
+          x-enum-varnames:
+            - MessagesMessageRoleUser
+            - MessagesMessageRoleAssistant
           description: The role of the message sender.
         content:
           description: |
@@ -3071,6 +3074,8 @@ components:
               type: string
               enum:
                 - tool
+              x-enum-varnames:
+                - MessagesToolChoiceTypeTool
               description: Always `tool`.
             name:
               type: string
@@ -3233,6 +3238,8 @@ components:
           type: string
           enum:
             - assistant
+          x-enum-varnames:
+            - MessagesResponseRoleAssistant
           description: Always `assistant`.
         content:
           type: array
