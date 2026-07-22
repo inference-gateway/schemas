@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.13.0](https://github.com/inference-gateway/schemas/compare/v0.12.0...v0.13.0) (2026-07-22)
+
+### Features
+
+* **openapi:** add routing config section (routing_enabled, routing_config_path) ([#147](https://github.com/inference-gateway/schemas/issues/147)) ([7529c8f](https://github.com/inference-gateway/schemas/commit/7529c8f481e6166ad1815b9042ffef93a9f9e8ab)), references [#490](https://github.com/inference-gateway/schemas/issues/490)
+
 ## [0.12.0](https://github.com/inference-gateway/schemas/compare/v0.11.1...v0.12.0) (2026-07-22)
 
 ### Features
