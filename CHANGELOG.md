@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.12.0](https://github.com/inference-gateway/schemas/compare/v0.11.1...v0.12.0) (2026-07-22)
+
+### Features
+
+* **openapi:** add telemetry tracing x-config entries ([#145](https://github.com/inference-gateway/schemas/issues/145)) ([5aa9349](https://github.com/inference-gateway/schemas/commit/5aa93497e57da634237cee498ce3690ff3ac6191)), references [#483](https://github.com/inference-gateway/schemas/issues/483)
+
 ## [0.11.1](https://github.com/inference-gateway/schemas/compare/v0.11.0...v0.11.1) (2026-07-21)
 
 ### Bug Fixes
