@@ -3,6 +3,17 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.14.0](https://github.com/inference-gateway/schemas/compare/v0.13.0...v0.14.0) (2026-07-27)
+
+### Features
+
+* **openapi:** add server max_request_body_size setting ([#153](https://github.com/inference-gateway/schemas/issues/153)) ([8640b13](https://github.com/inference-gateway/schemas/commit/8640b1313d087e46c26348d8680a4a2de3c75452))
+
+### Bug Fixes
+
+* **ci:** correct maintainer app ID reference in sync-downstream workflow ([d35b256](https://github.com/inference-gateway/schemas/commit/d35b256481b6521ceb3d97b2a883c2c84e7fd5d5))
+* **ci:** update maintainer app ID to client ID in workflows and documentation ([bb7d397](https://github.com/inference-gateway/schemas/commit/bb7d39737fdc4b1e3decab6eec5b50878cce436b))
+
 ## [0.13.0](https://github.com/inference-gateway/schemas/compare/v0.12.0...v0.13.0) (2026-07-22)
 
 ### Features
