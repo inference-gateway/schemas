@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.15.0](https://github.com/inference-gateway/schemas/compare/v0.14.0...v0.15.0) (2026-07-27)
+
+### Features
+
+* **openapi:** add guardrails x-config section ([#156](https://github.com/inference-gateway/schemas/issues/156)) ([3396efb](https://github.com/inference-gateway/schemas/commit/3396efb5d8e18f783121e1a4b17ac10805f68c79))
+
 ## [0.14.0](https://github.com/inference-gateway/schemas/compare/v0.13.0...v0.14.0) (2026-07-27)
 
 ### Features
