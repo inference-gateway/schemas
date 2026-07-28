@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.15.3](https://github.com/inference-gateway/schemas/compare/v0.15.2...v0.15.3) (2026-07-28)
+
+### Bug Fixes
+
+* **release:** add refactor type to release notes under Improvements section ([#159](https://github.com/inference-gateway/schemas/issues/159)) ([f8be2ce](https://github.com/inference-gateway/schemas/commit/f8be2ce7f85ced394a781f43134d95438abc4f10))
+
 ## [0.15.2](https://github.com/inference-gateway/schemas/compare/v0.15.1...v0.15.2) (2026-07-28)
 
 ## [0.15.1](https://github.com/inference-gateway/schemas/compare/v0.15.0...v0.15.1) (2026-07-28)
