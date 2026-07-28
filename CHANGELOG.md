@@ -3,6 +3,20 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.16.0](https://github.com/inference-gateway/schemas/compare/v0.15.3...v0.16.0) (2026-07-28)
+
+### Features
+
+* **openapi:** add output_config effort to CreateMessagesRequest ([#161](https://github.com/inference-gateway/schemas/issues/161)) ([8781701](https://github.com/inference-gateway/schemas/commit/8781701113d589dc1021a4ef0a915efbdf7d3d94))
+
+### Improvements
+
+* change commits to lowercase for consistency ([abacc20](https://github.com/inference-gateway/schemas/commit/abacc20b7dd3be72931acfaa85eff11e793d1cb9))
+
+### Misc
+
+* Sync MCP schema ([#160](https://github.com/inference-gateway/schemas/issues/160)) ([a361f44](https://github.com/inference-gateway/schemas/commit/a361f44b4d960fe49e3976ff0d6a869459b3c925))
+
 ## [0.15.3](https://github.com/inference-gateway/schemas/compare/v0.15.2...v0.15.3) (2026-07-28)
 
 ### Bug Fixes
