@@ -26,7 +26,7 @@ All tasks go through `Taskfile.yml`. `task --list` enumerates them; the load-bea
 
 `bun scripts/check-reachable.js [path]` — sanity-checks that streaming-payload schemas (`CreateChatCompletionStreamResponse` and friends) are still reachable from operations in `openapi.yaml`. `oapi-codegen` drops unreachable schemas during code generation; this prevents regressions of issue #31.
 
-The two schema-sync tasks are also exposed as `workflow_dispatch` GitHub Actions (`a2a-schema-sync.yml`, `mcp-schema-sync.yml`) that open a `chore: Sync …` PR automatically.
+The two schema-sync tasks are also exposed as `workflow_dispatch` GitHub Actions (`a2a-schema-sync.yml`, `mcp-schema-sync.yml`) that open a `chore(scope): sync …` PR automatically.
 
 Releases are automated with **semantic-release** (config in `.releaserc.yaml`), triggered manually via the `workflow_dispatch` `Release` workflow (`release.yml`). It derives the version from Conventional Commits, updates `CHANGELOG.md`, tags, and creates a GitHub Release. Nothing is published to a package registry. See `RELEASING.md`.
 
@@ -55,7 +55,7 @@ If you touch any of these scripts, run `task a2a-schema-download` end-to-end and
 
 ## Conventions
 
-- **Commits:** Conventional Commits, capitalized description (`chore: sync MCP schema`, `feat(openapi): add foo endpoint`). Semantic-release downstream depends on this.
+- **Commits:** Conventional Commits, capitalized description (`chore(mcp): sync MCP schema`, `feat(openapi): add foo endpoint`). Semantic-release downstream depends on this.
 - **YAML/Markdown style:** 2-space indent, single quotes, LF endings, final newline (`.editorconfig` + `.prettierrc`).
 - **CODEOWNERS:** `a2a/*` is owned by `@inference-gateway/a2a` — expect that team on any A2A-touching PR.
 - **CI:** runs `bun run lint` (markdownlint) and `bun run openapi:lint` (Spectral) on every push/PR. There's no test suite; the sync workflows themselves are the regression net for the generated schemas.

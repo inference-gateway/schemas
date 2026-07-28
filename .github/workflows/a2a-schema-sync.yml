@@ -68,7 +68,7 @@ jobs:
           sign-commits: true
           author: "${{ steps.app-token.outputs.app-slug }}[bot] <${{ steps.get-user-id.outputs.user-id }}+${{ steps.app-token.outputs.app-slug }}[bot]@users.noreply.github.com>"
           committer: "${{ steps.app-token.outputs.app-slug }}[bot] <${{ steps.get-user-id.outputs.user-id }}+${{ steps.app-token.outputs.app-slug }}[bot]@users.noreply.github.com>"
-          commit-message: "chore: Sync A2A schema"
+          commit-message: "chore(a2a): sync A2A schema"
           title: "chore(a2a): sync A2A schema"
           body: |
             Automated update of A2A schema from google-a2a/A2A.
