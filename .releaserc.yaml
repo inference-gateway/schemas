@@ -23,6 +23,22 @@ plugins:
             section: Bug Fixes
           - type: refactor
             section: Improvements
+          - type: docs
+            section: Documentation
+          - type: style
+            section: Misc
+          - type: chore
+            section: Misc
+          - type: perf
+            section: Performance
+          - type: test
+            section: Testing
+          - type: build
+            section: Build System
+          - type: ci
+            section: Continuous Integration
+          - type: revert
+            section: Reverts
   - - '@semantic-release/changelog'
     - changelogFile: CHANGELOG.md
       changelogTitle: |-
