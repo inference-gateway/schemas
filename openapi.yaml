@@ -3357,32 +3357,6 @@ components:
     Config:
       x-config:
         sections:
-          - guardrails:
-              title: 'Guardrails'
-              settings:
-                - name: guardrails_enabled
-                  env: 'GUARDRAILS_ENABLED'
-                  type: bool
-                  default: 'false'
-                  description: 'Enable gateway guardrails (OPA/Rego policy enforcement)'
-                - name: guardrails_policy_dir
-                  env: 'GUARDRAILS_POLICY_DIR'
-                  type: string
-                  description: 'Directory of .rego files compiled at startup'
-                - name: guardrails_fail_mode
-                  env: 'GUARDRAILS_FAIL_MODE'
-                  type: string
-                  default: 'closed'
-                  description: 'closed or open: behavior on policy/external error or timeout'
-                - name: guardrails_external_url
-                  env: 'GUARDRAILS_EXTERNAL_URL'
-                  type: string
-                  description: 'Optional external HTTP guardrail service'
-                - name: guardrails_external_timeout
-                  env: 'GUARDRAILS_EXTERNAL_TIMEOUT'
-                  type: time.Duration
-                  default: '5s'
-                  description: 'Timeout for the external guardrail service'
           - general:
               title: 'General settings'
               settings:
@@ -3568,6 +3542,32 @@ components:
                   type: string
                   description: 'OIDC client secret'
                   secret: true
+          - guardrails:
+              title: 'Guardrails'
+              settings:
+                - name: guardrails_enabled
+                  env: 'GUARDRAILS_ENABLED'
+                  type: bool
+                  default: 'false'
+                  description: 'Enable gateway guardrails (OPA/Rego policy enforcement)'
+                - name: guardrails_policy_dir
+                  env: 'GUARDRAILS_POLICY_DIR'
+                  type: string
+                  description: 'Directory of .rego files compiled at startup'
+                - name: guardrails_fail_mode
+                  env: 'GUARDRAILS_FAIL_MODE'
+                  type: string
+                  default: 'closed'
+                  description: 'closed or open: behavior on policy/external error or timeout'
+                - name: guardrails_external_url
+                  env: 'GUARDRAILS_EXTERNAL_URL'
+                  type: string
+                  description: 'Optional external HTTP guardrail service'
+                - name: guardrails_external_timeout
+                  env: 'GUARDRAILS_EXTERNAL_TIMEOUT'
+                  type: time.Duration
+                  default: '5s'
+                  description: 'Timeout for the external guardrail service'
           - server:
               title: 'Server settings'
               settings:
