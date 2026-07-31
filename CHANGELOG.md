@@ -3,6 +3,21 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.17.0](https://github.com/inference-gateway/schemas/compare/v0.16.0...v0.17.0) (2026-07-31)
+
+### Features
+
+* **config:** add MCP_TOOL_MODE to x-config ([#166](https://github.com/inference-gateway/schemas/issues/166)) ([0ac0a2d](https://github.com/inference-gateway/schemas/commit/0ac0a2d92ccc648b297ee622393f66eaef46623d))
+* **openapi:** add Images API schemas and endpoint ([#165](https://github.com/inference-gateway/schemas/issues/165)) ([0673f03](https://github.com/inference-gateway/schemas/commit/0673f032b371599601a1e7e1875d81ccf99fc606))
+
+### Misc
+
+* **mcp:** sync MCP schema ([#163](https://github.com/inference-gateway/schemas/issues/163)) ([12865d7](https://github.com/inference-gateway/schemas/commit/12865d7f83a7452531f639da1a1ed654b8222a0a))
+
+### Continuous Integration
+
+* **claude:** centralize claude.yml via reusable workflow ([#162](https://github.com/inference-gateway/schemas/issues/162)) ([1b4c3d4](https://github.com/inference-gateway/schemas/commit/1b4c3d4681e810d2006fc445b072f9c4e7338cbd))
+
 ## [0.16.0](https://github.com/inference-gateway/schemas/compare/v0.15.3...v0.16.0) (2026-07-28)
 
 ### Features
