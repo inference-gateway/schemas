@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.18.1](https://github.com/inference-gateway/schemas/compare/v0.18.0...v0.18.1) (2026-07-31)
+
+### Bug Fixes
+
+* **config:** restore enable_images x-config entry dropped in v0.18.0 ([#172](https://github.com/inference-gateway/schemas/issues/172)) ([f0c351d](https://github.com/inference-gateway/schemas/commit/f0c351dba574f548de670f3665a001d03a51311b))
+
 ## [0.18.0](https://github.com/inference-gateway/schemas/compare/v0.17.0...v0.18.0) (2026-07-31)
 
 ### Features
