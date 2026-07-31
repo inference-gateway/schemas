@@ -3,6 +3,20 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.18.0](https://github.com/inference-gateway/schemas/compare/v0.17.0...v0.18.0) (2026-07-31)
+
+### Features
+
+* **openapi:** add ImageSize enum for image generation sizes ([#170](https://github.com/inference-gateway/schemas/issues/170)) ([caae6cb](https://github.com/inference-gateway/schemas/commit/caae6cbe1252b22a28342d8506eac6a57f0881ae))
+
+### Misc
+
+* **deps:** bump infer CLI v0.153.1 -> v0.155.0 ([#168](https://github.com/inference-gateway/schemas/issues/168)) ([d691fd9](https://github.com/inference-gateway/schemas/commit/d691fd99b3530df4fe63f3a414676069be514cd4))
+
+### Continuous Integration
+
+* **claude:** centralize claude.yml via reusable workflow ([#169](https://github.com/inference-gateway/schemas/issues/169)) ([cddf0fb](https://github.com/inference-gateway/schemas/commit/cddf0fbf0eaf3a6e707adbf1aa058971502a073f))
+
 ## [0.17.0](https://github.com/inference-gateway/schemas/compare/v0.16.0...v0.17.0) (2026-07-31)
 
 ### Features
