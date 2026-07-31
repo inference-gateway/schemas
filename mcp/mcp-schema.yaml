@@ -2987,7 +2987,7 @@ $defs:
       close carries no response. The result body is otherwise empty.
     properties:
       _meta:
-        $ref: '#/$defs/SubscriptionsListenResultMeta'
+        $ref: '#/$defs/SubscriptionsListenResultMetaObject'
       resultType:
         description: |-
           Indicates the type of the result, which allows the client to determine
@@ -3002,7 +3002,7 @@ $defs:
       - _meta
       - resultType
     type: object
-  SubscriptionsListenResultMeta:
+  SubscriptionsListenResultMetaObject:
     description: |-
       Extends {@link ResultMetaObject} with the subscription-stream identifier carried by a
       {@link SubscriptionsListenResult}. All key naming rules from `MetaObject` apply.
@@ -3031,6 +3031,23 @@ $defs:
           response's `id`).
     required:
       - io.modelcontextprotocol/subscriptionId
+    type: object
+  SubscriptionsListenResultResponse:
+    description: |-
+      A successful response from the server for a {@link SubscriptionsListenRequestsubscriptions/listen}
+      request, sent when the server tears the subscription down gracefully.
+    properties:
+      id:
+        $ref: '#/$defs/RequestId'
+      jsonrpc:
+        const: '2.0'
+        type: string
+      result:
+        $ref: '#/$defs/SubscriptionsListenResult'
+    required:
+      - id
+      - jsonrpc
+      - result
     type: object
   TextContent:
     description: Text provided to or from an LLM.
