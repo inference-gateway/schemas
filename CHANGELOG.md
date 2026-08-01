@@ -3,6 +3,16 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.19.1](https://github.com/inference-gateway/schemas/compare/v0.19.0...v0.19.1) (2026-08-01)
+
+### Bug Fixes
+
+* include images edits and variations endpoints in ENABLE_IMAGES description ([#175](https://github.com/inference-gateway/schemas/issues/175)) ([f935318](https://github.com/inference-gateway/schemas/commit/f93531877aeff0ba0cfe04ec63a8fb6686ad6bdc))
+
+### Continuous Integration
+
+* **claude:** centralize claude.yml via reusable workflow ([#174](https://github.com/inference-gateway/schemas/issues/174)) ([d89b8e4](https://github.com/inference-gateway/schemas/commit/d89b8e4b831908e2da1a7f4e7642129338e3392b))
+
 ## [0.19.0](https://github.com/inference-gateway/schemas/compare/v0.18.1...v0.19.0) (2026-08-01)
 
 ### Features
