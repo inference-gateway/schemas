@@ -819,14 +819,14 @@ components:
               image:
                 type: string
                 format: binary
-                description: The image to edit. Must be a valid PNG file, less than 4MB, and square. If mask is not provided, the image must have transparency, which will be used as the mask.
+                description: The image to edit. For the GPT image models, a `png`, `webp`, or `jpg` file up to 50MB; for `dall-e-2`, a square PNG under 4MB. If `mask` is not provided, the image must have transparency, which will be used as the mask.
               prompt:
                 type: string
                 description: A text description of the desired image.
               mask:
                 type: string
                 format: binary
-                description: An additional image whose fully transparent areas (alpha = 0) indicate where the image should be edited. Must be a valid PNG file, less than 4MB, and have the same dimensions as the image.
+                description: An additional image whose fully transparent areas (alpha = 0) indicate where the image should be edited. Must be a valid PNG file with the same dimensions as the image (under 4MB for `dall-e-2`).
               model:
                 type: string
                 description: Model ID to use for image editing.
@@ -838,6 +838,18 @@ components:
                 description: Number of images to generate.
               size:
                 $ref: '#/components/schemas/ImageSize'
+              quality:
+                type: string
+                enum:
+                  - auto
+                  - standard
+                  - low
+                  - medium
+                  - high
+                description: |
+                  The quality of the edited image. `auto` selects the best
+                  quality for the model. The GPT image models support `low`,
+                  `medium`, and `high`; `dall-e-2` supports only `standard`.
               response_format:
                 type: string
                 enum:
@@ -862,7 +874,7 @@ components:
               image:
                 type: string
                 format: binary
-                description: The image to use as the basis for the variation. Must be a valid PNG file, less than 4MB, and square.
+                description: The image to use as the basis for the variation. For the GPT image models, a `png`, `webp`, or `jpg` file up to 50MB; for `dall-e-2`, a square PNG under 4MB.
               model:
                 type: string
                 description: Model ID to use for image variation.
