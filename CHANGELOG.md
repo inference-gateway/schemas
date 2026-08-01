@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.19.0](https://github.com/inference-gateway/schemas/compare/v0.18.1...v0.19.0) (2026-08-01)
+
+### Features
+
+* **openapi:** add /images/edits and /images/variations endpoints ([#173](https://github.com/inference-gateway/schemas/issues/173)) ([d41828d](https://github.com/inference-gateway/schemas/commit/d41828d0b010d0ce42ba700829ea384df4dcf3aa))
+
 ## [0.18.1](https://github.com/inference-gateway/schemas/compare/v0.18.0...v0.18.1) (2026-07-31)
 
 ### Bug Fixes
