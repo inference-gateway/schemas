@@ -3788,7 +3788,7 @@ components:
                   env: 'ENABLE_IMAGES'
                   type: bool
                   default: 'false'
-                  description: 'Enable the Images API (POST /v1/images/generations). When disabled, the endpoint returns a 404. Only providers with images support (currently openai) can serve this endpoint'
+                  description: 'Enable the Images API (POST /v1/images/generations, /v1/images/edits, /v1/images/variations). When disabled, the endpoints return a 404. Only providers with images support (currently openai) can serve these endpoints'
                 - name: debug_content_truncate_words
                   env: 'DEBUG_CONTENT_TRUNCATE_WORDS'
                   type: int
