@@ -1606,10 +1606,16 @@ components:
           type: string
         served_by:
           $ref: '#/components/schemas/Provider'
-        vision:
-          type: boolean
-          default: false
-          description: Whether the model supports image (vision) input natively
+        modalities:
+          type: array
+          description: The modalities the model supports natively
+          items:
+            type: string
+            enum:
+              - text
+              - image
+              - audio
+              - video
         context_window:
           oneOf:
             - $ref: '#/components/schemas/ContextWindow'
