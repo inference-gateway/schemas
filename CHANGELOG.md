@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.21.0](https://github.com/inference-gateway/schemas/compare/v0.20.0...v0.21.0) (2026-08-04)
+
+### Features
+
+* **openapi:** replace vision boolean with modalities enum on Model schema ([#178](https://github.com/inference-gateway/schemas/issues/178)) ([6fc67d1](https://github.com/inference-gateway/schemas/commit/6fc67d10a964c28bb5eef973df044e47210378a3))
+
 ## [0.20.0](https://github.com/inference-gateway/schemas/compare/v0.19.1...v0.20.0) (2026-08-04)
 
 ### Features
