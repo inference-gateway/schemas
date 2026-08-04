@@ -1042,7 +1042,6 @@ components:
           id: 'ollama'
           url: 'http://ollama:8080/v1'
           auth_type: 'none'
-          supports_vision: true
           endpoints:
             models:
               name: 'list_models'
@@ -1056,7 +1055,6 @@ components:
           id: 'ollama_cloud'
           url: 'https://ollama.com/v1'
           auth_type: 'bearer'
-          supports_vision: true
           endpoints:
             models:
               name: 'list_models'
@@ -1070,7 +1068,6 @@ components:
           id: 'anthropic'
           url: 'https://api.anthropic.com/v1'
           auth_type: 'xheader'
-          supports_vision: true
           extra_headers:
             anthropic-version: '2023-06-01'
           endpoints:
@@ -1086,7 +1083,6 @@ components:
           id: 'cohere'
           url: 'https://api.cohere.ai'
           auth_type: 'bearer'
-          supports_vision: true
           endpoints:
             models:
               name: 'list_models'
@@ -1100,7 +1096,6 @@ components:
           id: 'groq'
           url: 'https://api.groq.com/openai/v1'
           auth_type: 'bearer'
-          supports_vision: true
           endpoints:
             models:
               name: 'list_models'
@@ -1114,7 +1109,6 @@ components:
           id: 'llamacpp'
           url: 'http://llamacpp:8080/v1'
           auth_type: 'bearer'
-          supports_vision: true
           endpoints:
             models:
               name: 'list_models'
@@ -1128,7 +1122,6 @@ components:
           id: 'openai'
           url: 'https://api.openai.com/v1'
           auth_type: 'bearer'
-          supports_vision: true
           endpoints:
             models:
               name: 'list_models'
@@ -1158,7 +1151,6 @@ components:
           id: 'cloudflare'
           url: 'https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai'
           auth_type: 'bearer'
-          supports_vision: false
           endpoints:
             models:
               name: 'list_models'
@@ -1172,7 +1164,6 @@ components:
           id: 'deepseek'
           url: 'https://api.deepseek.com'
           auth_type: 'bearer'
-          supports_vision: false
           endpoints:
             models:
               name: 'list_models'
@@ -1186,7 +1177,6 @@ components:
           id: 'google'
           url: 'https://generativelanguage.googleapis.com/v1beta/openai'
           auth_type: 'bearer'
-          supports_vision: true
           endpoints:
             models:
               name: 'list_models'
@@ -1200,7 +1190,6 @@ components:
           id: 'mistral'
           url: 'https://api.mistral.ai/v1'
           auth_type: 'bearer'
-          supports_vision: true
           endpoints:
             models:
               name: 'list_models'
@@ -1214,7 +1203,6 @@ components:
           id: 'minimax'
           url: 'https://api.minimax.io/v1'
           auth_type: 'bearer'
-          supports_vision: true
           endpoints:
             models:
               name: 'list_models'
@@ -1228,7 +1216,6 @@ components:
           id: 'moonshot'
           url: 'https://api.moonshot.ai/v1'
           auth_type: 'bearer'
-          supports_vision: true
           endpoints:
             models:
               name: 'list_models'
@@ -1242,7 +1229,6 @@ components:
           id: 'nvidia'
           url: 'https://integrate.api.nvidia.com/v1'
           auth_type: 'bearer'
-          supports_vision: true
           endpoints:
             models:
               name: 'list_models'
@@ -1256,7 +1242,6 @@ components:
           id: 'zai'
           url: 'https://api.z.ai/api/paas/v4'
           auth_type: 'bearer'
-          supports_vision: true
           endpoints:
             models:
               name: 'list_models'
@@ -1621,6 +1606,10 @@ components:
           type: string
         served_by:
           $ref: '#/components/schemas/Provider'
+        vision:
+          type: boolean
+          default: false
+          description: Whether the model supports image (vision) input natively
         context_window:
           oneOf:
             - $ref: '#/components/schemas/ContextWindow'
