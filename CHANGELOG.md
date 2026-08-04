@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.20.0](https://github.com/inference-gateway/schemas/compare/v0.19.1...v0.20.0) (2026-08-04)
+
+### Features
+
+* **openapi:** add vision field to Model schema, remove supports_vision from provider configs ([#177](https://github.com/inference-gateway/schemas/issues/177)) ([961d967](https://github.com/inference-gateway/schemas/commit/961d967d3b9c12af69c2135b9666aef2d5aab25b))
+
 ## [0.19.1](https://github.com/inference-gateway/schemas/compare/v0.19.0...v0.19.1) (2026-08-01)
 
 ### Bug Fixes
