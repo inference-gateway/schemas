@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.21.1](https://github.com/inference-gateway/schemas/compare/v0.21.0...v0.21.1) (2026-08-04)
+
+### Improvements
+
+* update default server host in openapi.yaml ([76ac6e4](https://github.com/inference-gateway/schemas/commit/76ac6e46413906735b48380160ce8d0d0eb00453))
+
 ## [0.21.0](https://github.com/inference-gateway/schemas/compare/v0.20.0...v0.21.0) (2026-08-04)
 
 ### Features
