@@ -86,10 +86,11 @@ paths:
               type: string
               enum:
                 - context_window
+                - modalities
                 - pricing
           description: |
             Comma-separated list of metadata keys to include in the response.
-            Supported values: `pricing`, `context_window`.
+            Supported values: `pricing`, `context_window`, `modalities`.
             When omitted, the response remains unchanged (backward compatible).
       responses:
         '200':
@@ -244,6 +245,27 @@ paths:
                         context_window:
                           tokens: 128000
                           source: 'provider'
+                includeModalities:
+                  summary: Models with modalities metadata
+                  value:
+                    object: 'list'
+                    data:
+                      - id: 'openai/gpt-4o'
+                        object: 'model'
+                        created: 1686935002
+                        owned_by: 'openai'
+                        served_by: 'openai'
+                        modalities:
+                          - text
+                          - image
+                      - id: 'openai/gpt-4-turbo'
+                        object: 'model'
+                        created: 1687882410
+                        owned_by: 'openai'
+                        served_by: 'openai'
+                        modalities:
+                          - text
+                          - image
         '400':
           description: Bad request - unsupported include value
           content:
@@ -251,7 +273,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
               example:
-                error: "Unsupported include value: 'unsupported'. Supported values: pricing, context_window"
+                error: "Unsupported include value: 'unsupported'. Supported values: pricing, context_window, modalities"
         '401':
           $ref: '#/components/responses/Unauthorized'
         '500':
@@ -1607,15 +1629,17 @@ components:
         served_by:
           $ref: '#/components/schemas/Provider'
         modalities:
-          type: array
-          description: The modalities the model supports natively
-          items:
-            type: string
-            enum:
-              - text
-              - image
-              - audio
-              - video
+          oneOf:
+            - type: array
+              items:
+                type: string
+                enum:
+                  - text
+                  - image
+                  - audio
+                  - video
+            - type: 'null'
+          description: The modalities the model supports natively (included when `include=modalities`)
         context_window:
           oneOf:
             - $ref: '#/components/schemas/ContextWindow'
