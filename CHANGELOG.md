@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.22.0](https://github.com/inference-gateway/schemas/compare/v0.21.1...v0.22.0) (2026-08-05)
+
+### Features
+
+* **openapi:** restructure Model modalities into nested input/output object ([#179](https://github.com/inference-gateway/schemas/issues/179)) ([66b5a7c](https://github.com/inference-gateway/schemas/commit/66b5a7cb4ce9c90448b5ca95bf927c4810b52ea9))
+
 ## [0.21.1](https://github.com/inference-gateway/schemas/compare/v0.21.0...v0.21.1) (2026-08-04)
 
 ### Improvements
