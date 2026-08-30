@@ -745,8 +745,9 @@ paths:
       description: |
         Generates audio from the provided text using the OpenAI-compatible
         Audio API. Mirrors the OpenAI `POST /v1/audio/speech` request body.
-        The response is the synthesized audio as raw binary bytes in the
-        requested format (e.g. `audio/mpeg` for `mp3`).
+        The response is the synthesized audio as raw binary bytes; the actual
+        `Content-Type` header of the response reflects the requested
+        `response_format` (e.g. `audio/mpeg` for `mp3`).
 
         Not every provider implements the Audio API. Requests routed to a
         provider that does not support it return `400 Bad Request` with an
@@ -765,29 +766,11 @@ paths:
         $ref: '#/components/requestBodies/CreateSpeechRequest'
       responses:
         '200':
-          description: The synthesized audio as raw binary bytes
+          description: |
+            The synthesized audio as raw binary bytes. The actual `Content-Type`
+            header of the response reflects the requested `response_format`.
           content:
-            audio/mpeg:
-              schema:
-                type: string
-                format: binary
-            audio/opus:
-              schema:
-                type: string
-                format: binary
-            audio/aac:
-              schema:
-                type: string
-                format: binary
-            audio/flac:
-              schema:
-                type: string
-                format: binary
-            audio/wav:
-              schema:
-                type: string
-                format: binary
-            audio/pcm:
+            application/octet-stream:
               schema:
                 type: string
                 format: binary
@@ -897,15 +880,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/CreateImageRequest'
-    CreateSpeechRequest:
-      required: true
-      description: |
-        Request payload for the Audio API. Mirrors the OpenAI
-        `POST /v1/audio/speech` request body.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/CreateSpeechRequest'
     CreateImageEditRequest:
       required: true
       description: |
@@ -996,6 +970,15 @@ components:
                 description: The format in which the generated images are returned.
             required:
               - image
+    CreateSpeechRequest:
+      required: true
+      description: |
+        Request payload for the Audio API. Mirrors the OpenAI
+        `POST /v1/audio/speech` request body.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateSpeechRequest'
   responses:
     BadRequest:
       description: Bad request
@@ -2631,26 +2614,24 @@ components:
       properties:
         model:
           type: string
-          description: Model ID to use for speech synthesis (e.g. `tts-1`).
+          description: Model ID to use for speech synthesis (e.g. `gpt-4o-mini-tts` or `tts-1`).
         input:
           type: string
           maxLength: 4096
           description: The text to synthesize into audio (4096 characters maximum).
+        instructions:
+          type: string
+          maxLength: 4096
+          description: >
+            Control the voice of your generated audio with additional
+            instructions. Does not work with `tts-1` or `tts-1-hd`.
         voice:
           type: string
-          enum:
-            - alloy
-            - ash
-            - ballad
-            - coral
-            - echo
-            - fable
-            - onyx
-            - nova
-            - sage
-            - shimmer
-            - verse
-          description: The voice the model uses to synthesize the audio.
+          description: |-
+            The voice to use when generating the audio. OpenAI built-in voices
+            are `alloy`, `ash`, `ballad`, `coral`, `echo`, `fable`, `onyx`,
+            `nova`, `sage`, `shimmer`, `verse`, `marin`, and `cedar`. Other
+            providers accept their own voice identifiers.
         response_format:
           type: string
           enum:
@@ -2664,10 +2645,9 @@ components:
           description: The audio format of the response.
         speed:
           type: number
-          format: float
           minimum: 0.25
           maximum: 4
-          default: 1.0
+          default: 1
           description: The speed of the generated audio.
       required:
         - model
