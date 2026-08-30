@@ -3,6 +3,22 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.23.0](https://github.com/inference-gateway/schemas/compare/v0.22.0...v0.23.0) (2026-08-30)
+
+### Features
+
+* **openapi:** add /audio/speech operation mirroring the OpenAI API ([#185](https://github.com/inference-gateway/schemas/issues/185)) ([e9532a0](https://github.com/inference-gateway/schemas/commit/e9532a035b171f76cd7a7305d31285cf126f6ada))
+
+### Misc
+
+* **deps:** bump claude-code 2.1.201 -> 2.1.238 ([#181](https://github.com/inference-gateway/schemas/issues/181)) ([5cac095](https://github.com/inference-gateway/schemas/commit/5cac095f86802aa3cc40d47051f2083b07bb8021))
+* **deps:** bump infer CLI v0.155.0 -> v0.164.0 ([#180](https://github.com/inference-gateway/schemas/issues/180)) ([995ad3e](https://github.com/inference-gateway/schemas/commit/995ad3e8e144d00fcbe00839ca4cd32c01e14704))
+* **deps:** bump infer CLI v0.164.0 -> v0.183.0 ([#183](https://github.com/inference-gateway/schemas/issues/183)) ([c2567aa](https://github.com/inference-gateway/schemas/commit/c2567aadeb8ba851ede5bc53fa41292f82f9402e))
+
+### Continuous Integration
+
+* **claude:** centralize claude.yml via reusable workflow ([#182](https://github.com/inference-gateway/schemas/issues/182)) ([4ef96bd](https://github.com/inference-gateway/schemas/commit/4ef96bd058c2967c31453073ac3b1bbd14d60d83))
+
 ## [0.22.0](https://github.com/inference-gateway/schemas/compare/v0.21.1...v0.22.0) (2026-08-05)
 
 ### Features
