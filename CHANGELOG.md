@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.26.0](https://github.com/inference-gateway/schemas/compare/v0.25.0...v0.26.0) (2026-08-31)
+
+### Features
+
+* **openapi:** rename ENABLE_AUDIO to AUDIO_ENABLED and add local speech engine config ([#191](https://github.com/inference-gateway/schemas/issues/191)) ([376d4f7](https://github.com/inference-gateway/schemas/commit/376d4f79b0472a23b9187615fec47a00af78ff8c)), closes [inference-gateway/schemas#190](https://github.com/inference-gateway/schemas/issues/190), references [inference-gateway/inference-gateway#574](https://github.com/inference-gateway/inference-gateway/issues/574)
+
 ## [0.25.0](https://github.com/inference-gateway/schemas/compare/v0.24.0...v0.25.0) (2026-08-31)
 
 ### Features
