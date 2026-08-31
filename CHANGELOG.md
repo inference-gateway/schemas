@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.25.0](https://github.com/inference-gateway/schemas/compare/v0.24.0...v0.25.0) (2026-08-31)
+
+### Features
+
+* **openapi:** Add reference_audio voice cloning field and llamacpp speech endpoint ([#187](https://github.com/inference-gateway/schemas/issues/187)) ([77f8fde](https://github.com/inference-gateway/schemas/commit/77f8fde02f8386b506d860f10aa7f433ed3906e7)), references [cli#1118](https://github.com/cli/issues/1118)
+
 ## [0.24.0](https://github.com/inference-gateway/schemas/compare/v0.23.0...v0.24.0) (2026-08-31)
 
 ### Features
