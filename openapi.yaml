@@ -92,9 +92,10 @@ paths:
                 - context_window
                 - modalities
                 - pricing
+                - type
           description: |
             Comma-separated list of metadata keys to include in the response.
-            Supported values: `pricing`, `context_window`, `modalities`.
+            Supported values: `pricing`, `context_window`, `modalities`, `type`.
             When omitted, the response remains unchanged (backward compatible).
       responses:
         '200':
@@ -276,6 +277,29 @@ paths:
                             - image
                           output:
                             - image
+                includeType:
+                  summary: Models with type metadata
+                  value:
+                    object: 'list'
+                    data:
+                      - id: 'openai/gpt-4o'
+                        object: 'model'
+                        created: 1686935002
+                        owned_by: 'openai'
+                        served_by: 'openai'
+                        type: 'chat'
+                      - id: 'openai/text-embedding-3-small'
+                        object: 'model'
+                        created: 1705948997
+                        owned_by: 'openai'
+                        served_by: 'openai'
+                        type: 'embedding'
+                      - id: 'openai/whisper-1'
+                        object: 'model'
+                        created: 1677532384
+                        owned_by: 'openai'
+                        served_by: 'openai'
+                        type: 'speech-to-text'
         '400':
           description: Bad request - unsupported include value
           content:
@@ -283,7 +307,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
               example:
-                error: "Unsupported include value: 'unsupported'. Supported values: pricing, context_window, modalities"
+                error: "Unsupported include value: 'unsupported'. Supported values: pricing, context_window, modalities, type"
         '401':
           $ref: '#/components/responses/Unauthorized'
         '500':
@@ -1726,6 +1750,14 @@ components:
             - $ref: '#/components/schemas/Pricing'
             - type: 'null'
           description: Pricing information for the model (included when `include=pricing`)
+        type:
+          oneOf:
+            - $ref: '#/components/schemas/ModelType'
+            - type: 'null'
+          description: >-
+            What the model does, answering capability questions modality pairs cannot
+            (an embedding model and a chat model are both `text -> text`). Included when
+            `include=type`; null when the gateway cannot classify the model.
       required:
         - id
         - object
@@ -1759,6 +1791,20 @@ components:
       required:
         - input
         - output
+    ModelType:
+      type: string
+      description: >-
+        The primary capability of a model - which endpoint or workload it serves.
+        `chat` models can serve `/chat/completions`; the other values name models
+        that cannot, even when their modalities look identical to a chat model's.
+      enum:
+        - chat
+        - embedding
+        - speech-to-text
+        - text-to-speech
+        - image
+        - video
+        - moderation
     ListModelsResponse:
       type: object
       description: Response structure for listing models
