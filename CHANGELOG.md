@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.24.0](https://github.com/inference-gateway/schemas/compare/v0.23.0...v0.24.0) (2026-08-31)
+
+### Features
+
+* **openapi:** add ENABLE_AUDIO config and speech endpoint to Endpoints schema ([#186](https://github.com/inference-gateway/schemas/issues/186)) ([dfbebdf](https://github.com/inference-gateway/schemas/commit/dfbebdf9976cd4b20b3cfc449391e7855ce1c058))
+
 ## [0.23.0](https://github.com/inference-gateway/schemas/compare/v0.22.0...v0.23.0) (2026-08-30)
 
 ### Features
