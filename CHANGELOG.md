@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.27.0](https://github.com/inference-gateway/schemas/compare/v0.26.0...v0.27.0) (2026-09-01)
+
+### Features
+
+* **openapi:** add language field to CreateSpeechRequest ([#193](https://github.com/inference-gateway/schemas/issues/193)) ([65f4969](https://github.com/inference-gateway/schemas/commit/65f49697d24b5c17e332197b177fba36fc72b7b1))
+
 ## [0.26.0](https://github.com/inference-gateway/schemas/compare/v0.25.0...v0.26.0) (2026-08-31)
 
 ### Features
