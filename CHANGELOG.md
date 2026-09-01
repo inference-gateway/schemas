@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.27.1](https://github.com/inference-gateway/schemas/compare/v0.27.0...v0.27.1) (2026-09-01)
+
+### Bug Fixes
+
+* **openapi:** correct punctuation in description of model input/output modalities ([85e7734](https://github.com/inference-gateway/schemas/commit/85e7734cc459771cc0ef97ea08a4f3451f20f767))
+
 ## [0.27.0](https://github.com/inference-gateway/schemas/compare/v0.26.0...v0.27.0) (2026-09-01)
 
 ### Features
