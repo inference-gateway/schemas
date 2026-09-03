@@ -3,6 +3,7 @@ schema-version = "1.15.0"
 [install]
 go.pkg-path = "go"
 go.version = "1.26.7"
+go.pkg-group = "go"
 bun.pkg-path = "bun"
 bun.version = "^1.3.13"
 bun.pkg-group = "bun"
