@@ -3,6 +3,20 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.27.2](https://github.com/inference-gateway/schemas/compare/v0.27.1...v0.27.2) (2026-09-03)
+
+### Improvements
+
+* **openapi:** rename ENABLE_IMAGES to IMAGES_ENABLED ([#195](https://github.com/inference-gateway/schemas/issues/195)) ([3529212](https://github.com/inference-gateway/schemas/commit/35292122cf38b9571b939f6fa7655b4329259ae6))
+
+### Misc
+
+* bump flox deps ([e20b519](https://github.com/inference-gateway/schemas/commit/e20b5192045a857fd185e04d7e9ea8b93452e6bc))
+
+### Continuous Integration
+
+* **claude:** centralize claude.yml via reusable workflow ([#194](https://github.com/inference-gateway/schemas/issues/194)) ([4856d83](https://github.com/inference-gateway/schemas/commit/4856d835976598fb53dc447a7d86cfc0b2b51fb0))
+
 ## [0.27.1](https://github.com/inference-gateway/schemas/compare/v0.27.0...v0.27.1) (2026-09-01)
 
 ### Bug Fixes
