@@ -3,6 +3,16 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.27.3](https://github.com/inference-gateway/schemas/compare/v0.27.2...v0.27.3) (2026-09-03)
+
+### Documentation
+
+* correct ENABLE_VISION behavior description ([#198](https://github.com/inference-gateway/schemas/issues/198)) ([62acdbe](https://github.com/inference-gateway/schemas/commit/62acdbe560473995821bbb7dc245d3b4a2a21dc6))
+
+### Misc
+
+* bump go toolchain to 1.26.7 ([#197](https://github.com/inference-gateway/schemas/issues/197)) ([669a8ca](https://github.com/inference-gateway/schemas/commit/669a8ca2337ae705c4869498e2d9046152830329)), references [#196](https://github.com/inference-gateway/schemas/issues/196)
+
 ## [0.27.2](https://github.com/inference-gateway/schemas/compare/v0.27.1...v0.27.2) (2026-09-03)
 
 ### Improvements
