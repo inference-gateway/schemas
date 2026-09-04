@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.27.4](https://github.com/inference-gateway/schemas/compare/v0.27.3...v0.27.4) (2026-09-04)
+
+### Improvements
+
+* **openapi:** rename ENABLE_VISION to VISION_ENABLED ([#200](https://github.com/inference-gateway/schemas/issues/200)) ([9944707](https://github.com/inference-gateway/schemas/commit/9944707946c0a7eb5c6c30699e3e380ca10f3a23))
+
 ## [0.27.3](https://github.com/inference-gateway/schemas/compare/v0.27.2...v0.27.3) (2026-09-03)
 
 ### Documentation
