@@ -4153,19 +4153,15 @@ components:
                 - name: auth_oidc_issuer
                   env: 'AUTH_OIDC_ISSUER'
                   type: string
-                  default: 'http://keycloak:8080/realms/inference-gateway-realm'
-                  description: 'OIDC issuer URL'
+                  description: 'OIDC issuer URL. Discovery runs once at startup against {issuer}/.well-known/openid-configuration'
                 - name: auth_oidc_client_id
                   env: 'AUTH_OIDC_CLIENT_ID'
                   type: string
-                  default: 'inference-gateway-client'
-                  description: 'OIDC client ID'
-                  secret: true
-                - name: auth_oidc_client_secret
-                  env: 'AUTH_OIDC_CLIENT_SECRET'
+                  description: 'OIDC client ID. Used as the expected token audience when AUTH_OIDC_AUDIENCE is empty'
+                - name: auth_oidc_audience
+                  env: 'AUTH_OIDC_AUDIENCE'
                   type: string
-                  description: 'OIDC client secret'
-                  secret: true
+                  description: 'Comma-separated list of accepted aud values, for example an API identifier. Defaults to AUTH_OIDC_CLIENT_ID'
           - guardrails:
               title: 'Guardrails'
               settings:
