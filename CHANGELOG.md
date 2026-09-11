@@ -3,6 +3,16 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.28.0](https://github.com/inference-gateway/schemas/compare/v0.27.4...v0.28.0) (2026-09-11)
+
+### Features
+
+* **openapi:** sync AUTH_OIDC settings with gateway ([#204](https://github.com/inference-gateway/schemas/issues/204)) ([b97fb1c](https://github.com/inference-gateway/schemas/commit/b97fb1c07ca084400c4ffc6267c40a583da3ff67))
+
+### Documentation
+
+* **openapi:** fix inverted VISION_ENABLED description ([#202](https://github.com/inference-gateway/schemas/issues/202)) ([ae41932](https://github.com/inference-gateway/schemas/commit/ae4193242c69a58f7bbc059079334847d139231c))
+
 ## [0.27.4](https://github.com/inference-gateway/schemas/compare/v0.27.3...v0.27.4) (2026-09-04)
 
 ### Improvements
