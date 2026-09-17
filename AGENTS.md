@@ -1,44 +1,51 @@
 # Repository Guidelines
 
-## Project Structure & Module Organization
+Shared schemas for the Inference Gateway ecosystem. Downstream projects (gateway, SDKs, docs, CLI, operator) regenerate from these files, so every change ripples — call out downstream impact in PRs.
 
-This repository stores shared schema artifacts for the Inference Gateway ecosystem. `openapi.yaml` is the hand-edited source of truth for the HTTP API. `a2a/a2a.proto` is the source for A2A types; `a2a/a2a-schema.json` and `a2a/a2a-schema.yaml` are generated. `mcp/mcp-schema.json` and `mcp/mcp-schema.yaml` mirror the upstream Model Context Protocol schema. Helper scripts live in `scripts/`, automation in `Taskfile.yml`, and CI workflows in `.github/workflows/`.
+- `openapi.yaml` — the gateway's HTTP API. **Hand-edited; source of truth.**
+- `a2a/a2a.proto` — A2A types, source of truth; `a2a/a2a-schema.{json,yaml}` are **generated** from it.
+- `mcp/mcp-schema.{json,yaml}` — **mirrored** from upstream `modelcontextprotocol/modelcontextprotocol`.
 
-## Build, Test, and Development Commands
+## Commands
 
-Use Taskfile tasks for routine work:
+Runtime is Bun (`>= 1.3.13`); run `bun install` first. Everything goes through Task (`task --list`).
 
-- `task --list` lists available tasks.
-- `task openapi:format` formats `openapi.yaml` with Prettier.
-- `task openapi:lint` runs Spectral against `openapi.yaml`; this is the CI check.
-- `task mcp-schema-download` fetches the latest upstream MCP schema and regenerates YAML.
-- `task a2a-schema-download` regenerates A2A JSON/YAML from `a2a/a2a.proto`; it requires Go and `buf`.
-- `task release:dry` previews the next semantic-release version and notes without publishing.
+| Task                       | Purpose                                                                     |
+| -------------------------- | --------------------------------------------------------------------------- |
+| `task openapi:lint`        | Spectral lint of `openapi.yaml` (CI gate).                                  |
+| `task openapi:format`      | Prettier-format `openapi.yaml`.                                              |
+| `task lint` / `lint:fix`   | markdownlint over all Markdown (`lint` is a CI gate).                       |
+| `task check-reachable`     | Asserts streaming-payload schemas stay reachable (oapi-codegen drops unreachable ones). |
+| `task a2a-schema-download` | Regenerates `a2a/a2a-schema.{json,yaml}` from the proto. Requires Go + `buf`. |
+| `task mcp-schema-download` | Re-syncs the MCP schema from upstream.                                      |
+| `task release:dry`         | Previews the next semantic-release version and notes; publishes nothing.    |
 
-For OpenAPI codegen reachability checks, run `bun scripts/check-reachable.js openapi.yaml`.
+## Validation
 
-## Coding Style & Naming Conventions
+There is no unit-test suite. CI (`.github/workflows/ci.yml`) runs only `bun run lint` and `bun run openapi:lint`. When touching streaming response schemas, also run `task check-reachable`; when touching `a2a.proto` or `scripts/`, run `task a2a-schema-download` end to end and diff the output against `main`.
 
-Follow `.editorconfig`: LF endings, UTF-8, final newline, and trimmed trailing whitespace. Markdown and YAML use 2-space indentation. Prettier is configured for single quotes. Keep schema names descriptive and stable because downstream SDKs, docs, and code generators consume these files directly.
+## Style
 
-## Testing Guidelines
+Follow `.editorconfig` / `.prettierrc`: LF endings, UTF-8, final newline, trimmed trailing whitespace, 2-space indent (YAML and Markdown), single quotes. Keep schema names descriptive and stable — downstream code generators consume them verbatim.
 
-There is no broad unit test suite. Validate OpenAPI changes with `task openapi:lint` and, when touching streaming response schemas, `bun scripts/check-reachable.js openapi.yaml`. For A2A generation changes, run `task a2a-schema-download` end to end and inspect the generated diff. Do not hand-edit generated schema outputs unless the corresponding task or source file requires it.
+## Commits & releases
 
-## Commit & Pull Request Guidelines
+Conventional Commits with an all-lowercase description (`feat(openapi): add usage fields`). Releases are automated by semantic-release (`.releaserc.yaml`, manual `Release` workflow in `.github/workflows/release.yml`): `feat:` → minor, `fix:` → patch, a `BREAKING CHANGE:` footer → major.
 
-Use Conventional Commits with an all-lowercase description, for example `chore(mcp): sync MCP schema` or `feat(openapi): add usage fields`. These commit types drive semantic-release: `feat:` triggers a minor release, `fix:` a patch, and a `BREAKING CHANGE:` footer a major; see `RELEASING.md`. PRs should describe the schema impact, list validation commands run, and call out downstream effects for SDKs, docs, or gateway code. A2A changes touch CODEOWNERS-managed paths, so expect review from `@inference-gateway/a2a`.
+## Adding a provider
 
-## Provider Onboarding Checklist
+Update `openapi.yaml` in three places, keeping alphabetical order by provider name:
 
-When adding a new provider to the gateway, update `openapi.yaml` in these places:
+1. **Provider enum** — add the name to the `Provider` schema's `enum` list.
+2. **`x-provider-configs`** — add an entry with `id`, `url`, `auth_type`, and `endpoints` under the `Provider` schema.
+3. **`x-config.providers`** — add `{provider}_api_url` (its `default` must match the `x-provider-configs` `url`) and `{provider}_api_key` (`secret: true`).
 
-1. **Provider enum** - Add the provider name to the `Provider` schema's `enum` list (alphabetical order).
-2. **x-provider-configs** - Add a config entry under the `Provider` schema's `x-provider-configs` map with `id`, `url`, `auth_type`, `supports_vision`, and `endpoints`.
-3. **x-config providers section** - Add `{provider}_api_url` and `{provider}_api_key` entries under the `providers` section of `x-config`. The URL entry must have a `default` matching the `url` from `x-provider-configs`. The key entry must have `secret: true`.
+Env vars follow `{UPPER_SNAKE_PROVIDER}_API_URL` / `_API_KEY`.
 
-The env var naming convention is `{UPPER_SNAKE_PROVIDER}_API_URL` and `{UPPER_SNAKE_PROVIDER}_API_KEY`. Keep entries in alphabetical order by provider name within the providers section.
+## Gotchas
 
-## Security & Configuration Tips
-
-Do not commit local `.infer/`, `.flox/`, or generated temporary files. Schema sync tasks download upstream content; review generated diffs carefully before merging automated or manual sync updates.
+- Never hand-edit generated or mirrored outputs (`a2a/a2a-schema.*`, `mcp/mcp-schema.*`) — change the source (or wait for upstream) and rerun the task.
+- `a2a/*` is CODEOWNERS-protected; expect review from `@inference-gateway/a2a`.
+- Sync tasks download upstream content — review generated diffs carefully before merging.
+- Do not commit local `.infer/`, `.flox/`, or temporary files.
+- The A2A generation pipeline internals (the `scripts/` stages) are documented in `CLAUDE.md`.
