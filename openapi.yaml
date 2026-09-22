@@ -29,6 +29,7 @@ servers:
       - Messages
       - Images
       - Audio
+      - Videos
   - url: https://api.inference-gateway.local/v1
     description: Local server with version prefix for listing models and chat completions
     x-server-tags:
@@ -37,6 +38,7 @@ servers:
       - Responses
       - Images
       - Audio
+      - Videos
 tags:
   - name: Models
     description: List and describe the various models available in the API.
@@ -50,6 +52,8 @@ tags:
     description: Generate images using the OpenAI-compatible Images API.
   - name: Audio
     description: Generate speech audio from text using the OpenAI-compatible Speech API.
+  - name: Videos
+    description: Generate videos using the OpenAI-compatible Videos API.
   - name: MCP
     description: List and manage MCP tools.
   - name: Proxy
@@ -825,6 +829,142 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalError'
+  /videos:
+    post:
+      operationId: createVideo
+      tags:
+        - Videos
+      description: |
+        Creates a video generation job using the OpenAI-compatible Videos API.
+        Mirrors the OpenAI `POST /v1/videos` request body. Video generation is
+        asynchronous at every provider: this operation returns a `VideoJob`
+        immediately, the client polls `GET /videos/{video_id}` until `status`
+        is `completed`, then downloads the bytes from
+        `GET /videos/{video_id}/content`.
+
+        The request is sent as `multipart/form-data` so reference media can be
+        uploaded as binary. The non-standard `audio` field drives a
+        talking-avatar render: when present, the model lip-syncs
+        `input_reference` to the clip and the video lasts as long as the audio.
+
+        Not every provider implements the Videos API. Requests routed to a
+        provider that does not support it return `400 Bad Request` with an
+        explanatory error message.
+      summary: Create a video generation job
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: provider
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/Provider'
+          description: Specific provider to use (default determined by model)
+      requestBody:
+        $ref: '#/components/requestBodies/CreateVideoRequest'
+      responses:
+        '200':
+          description: The created video generation job.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VideoJob'
+        '400':
+          $ref: '#/components/responses/VideosNotSupported'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /videos/{video_id}:
+    get:
+      operationId: retrieveVideo
+      tags:
+        - Videos
+      description: |
+        Retrieves a video generation job. The gateway keeps no job state, so
+        the request is forwarded to the provider that created the job; pass
+        `provider` when the job id alone is not enough to route it.
+      summary: Retrieve a video generation job
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: video_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: |
+            The id of the video generation job, as returned by
+            `POST /videos`. Opaque to clients - it may encode the provider -
+            and must be sent back verbatim.
+        - name: provider
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/Provider'
+          description: Specific provider to use (default determined by the job id)
+      responses:
+        '200':
+          description: The video generation job.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VideoJob'
+        '400':
+          $ref: '#/components/responses/VideosNotSupported'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /videos/{video_id}/content:
+    get:
+      operationId: downloadVideoContent
+      tags:
+        - Videos
+      description: |
+        Downloads the rendered video of a completed job as raw binary bytes.
+        Returns `404` while the job is still `queued` or `in_progress`, or if
+        it `failed`.
+      summary: Download the rendered video
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: video_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: |
+            The id of the video generation job, as returned by
+            `POST /videos`. Opaque to clients - it may encode the provider -
+            and must be sent back verbatim.
+        - name: provider
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/Provider'
+          description: Specific provider to use (default determined by the job id)
+      responses:
+        '200':
+          description: |
+            The rendered video as raw binary bytes. The actual `Content-Type`
+            header of the response reflects the container produced by the
+            provider (e.g. `video/mp4`).
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '400':
+          $ref: '#/components/responses/VideosNotSupported'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
   /health:
     get:
       operationId: healthCheck
@@ -1032,6 +1172,16 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/CreateSFXRequest'
+    CreateVideoRequest:
+      required: true
+      description: |
+        Request payload for the Videos API. Mirrors the OpenAI
+        `POST /v1/videos` request body, sent as `multipart/form-data` with the
+        reference media as binary uploads.
+      content:
+        multipart/form-data:
+          schema:
+            $ref: '#/components/schemas/CreateVideoRequest'
   responses:
     BadRequest:
       description: Bad request
@@ -1047,6 +1197,12 @@ components:
             $ref: '#/components/schemas/Error'
     InternalError:
       description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found
       content:
         application/json:
           schema:
@@ -1117,6 +1273,17 @@ components:
             $ref: '#/components/schemas/Error'
           example:
             error: 'Sound effect generation is not supported by this provider yet.'
+    VideosNotSupported:
+      description: |
+        The selected provider does not implement the Videos API. The
+        gateway returns this when a request is routed to a provider without
+        video generation support.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: 'The Videos API is not supported by this provider yet.'
     ProviderResponse:
       description: |
         ProviderResponse depends on the specific provider and endpoint being called
@@ -1359,6 +1526,14 @@ components:
               name: 'create_sfx'
               method: 'POST'
               endpoint: '/sound-generation'
+            videos:
+              name: 'create_video'
+              method: 'POST'
+              endpoint: '/flows/video'
+            videos_retrieve:
+              name: 'retrieve_video'
+              method: 'GET'
+              endpoint: '/flows/video/{generation_id}'
         google:
           id: 'google'
           url: 'https://generativelanguage.googleapis.com/v1beta/openai'
@@ -2808,6 +2983,115 @@ components:
       required:
         - model
         - prompt
+    CreateVideoRequest:
+      type: object
+      description: |
+        Request body for creating a video generation job via the
+        OpenAI-compatible Videos API. Sent as `multipart/form-data`.
+      properties:
+        model:
+          type: string
+          description: Model ID to use for video generation (e.g. `elevenlabs/creatify-aurora`).
+        prompt:
+          type: string
+          description: |-
+            Text description of the video to generate. Optional for
+            audio-driven avatar models, where the dialogue comes from `audio`
+            and the prompt only describes framing, never the spoken words.
+        input_reference:
+          type: string
+          format: binary
+          description: |-
+            Optional image used as the first frame or, for avatar models, the
+            portrait to animate.
+        audio:
+          type: string
+          format: binary
+          description: |-
+            Non-standard extension (OpenAI's Videos API has no audio field):
+            an audio clip - `audio/wav` or `audio/mpeg` - that drives the
+            render. When present, the model lip-syncs `input_reference` to it
+            and the generated video lasts as long as the clip, so `seconds` is
+            ignored. Forwarded to the provider as-is; only providers with
+            talking-avatar support honor it (e.g. ElevenLabs
+            `creatify-aurora`), others ignore or reject it.
+        seconds:
+          type: string
+          description: |-
+            Requested duration of the generated video in seconds, as a string
+            (e.g. `4`, `8`, `12`). Providers accept a limited set of values;
+            omit to use the provider default. Ignored when `audio` is present.
+        size:
+          type: string
+          description: |-
+            Requested output resolution as `widthxheight` (e.g. `720x1280`).
+            Providers accept a limited set of values - ElevenLabs
+            `creatify-aurora` maps to `480p` and `720p`. Omit to use the
+            provider default.
+      required:
+        - model
+    VideoJob:
+      type: object
+      description: |
+        A video generation job. Returned by `POST /videos` and
+        `GET /videos/{video_id}`.
+      properties:
+        id:
+          type: string
+          description: |-
+            Identifier of the video generation job. Opaque to clients - it may
+            encode the provider - and must be sent back verbatim to
+            `GET /videos/{video_id}`.
+        object:
+          type: string
+          const: video
+          description: The object type, which is always `video`.
+        model:
+          type: string
+          description: The model used to generate the video.
+        status:
+          type: string
+          enum:
+            - queued
+            - in_progress
+            - completed
+            - failed
+          description: Current status of the job.
+        progress:
+          type: integer
+          minimum: 0
+          maximum: 100
+          description: Completion percentage of the render.
+        created_at:
+          type: integer
+          description: Unix timestamp (in seconds) of when the job was created.
+        completed_at:
+          type: integer
+          nullable: true
+          description: Unix timestamp (in seconds) of when the job finished, null while it is still running.
+        seconds:
+          type: string
+          description: Duration of the generated video in seconds, as a string.
+        size:
+          type: string
+          description: Resolution of the generated video as `widthxheight`.
+        error:
+          type: object
+          nullable: true
+          description: The error that caused the job to fail, null otherwise.
+          properties:
+            code:
+              type: string
+              description: Machine-readable error code.
+            message:
+              type: string
+              description: Human-readable error message.
+      required:
+        - id
+        - object
+        - model
+        - status
+        - created_at
     CreateResponseRequest:
       type: object
       description: |
