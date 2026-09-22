@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.30.2](https://github.com/inference-gateway/schemas/compare/v0.30.1...v0.30.2) (2026-09-22)
+
+### Bug Fixes
+
+* **openapi:** name the sfx endpoints field SFX in go ([#218](https://github.com/inference-gateway/schemas/issues/218)) ([6b3cfb6](https://github.com/inference-gateway/schemas/commit/6b3cfb642dffdd6d9a2cda889b75e967c59f01b7))
+
 ## [0.30.1](https://github.com/inference-gateway/schemas/compare/v0.30.0...v0.30.1) (2026-09-22)
 
 ### Bug Fixes
