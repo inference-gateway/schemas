@@ -1126,6 +1126,7 @@ components:
         - cohere
         - anthropic
         - deepseek
+        - elevenlabs
         - google
         - mistral
         - minimax
@@ -1276,6 +1277,20 @@ components:
               name: 'chat_completions'
               method: 'POST'
               endpoint: '/chat/completions'
+        elevenlabs:
+          id: 'elevenlabs'
+          url: 'https://api.elevenlabs.io/v1'
+          auth_type: 'xheader'
+          auth_header: 'xi-api-key'
+          endpoints:
+            models:
+              name: 'list_models'
+              method: 'GET'
+              endpoint: '/models'
+            speech:
+              name: 'create_speech'
+              method: 'POST'
+              endpoint: '/text-to-speech/{voice}'
         google:
           id: 'google'
           url: 'https://generativelanguage.googleapis.com/v1beta/openai'
@@ -2637,7 +2652,8 @@ components:
             The voice to use when generating the audio. OpenAI built-in voices
             are `alloy`, `ash`, `ballad`, `coral`, `echo`, `fable`, `onyx`,
             `nova`, `sage`, `shimmer`, `verse`, `marin`, and `cedar`. Other
-            providers accept their own voice identifiers.
+            providers accept their own voice identifiers - for ElevenLabs this
+            is a voice id, including the id of a previously cloned voice.
         response_format:
           type: string
           enum:
@@ -4364,6 +4380,16 @@ components:
                   env: 'DEEPSEEK_API_KEY'
                   type: string
                   description: 'DeepSeek API Key'
+                  secret: true
+                - name: elevenlabs_api_url
+                  env: 'ELEVENLABS_API_URL'
+                  type: string
+                  default: 'https://api.elevenlabs.io/v1'
+                  description: 'ElevenLabs API URL'
+                - name: elevenlabs_api_key
+                  env: 'ELEVENLABS_API_KEY'
+                  type: string
+                  description: 'ElevenLabs API Key'
                   secret: true
                 - name: google_api_url
                   env: 'GOOGLE_API_URL'
