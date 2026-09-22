@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.30.3](https://github.com/inference-gateway/schemas/compare/v0.30.2...v0.30.3) (2026-09-22)
+
+### Improvements
+
+* **openapi:** drop wav from sfx and music formats ([#220](https://github.com/inference-gateway/schemas/issues/220)) ([e31fd55](https://github.com/inference-gateway/schemas/commit/e31fd557da340b526cbdddcd7b419f5c3ffd3f82))
+
 ## [0.30.2](https://github.com/inference-gateway/schemas/compare/v0.30.1...v0.30.2) (2026-09-22)
 
 ### Bug Fixes
