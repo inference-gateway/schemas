@@ -3,6 +3,23 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.29.0](https://github.com/inference-gateway/schemas/compare/v0.28.0...v0.29.0) (2026-09-22)
+
+### Features
+
+* **openapi:** add /audio/sfx text-to-sound-effect operation ([#211](https://github.com/inference-gateway/schemas/issues/211)) ([5aee709](https://github.com/inference-gateway/schemas/commit/5aee7090827e8778ec8574459c97b5dc1a51fbac))
+* **openapi:** add /videos operations with audio-driven avatars ([#213](https://github.com/inference-gateway/schemas/issues/213)) ([a1e85b1](https://github.com/inference-gateway/schemas/commit/a1e85b1904bd636d33073d5967fb909fbf49a40e))
+* **openapi:** add elevenlabs provider for speech ([#210](https://github.com/inference-gateway/schemas/issues/210)) ([c3c0a1e](https://github.com/inference-gateway/schemas/commit/c3c0a1e8bf61ebd3e2a1d7545794ac9a62afe990))
+
+### Documentation
+
+* refresh AGENTS.md to follow the agents.md standard ([#207](https://github.com/inference-gateway/schemas/issues/207)) ([45f8559](https://github.com/inference-gateway/schemas/commit/45f8559d1ff3e11d3ee777ae43a54b5926d5c8e8))
+
+### Misc
+
+* **deps:** bump claude-code 2.1.245 -> 2.1.266 ([#205](https://github.com/inference-gateway/schemas/issues/205)) ([b77a675](https://github.com/inference-gateway/schemas/commit/b77a6753600c460a740299efd3256438f57c2ecf))
+* **deps:** bump infer CLI v0.188.0 -> v0.192.0 ([#206](https://github.com/inference-gateway/schemas/issues/206)) ([b3bbe5d](https://github.com/inference-gateway/schemas/commit/b3bbe5dc621c68139a8ea6d098757411df28c1d7))
+
 ## [0.28.0](https://github.com/inference-gateway/schemas/compare/v0.27.4...v0.28.0) (2026-09-11)
 
 ### Features
