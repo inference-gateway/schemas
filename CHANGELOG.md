@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.30.1](https://github.com/inference-gateway/schemas/compare/v0.30.0...v0.30.1) (2026-09-22)
+
+### Bug Fixes
+
+* **openapi:** add videos_enabled config and sfx/videos endpoints schema fields ([#217](https://github.com/inference-gateway/schemas/issues/217)) ([6caf9d2](https://github.com/inference-gateway/schemas/commit/6caf9d2d8b9e547e60e75e2fcb93182581ebac6d))
+
 ## [0.30.0](https://github.com/inference-gateway/schemas/compare/v0.29.0...v0.30.0) (2026-09-22)
 
 ### Features
