@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.31.0](https://github.com/inference-gateway/schemas/compare/v0.30.3...v0.31.0) (2026-09-22)
+
+### Features
+
+* **openapi:** add reference_images to CreateVideoRequest ([#222](https://github.com/inference-gateway/schemas/issues/222)) ([69648e5](https://github.com/inference-gateway/schemas/commit/69648e5efd7bee783b41546a7dd1fe86642d462f))
+
 ## [0.30.3](https://github.com/inference-gateway/schemas/compare/v0.30.2...v0.30.3) (2026-09-22)
 
 ### Improvements
