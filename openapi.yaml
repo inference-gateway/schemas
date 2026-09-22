@@ -780,6 +780,51 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalError'
+  /audio/sfx:
+    post:
+      operationId: createSFX
+      tags:
+        - Audio
+      description: |
+        Generates a non-speech audio clip - a sound effect or ambience - from
+        a text prompt. Gateway extension: OpenAI has no sound-effects
+        endpoint, so this mirrors the shape of `POST /audio/speech` (JSON in,
+        raw audio bytes out) rather than an upstream OpenAI operation. The
+        response is the generated audio as raw binary bytes; the actual
+        `Content-Type` header of the response reflects the requested
+        `response_format` (e.g. `audio/mpeg` for `mp3`).
+
+        Not every provider implements sound-effect generation. Requests routed
+        to a provider that does not support it return `400 Bad Request` with an
+        explanatory error message.
+      summary: Generate a sound effect from a text prompt
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: provider
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/Provider'
+          description: Specific provider to use (default determined by model)
+      requestBody:
+        $ref: '#/components/requestBodies/CreateSFXRequest'
+      responses:
+        '200':
+          description: |
+            The generated audio as raw binary bytes. The actual `Content-Type`
+            header of the response reflects the requested `response_format`.
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '400':
+          $ref: '#/components/responses/SFXNotSupported'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalError'
   /health:
     get:
       operationId: healthCheck
@@ -979,6 +1024,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/CreateSpeechRequest'
+    CreateSFXRequest:
+      required: true
+      description: |
+        Request payload for generating a sound effect from a text prompt.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateSFXRequest'
   responses:
     BadRequest:
       description: Bad request
@@ -1053,6 +1106,17 @@ components:
             $ref: '#/components/schemas/Error'
           example:
             error: 'The Audio API is not supported by this provider yet.'
+    SFXNotSupported:
+      description: |
+        The selected provider does not implement sound-effect generation. The
+        gateway returns this when a request is routed to a provider without
+        text-to-sound-effect support.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: 'Sound effect generation is not supported by this provider yet.'
     ProviderResponse:
       description: |
         ProviderResponse depends on the specific provider and endpoint being called
@@ -1291,6 +1355,10 @@ components:
               name: 'create_speech'
               method: 'POST'
               endpoint: '/text-to-speech/{voice}'
+            sfx:
+              name: 'create_sfx'
+              method: 'POST'
+              endpoint: '/sound-generation'
         google:
           id: 'google'
           url: 'https://generativelanguage.googleapis.com/v1beta/openai'
@@ -2696,6 +2764,50 @@ components:
         - model
         - input
         - voice
+    CreateSFXRequest:
+      type: object
+      description: |
+        Request body for generating a non-speech audio clip - a sound effect
+        or ambience - from a text prompt.
+      properties:
+        model:
+          type: string
+          description: Model ID to use for sound-effect generation (e.g. `elevenlabs/eleven_text_to_sound_v2`).
+        prompt:
+          type: string
+          description: Description of the sound to generate (e.g. `distant thunder rolling over a valley`).
+        duration_seconds:
+          type: number
+          minimum: 0.5
+          maximum: 30
+          description: |-
+            Length of the generated clip in seconds. Omit to let the provider
+            pick a length that fits the prompt.
+        prompt_influence:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: |-
+            How closely the generation follows the prompt. Higher values stay
+            closer to the prompt, lower values allow more variation. Omit to
+            use the provider default.
+        loop:
+          type: boolean
+          description: Whether to generate a clip that loops seamlessly.
+        response_format:
+          type: string
+          enum:
+            - mp3
+            - opus
+            - aac
+            - flac
+            - wav
+            - pcm
+          default: mp3
+          description: The audio format of the response.
+      required:
+        - model
+        - prompt
     CreateResponseRequest:
       type: object
       description: |
