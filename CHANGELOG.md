@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.30.0](https://github.com/inference-gateway/schemas/compare/v0.29.0...v0.30.0) (2026-09-22)
+
+### Features
+
+* **openapi:** add post /audio/music operation ([#215](https://github.com/inference-gateway/schemas/issues/215)) ([5611765](https://github.com/inference-gateway/schemas/commit/56117652a1799de208723cbc5e67f54052e574a0))
+
 ## [0.29.0](https://github.com/inference-gateway/schemas/compare/v0.28.0...v0.29.0) (2026-09-22)
 
 ### Features
