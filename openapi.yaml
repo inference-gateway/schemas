@@ -1764,6 +1764,7 @@ components:
           type: string
         sfx:
           type: string
+          x-go-name: SFX
         videos:
           type: string
         videos_retrieve:
