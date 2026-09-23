@@ -3,6 +3,16 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.31.1](https://github.com/inference-gateway/schemas/compare/v0.31.0...v0.31.1) (2026-09-23)
+
+### Improvements
+
+* **openapi:** remove images variations operation ([#225](https://github.com/inference-gateway/schemas/issues/225)) ([2026f3f](https://github.com/inference-gateway/schemas/commit/2026f3f5654b7d9ecdee726f17cf7753c7f8b422))
+
+### Misc
+
+* **deps:** bump claude-code 2.1.266 -> 2.1.278 ([#224](https://github.com/inference-gateway/schemas/issues/224)) ([7fe00f2](https://github.com/inference-gateway/schemas/commit/7fe00f29dcc3c3011da977e9b9284390d450282e))
+
 ## [0.31.0](https://github.com/inference-gateway/schemas/compare/v0.30.3...v0.31.0) (2026-09-22)
 
 ### Features
