@@ -3,6 +3,19 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.31.2](https://github.com/inference-gateway/schemas/compare/v0.31.1...v0.31.2) (2026-09-24)
+
+### Misc
+
+* **dependabot:** change package ecosystem from npm to bun ([49ce16f](https://github.com/inference-gateway/schemas/commit/49ce16fabac80b57b35576a20ccdf095d31f278a))
+* **deps-dev:** bump prettier from 3.9.6 to 3.9.8 in the npm group ([#228](https://github.com/inference-gateway/schemas/issues/228)) ([6401214](https://github.com/inference-gateway/schemas/commit/64012147036eefb1a71c08af0b787f8a98953f56))
+* **deps:** bump infer CLI v0.192.0 -> v0.205.3 ([#226](https://github.com/inference-gateway/schemas/issues/226)) ([d28d3f2](https://github.com/inference-gateway/schemas/commit/d28d3f29e4e41e7b31b9bc248be3996435b031b0))
+* **deps:** bump the npm group with 6 updates ([#230](https://github.com/inference-gateway/schemas/issues/230)) ([03e0b69](https://github.com/inference-gateway/schemas/commit/03e0b69c1a23f386ddd818a33216d6fde18c51d2))
+
+### Continuous Integration
+
+* **claude:** centralize claude.yml via reusable workflow ([#227](https://github.com/inference-gateway/schemas/issues/227)) ([5660ed4](https://github.com/inference-gateway/schemas/commit/5660ed48f58c65ee90465bf713befb307df2b7cd))
+
 ## [0.31.1](https://github.com/inference-gateway/schemas/compare/v0.31.0...v0.31.1) (2026-09-23)
 
 ### Improvements
