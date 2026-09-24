@@ -8,10 +8,12 @@ tasks:
     silent: true
 
   mcp-schema-download:
-    desc: "Download the latest MCP schema and convert to YAML"
+    desc: "Download the MCP schema for the pinned protocol version and convert to YAML"
+    vars:
+      MCP_PROTOCOL_VERSION: "2026-07-28"
     cmds:
       - bun install
-      - curl -o mcp/mcp-schema.json https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/refs/heads/main/schema/draft/schema.json
+      - curl -fsSL -o mcp/mcp-schema.json https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/refs/heads/main/schema/{{.MCP_PROTOCOL_VERSION}}/schema.json
       - |
         echo "Converting JSON schema to YAML format"
         bun -e "

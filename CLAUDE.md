@@ -20,7 +20,7 @@ All tasks go through `Taskfile.yml`. `task --list` enumerates them; the load-bea
 | --- | --- |
 | `task openapi:lint` | Spectral lint of `openapi.yaml` (CI runs this on every push/PR). |
 | `task openapi:format` | `prettier --write openapi.yaml` (single quotes, 2-space). |
-| `task mcp-schema-download` | Fetches latest MCP JSON schema from upstream, regenerates the YAML. |
+| `task mcp-schema-download` | Fetches the MCP JSON schema for the pinned protocol version (`MCP_PROTOCOL_VERSION` in `Taskfile.yml`, currently `2026-07-28`) from upstream, regenerates the YAML. Bump the pin when a new revision ships. |
 | `task a2a-schema-download` | Runs `buf generate` on `a2a/a2a.proto` → bundled JSON schema → post-processed `a2a-schema.{json,yaml}`. Requires Go + `buf` on PATH. |
 | `task release:dry` | Previews the next semantic-release version + notes locally (`bunx semantic-release --dry-run`); publishes nothing. |
 
