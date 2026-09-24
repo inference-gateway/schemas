@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.33.1](https://github.com/inference-gateway/schemas/compare/v0.33.0...v0.33.1) (2026-09-24)
+
+### Improvements
+
+* **openapi:** document mcp alias uniqueness rules ([#235](https://github.com/inference-gateway/schemas/issues/235)) ([9f4a081](https://github.com/inference-gateway/schemas/commit/9f4a0813626bb4ccad15831fbd983cec736dc2d8))
+
 ## [0.33.0](https://github.com/inference-gateway/schemas/compare/v0.32.0...v0.33.0) (2026-09-24)
 
 ### Features
