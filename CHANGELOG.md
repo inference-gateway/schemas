@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.32.0](https://github.com/inference-gateway/schemas/compare/v0.31.2...v0.32.0) (2026-09-24)
+
+### Features
+
+* **openapi:** document mcp json-rpc endpoint ([#231](https://github.com/inference-gateway/schemas/issues/231)) ([f3dd4bd](https://github.com/inference-gateway/schemas/commit/f3dd4bd5376b477f0f22c83eb9a0e2de86c80a52))
+
 ## [0.31.2](https://github.com/inference-gateway/schemas/compare/v0.31.1...v0.31.2) (2026-09-24)
 
 ### Misc
