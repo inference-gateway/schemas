@@ -3,6 +3,16 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.34.0](https://github.com/inference-gateway/schemas/compare/v0.33.1...v0.34.0) (2026-09-25)
+
+### Features
+
+* **openapi:** add rfc 9728 metadata path and mcp_resource_url ([#239](https://github.com/inference-gateway/schemas/issues/239)) ([a23ee68](https://github.com/inference-gateway/schemas/commit/a23ee689a09a301fccf05a2232a502a85058f8ad))
+
+### Documentation
+
+* **openapi:** document -32001 guardrails block code ([#238](https://github.com/inference-gateway/schemas/issues/238)) ([2e72236](https://github.com/inference-gateway/schemas/commit/2e72236e3c4663a57ff02a4373936f3739814662))
+
 ## [0.33.1](https://github.com/inference-gateway/schemas/compare/v0.33.0...v0.33.1) (2026-09-24)
 
 ### Improvements
