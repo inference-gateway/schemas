@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.34.1](https://github.com/inference-gateway/schemas/compare/v0.34.0...v0.34.1) (2026-09-25)
+
+### Improvements
+
+* **openapi:** move metrics push to POST /metrics ([#243](https://github.com/inference-gateway/schemas/issues/243)) ([866181b](https://github.com/inference-gateway/schemas/commit/866181b1b028449b2b4587702621dba28230b768))
+
 ## [0.34.0](https://github.com/inference-gateway/schemas/compare/v0.33.1...v0.34.0) (2026-09-25)
 
 ### Features
