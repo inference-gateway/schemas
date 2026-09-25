@@ -3,6 +3,16 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.34.2](https://github.com/inference-gateway/schemas/compare/v0.34.1...v0.34.2) (2026-09-25)
+
+### Improvements
+
+* **openapi:** remove /v1/mcp/tools in favour of tools/list ([#246](https://github.com/inference-gateway/schemas/issues/246)) ([f02b408](https://github.com/inference-gateway/schemas/commit/f02b4086cb1f3833c4c5fc8ab22172b2346472f4))
+
+### Reverts
+
+* **openapi:** restore /v1 prefix on otlp metrics push ([#245](https://github.com/inference-gateway/schemas/issues/245)) ([b80e728](https://github.com/inference-gateway/schemas/commit/b80e728641484806ef4df72d8cf3fbe9bb4faeac)), closes [#244](https://github.com/inference-gateway/schemas/issues/244)
+
 ## [0.34.1](https://github.com/inference-gateway/schemas/compare/v0.34.0...v0.34.1) (2026-09-25)
 
 ### Improvements
