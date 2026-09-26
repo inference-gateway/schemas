@@ -192,10 +192,6 @@ definitions:
       uri:
         description: The unique URI identifying the extension.
         type: string
-    required:
-      - uri
-      - description
-      - required
     title: Agent Extension
     type: object
   AgentInterface:
@@ -383,9 +379,6 @@ definitions:
       tenant:
         description: Optional tenant, provided as a path parameter.
         type: string
-    required:
-      - tenant
-      - name
     title: Cancel Task Request
     type: object
   ClientCredentialsOAuthFlow:
@@ -436,9 +429,6 @@ definitions:
       tenant:
         description: Optional tenant, provided as a path parameter.
         type: string
-    required:
-      - tenant
-      - name
     title: Delete Task Push Notification Config Request
     type: object
   FilePart:
@@ -463,9 +453,6 @@ definitions:
       name:
         description: An optional name for the file (e.g., "document.pdf").
         type: string
-    required:
-      - mediaType
-      - name
     title: File Part
     type: object
   GetExtendedAgentCardRequest:
@@ -475,8 +462,6 @@ definitions:
       tenant:
         description: Optional tenant, provided as a path parameter.
         type: string
-    required:
-      - tenant
     title: Get Extended Agent Card Request
     type: object
   GetTaskPushNotificationConfigRequest:
@@ -491,9 +476,6 @@ definitions:
       tenant:
         description: Optional tenant, provided as a path parameter.
         type: string
-    required:
-      - tenant
-      - name
     title: Get Task Push Notification Config Request
     type: object
   GetTaskRequest:
@@ -584,11 +566,6 @@ definitions:
       tenant:
         description: Optional tenant, provided as a path parameter.
         type: string
-    required:
-      - tenant
-      - parent
-      - pageSize
-      - pageToken
     title: List Task Push Notification Config Request
     type: object
   ListTaskPushNotificationConfigResponse:
@@ -608,8 +585,6 @@ definitions:
           A token, which can be sent as `page_token` to retrieve the next page.
            If this field is omitted, there are no subsequent pages.
         type: string
-    required:
-      - nextPageToken
     title: List Task Push Notification Config Response
     type: object
   ListTasksRequest:
@@ -662,12 +637,6 @@ definitions:
       tenant:
         description: Optional tenant, provided as a path parameter.
         type: string
-    required:
-      - tenant
-      - contextId
-      - status
-      - pageToken
-      - lastUpdatedAfter
     title: List Tasks Request
     type: object
   ListTasksResponse:
@@ -771,8 +740,6 @@ definitions:
       description:
         description: An optional description for the security scheme.
         type: string
-    required:
-      - description
     title: Mutual Tls Security Scheme
     type: object
   OAuth2SecurityScheme:
@@ -955,8 +922,6 @@ definitions:
       pushNotificationConfig:
         $ref: '#/definitions/PushNotificationConfig'
         description: Configuration for the agent to send push notifications for task updates.
-    required:
-      - blocking
     title: Send Message Configuration
     type: object
   SendMessageRequest:
@@ -979,7 +944,7 @@ definitions:
         description: Optional tenant, provided as a path parameter.
         type: string
     required:
-      - tenant
+      - message
     title: Send Message Request
     type: object
   SendMessageResponse:
@@ -1064,9 +1029,6 @@ definitions:
       tenant:
         description: Optional tenant, provided as a path parameter.
         type: string
-    required:
-      - tenant
-      - name
     title: Subscribe To Task Request
     type: object
   Task:

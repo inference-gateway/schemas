@@ -4,6 +4,7 @@ const protoContent = fs.readFileSync('a2a/a2a.proto', 'utf8');
 
 const requiredFields = {};
 let currentMessage = null;
+let statement = '';
 
 const lines = protoContent.split('\n');
 for (let i = 0; i < lines.length; i++) {
@@ -13,22 +14,39 @@ for (let i = 0; i < lines.length; i++) {
   if (messageMatch) {
     currentMessage = messageMatch[1];
     requiredFields[currentMessage] = [];
+    statement = '';
     continue;
   }
 
   if (line.match(/^\}/)) {
     currentMessage = null;
+    statement = '';
     continue;
   }
 
-  if (currentMessage && line.includes('[(google.api.field_behavior) = REQUIRED]')) {
-    const fieldMatch = line.match(/^\s+(?:optional\s+|repeated\s+)?(?:map<[^>]+>|(?:\w+\.)*\w+)\s+(\w+)\s*=/);
-    if (fieldMatch) {
+  if (!currentMessage) {
+    continue;
+  }
+
+  // Field options may span several lines, so accumulate until the statement ends.
+  statement += ' ' + line.replace(/\/\/.*$/, '').trim();
+  if (!statement.includes(';')) {
+    continue;
+  }
+
+  if (statement.includes('(google.api.field_behavior) = REQUIRED')) {
+    const fieldMatch = statement.match(/(?:optional\s+|repeated\s+)?(?:map<[^>]+>|(?:\w+\.)*\w+)\s+(\w+)\s*=\s*\d+/);
+    const jsonNameMatch = statement.match(/json_name\s*=\s*"([^"]+)"/);
+    if (jsonNameMatch) {
+      requiredFields[currentMessage].push(jsonNameMatch[1]);
+    } else if (fieldMatch) {
       const fieldName = fieldMatch[1];
       const camelCase = fieldName.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
       requiredFields[currentMessage].push(camelCase);
     }
   }
+
+  statement = '';
 }
 
 const filtered = {};
@@ -39,3 +57,14 @@ for (const [msg, fields] of Object.entries(requiredFields)) {
 }
 
 module.exports = filtered;
+
+if (require.main === module) {
+  const assert = require('assert');
+  // Multi-line field options with a json_name override (SendMessageRequest.request).
+  assert.deepStrictEqual(filtered.SendMessageRequest, ['message']);
+  // Single-line annotations still work, and unannotated fields are never required.
+  assert.deepStrictEqual(filtered.GetTaskRequest, ['name']);
+  assert.ok(!Object.values(filtered).some((fields) => fields.includes('tenant')));
+  assert.ok(!('CancelTaskRequest' in filtered));
+  console.log('✓ parse-proto-required self-check passed');
+}

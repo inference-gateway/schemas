@@ -6,11 +6,21 @@ const requiredFieldsMap = require('./parse-proto-required.js');
 
 const schema = yaml.load(fs.readFileSync('a2a/a2a-schema.yaml', 'utf8'));
 
-for (const [typeName, fields] of Object.entries(requiredFieldsMap)) {
-  if (schema.definitions && schema.definitions[typeName]) {
-    schema.definitions[typeName].required = fields;
+// The jsonschema plugin marks every implicit-presence scalar/enum field as required,
+// so `required` is derived solely from the proto's field_behavior annotations here.
+for (const [typeName, definition] of Object.entries(schema.definitions || {})) {
+  const fields = requiredFieldsMap[typeName];
+  if (fields) {
+    definition.required = fields;
     console.log(`✓ Added required fields to ${typeName}: [${fields.join(', ')}]`);
-  } else {
+  } else if (definition.required) {
+    delete definition.required;
+    console.log(`✓ Removed plugin-generated required fields from ${typeName}`);
+  }
+}
+
+for (const typeName of Object.keys(requiredFieldsMap)) {
+  if (!schema.definitions || !schema.definitions[typeName]) {
     console.warn(`⚠ Warning: Type ${typeName} not found in schema`);
   }
 }
