@@ -28,7 +28,6 @@ for (let i = 0; i < lines.length; i++) {
     continue;
   }
 
-  // Field options may span several lines, so accumulate until the statement ends.
   statement += ' ' + line.replace(/\/\/.*$/, '').trim();
   if (!statement.includes(';')) {
     continue;
@@ -60,9 +59,7 @@ module.exports = filtered;
 
 if (require.main === module) {
   const assert = require('assert');
-  // Multi-line field options with a json_name override (SendMessageRequest.request).
   assert.deepStrictEqual(filtered.SendMessageRequest, ['message']);
-  // Single-line annotations still work, and unannotated fields are never required.
   assert.deepStrictEqual(filtered.GetTaskRequest, ['name']);
   assert.ok(!Object.values(filtered).some((fields) => fields.includes('tenant')));
   assert.ok(!('CancelTaskRequest' in filtered));
