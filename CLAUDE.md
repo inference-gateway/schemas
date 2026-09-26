@@ -10,7 +10,7 @@ The `inference-gateway/schemas` repo holds the three shared schemas the rest of 
 - `a2a/` — A2A (Agent-to-Agent) protocol. `a2a.proto` is the source of truth; `a2a-schema.json` / `.yaml` are **generated** from it.
 - `mcp/` — Model Context Protocol schema. **Mirrored** from `modelcontextprotocol/modelcontextprotocol`; both the JSON and YAML are generated.
 
-Downstream consumers regenerate from these files, so a schema change here ripples into `inference-gateway/sdks`, `inference-gateway/docs`, and others. See the `maintainer` skill / cross-repo checklist before shipping a breaking change.
+Downstream consumers regenerate from these files, so a schema change here ripples into the SDK repos (`inference-gateway/sdk`, `python-sdk`, `rust-sdk`, `typescript-sdk`), `inference-gateway/docs`, and others. See the `maintainer` skill / cross-repo checklist before shipping a breaking change.
 
 ## Commands
 
@@ -18,7 +18,7 @@ All tasks go through `Taskfile.yml`. `task --list` enumerates them; the load-bea
 
 | Task | What it does |
 | --- | --- |
-| `task openapi:lint` | Spectral lint of `openapi.yaml` (CI runs this on every push/PR). |
+| `task openapi:lint` | Spectral lint of `openapi.yaml` (CI runs this on pushes to `main` and PRs targeting `main`). |
 | `task openapi:format` | `prettier --write openapi.yaml` (single quotes, 2-space). |
 | `task mcp-schema-download` | Fetches the MCP JSON schema for the pinned protocol version (`MCP_PROTOCOL_VERSION` in `Taskfile.yml`, currently `2026-07-28`) from upstream, regenerates the YAML. Bump the pin when a new revision ships. |
 | `task a2a-schema-download` | Runs `buf generate` on `a2a/a2a.proto` → bundled JSON schema → post-processed `a2a-schema.{json,yaml}`. Requires Go + `buf` on PATH. |
@@ -59,8 +59,8 @@ If you touch any of these scripts, run `task a2a-schema-download` end-to-end and
 - **Commits:** Conventional Commits, all-lowercase description (`chore(mcp): sync MCP schema`, `feat(openapi): add foo endpoint`). Semantic-release downstream depends on this.
 - **YAML/Markdown style:** 2-space indent, single quotes, LF endings, final newline (`.editorconfig` + `.prettierrc`).
 - **CODEOWNERS:** `a2a/*` is owned by `@inference-gateway/a2a` — expect that team on any A2A-touching PR.
-- **CI:** runs `bun run lint` (markdownlint) and `bun run openapi:lint` (Spectral) on every push/PR. There's no test suite; the sync workflows themselves are the regression net for the generated schemas.
+- **CI:** runs `bun run lint` (markdownlint; `.markdownlintignore` excludes `AGENTS.md`, `CLAUDE.md`, `CHANGELOG.md`) and `bun run openapi:lint` (Spectral) on pushes to `main` and PRs targeting `main` - pushes to other branches without an open PR are not built. There's no test suite; the sync workflows themselves are the regression net for the generated schemas.
 
 ## Ecosystem context
 
-This repo lives in the `inference-gateway` GitHub org polyrepo. The `maintainer` skill (if loaded) documents cross-repo conventions — read it before fan-out changes. Key downstream consumers to mention in PR bodies when relevant: `inference-gateway/sdks`, `inference-gateway/docs`, `inference-gateway/inference-gateway`.
+This repo lives in the `inference-gateway` GitHub org polyrepo. The `maintainer` skill (if loaded) documents cross-repo conventions — read it before fan-out changes. Key downstream consumers to mention in PR bodies when relevant: the SDK repos (`inference-gateway/sdk`, `python-sdk`, `rust-sdk`, `typescript-sdk`), `inference-gateway/docs`, `inference-gateway/inference-gateway`.
