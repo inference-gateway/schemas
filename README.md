@@ -57,7 +57,7 @@ Two kinds of files live here:
 ├── mcp/
 │   ├── mcp-schema.json   # mirrored from upstream MCP
 │   └── mcp-schema.yaml   # mirrored from upstream MCP
-└── scripts/              # A2A generation pipeline (Bun)
+└── scripts/              # A2A generation pipeline + openapi checks (Bun)
 ```
 
 ## Consumers

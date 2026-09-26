@@ -44,8 +44,8 @@ Env vars follow `{UPPER_SNAKE_PROVIDER}_API_URL` / `_API_KEY`.
 
 ## Gotchas
 
-- Never hand-edit generated or mirrored outputs (`a2a/a2a-schema.*`, `mcp/mcp-schema.*`) — change the source (or wait for upstream) and rerun the task.
+- Never hand-edit generated or mirrored outputs (`a2a/a2a-schema.*`, `mcp/mcp-schema.*`) — change the source and rerun the task. For A2A the source is the committed `a2a/a2a.proto`; the task never fetches it, so upstream changes have to be copied in by hand (or the task changed to fetch them).
 - `a2a/*` is CODEOWNERS-protected; expect review from `@inference-gateway/a2a`.
-- Sync tasks download upstream content — review generated diffs carefully before merging.
+- Only `task mcp-schema-download` downloads an upstream schema; `task a2a-schema-download` downloads just `buf.yaml` and the `protoc-gen-jsonschema@latest` plugin, then regenerates from the local proto. Review generated diffs carefully before merging.
 - Do not commit local `.infer/`, `.flox/`, or temporary files.
 - The A2A generation pipeline internals (the `scripts/` stages) are documented in `CLAUDE.md`.
