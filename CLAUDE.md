@@ -22,13 +22,13 @@ All tasks go through `Taskfile.yml`. `task --list` enumerates them; the load-bea
 | `task openapi:format` | `prettier --write openapi.yaml` (single quotes, 2-space). |
 | `task mcp-schema-download` | Fetches the MCP JSON schema for the pinned protocol version (`MCP_PROTOCOL_VERSION` in `Taskfile.yml`, currently `2026-07-28`) from upstream, regenerates the YAML. Bump the pin when a new revision ships. |
 | `task a2a-schema-download` | Runs `buf generate` on `a2a/a2a.proto` → bundled JSON schema → post-processed `a2a-schema.{json,yaml}`. Requires Go + `buf` on PATH. |
-| `task release:dry` | Previews the next semantic-release version + notes locally (`bunx semantic-release --dry-run`); publishes nothing. |
+| `task release:dry` | Previews the next semantic-release version + notes locally (`bun install` then `bun run release:dry`, i.e. `semantic-release --dry-run --no-ci`); publishes nothing. Needs `GITHUB_TOKEN`/`GH_TOKEN` exported and push access to `main` - the dry run still does `git push --dry-run` and the `@semantic-release/github` verifyConditions check, which fails with `ENOGHTOKEN` without a token. |
 
 `bun scripts/check-reachable.js [path]` — sanity-checks that streaming-payload schemas (`CreateChatCompletionStreamResponse` and friends) are still reachable from operations in `openapi.yaml`. `oapi-codegen` drops unreachable schemas during code generation; this prevents regressions of issue #31.
 
 The two schema-sync tasks are also exposed as `workflow_dispatch` GitHub Actions (`a2a-schema-sync.yml`, `mcp-schema-sync.yml`) that open a `chore(scope): sync …` PR automatically.
 
-Releases are automated with **semantic-release** (config in `.releaserc.yaml`), triggered manually via the `workflow_dispatch` `Release` workflow (`release.yml`). It derives the version from Conventional Commits, updates `CHANGELOG.md`, tags, and creates a GitHub Release. Nothing is published to a package registry. See `RELEASING.md`.
+Releases are automated with **semantic-release** (config in `.releaserc.yaml`), triggered manually via the `workflow_dispatch` `Release` workflow (`release.yml`). It derives the version from Conventional Commits, updates `CHANGELOG.md`, tags, and creates a GitHub Release. Nothing is published to a package registry. `feat:` → minor and a `BREAKING CHANGE:` footer → major; `fix:`, `chore:`, `ci:`, `refactor:`, `perf:` and reverts all cut a patch (`releaseRules` in `.releaserc.yaml` plus the commit-analyzer defaults). Only `docs:`, `style:`, `test:` and `build:` do not release.
 
 ## Generated files — do not hand-edit
 
