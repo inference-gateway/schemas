@@ -96,7 +96,7 @@ Common tasks:
 | `task mcp-schema-download` | Sync the MCP schema from upstream.                               |
 | `task release:dry`         | Preview the next semantic-release version locally (needs `GITHUB_TOKEN`). |
 
-> See [`CLAUDE.md`](CLAUDE.md) / [`AGENTS.md`](AGENTS.md) for the full set of
+> See [`AGENTS.md`](AGENTS.md) for the full set of
 > commands, the A2A generation pipeline, and contributor conventions.
 
 ## Releases

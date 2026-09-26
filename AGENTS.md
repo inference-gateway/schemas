@@ -6,6 +6,8 @@ Shared schemas for the Inference Gateway ecosystem. Downstream projects (gateway
 - `a2a/a2a.proto` - A2A types, source of truth; `a2a/a2a-schema.{json,yaml}` are **generated** from it.
 - `mcp/mcp-schema.{json,yaml}` - **mirrored** from upstream `modelcontextprotocol/modelcontextprotocol`.
 
+The `maintainer` skill (if loaded) documents cross-repo conventions for the `inference-gateway` polyrepo - read it before fan-out or breaking changes.
+
 ## Commands
 
 Runtime is Bun (`>= 1.3.13`); run `bun install` first. Everything goes through Task (`task --list`).
@@ -14,7 +16,7 @@ Runtime is Bun (`>= 1.3.13`); run `bun install` first. Everything goes through T
 | -------------------------- | --------------------------------------------------------------------------- |
 | `task openapi:lint`        | Spectral lint of `openapi.yaml` (CI gate).                                  |
 | `task openapi:format`      | Prettier-format `openapi.yaml`.                                              |
-| `task lint` / `lint:fix`   | markdownlint over Markdown, minus `.markdownlintignore` (`AGENTS.md`, `CLAUDE.md`, `CHANGELOG.md`, `node_modules/`). `lint` is a CI gate. |
+| `task lint` / `lint:fix`   | markdownlint over Markdown, minus `.markdownlintignore` (`AGENTS.md`, `CHANGELOG.md`, `node_modules/`). `lint` is a CI gate. |
 | `task check-reachable`     | Asserts streaming-payload schemas (`CreateChatCompletionStreamResponse` and friends) stay reachable from operations; oapi-codegen drops unreachable ones (issue #31). |
 | `task a2a-schema-download` | Regenerates `a2a/a2a-schema.{json,yaml}` from the proto. Requires Go + `buf`. |
 | `task mcp-schema-download` | Re-syncs the MCP schema for the pinned protocol version (`MCP_PROTOCOL_VERSION` in `Taskfile.yml`); bump the pin when a new revision ships. |
@@ -35,7 +37,8 @@ Follow `.editorconfig` / `.prettierrc`: LF endings, UTF-8, final newline, trimme
 - Write self-explanatory code: clear names and small, single-purpose functions carry the intent.
   If a block needs a comment to be understood, extract it into a well-named function or variable.
 - No inline comments inside function bodies.
-- Doc comments on functions, types, and modules are at most 5 lines: what it does and why, not how.
+- Doc comments on functions and types are at most 5 lines: what it does and why, not how.
+- No comments above modules, packages, or files.
 - Tool directives are not comments and stay where the tool needs them (lint suppressions, build
   tags, compiler pragmas, code generation markers).
 
