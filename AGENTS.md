@@ -18,7 +18,7 @@ Runtime is Bun (`>= 1.3.13`); run `bun install` first. Everything goes through T
 | `task check-reachable`     | Asserts streaming-payload schemas stay reachable (oapi-codegen drops unreachable ones). |
 | `task a2a-schema-download` | Regenerates `a2a/a2a-schema.{json,yaml}` from the proto. Requires Go + `buf`. |
 | `task mcp-schema-download` | Re-syncs the MCP schema from upstream.                                      |
-| `task release:dry`         | Previews the next semantic-release version and notes; publishes nothing.    |
+| `task release:dry`         | Previews the next semantic-release version and notes; publishes nothing. Needs `GITHUB_TOKEN`/`GH_TOKEN` exported. |
 
 ## Validation
 
@@ -30,7 +30,7 @@ Follow `.editorconfig` / `.prettierrc`: LF endings, UTF-8, final newline, trimme
 
 ## Commits & releases
 
-Conventional Commits with an all-lowercase description (`feat(openapi): add usage fields`). Releases are automated by semantic-release (`.releaserc.yaml`, manual `Release` workflow in `.github/workflows/release.yml`): `feat:` → minor, `fix:` → patch, a `BREAKING CHANGE:` footer → major.
+Conventional Commits with an all-lowercase description (`feat(openapi): add usage fields`). Releases are automated by semantic-release (`.releaserc.yaml`, manual `Release` workflow in `.github/workflows/release.yml`): `feat:` → minor, a `BREAKING CHANGE:` footer → major, and `fix:`, `chore:`, `ci:`, `refactor:`, `perf:` and reverts → patch (the `releaseRules` in `.releaserc.yaml` plus the commit-analyzer defaults). Of the configured types only `docs:`, `style:`, `test:` and `build:` do not cut a release - a batch of `chore`/`ci` commits alone still ships a patch version.
 
 ## Adding a provider
 

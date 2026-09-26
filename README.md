@@ -94,7 +94,7 @@ Common tasks:
 | `task format`              | Format the YAML schemas with Prettier.                           |
 | `task a2a-schema-download` | Regenerate the A2A schema from `a2a/a2a.proto` (needs Go + buf). |
 | `task mcp-schema-download` | Sync the MCP schema from upstream.                               |
-| `task release:dry`         | Preview the next semantic-release version locally.               |
+| `task release:dry`         | Preview the next semantic-release version locally (needs `GITHUB_TOKEN`). |
 
 > See [`CLAUDE.md`](CLAUDE.md) / [`AGENTS.md`](AGENTS.md) for the full set of
 > commands, the A2A generation pipeline, and contributor conventions.
@@ -107,6 +107,15 @@ and triggered manually via the **Release** GitHub Actions workflow
 [Conventional Commits](https://www.conventionalcommits.org) since the last
 release, and each release updates [`CHANGELOG.md`](CHANGELOG.md), creates a git
 tag, and publishes a GitHub Release. Nothing is published to a package registry.
+
+`task release:dry` previews the next version locally. Even as a dry run it
+verifies push access (`git push --dry-run`) and the GitHub plugin's
+credentials, so export a token first, otherwise it fails with `ENOGHTOKEN`:
+
+```sh
+export GITHUB_TOKEN=$(gh auth token)
+task release:dry
+```
 
 ## Contributing
 
