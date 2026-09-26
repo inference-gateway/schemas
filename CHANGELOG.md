@@ -3,6 +3,23 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.34.3](https://github.com/inference-gateway/schemas/compare/v0.34.2...v0.34.3) (2026-09-26)
+
+### Bug Fixes
+
+* **a2a:** derive required arrays from proto annotations ([#255](https://github.com/inference-gateway/schemas/issues/255)) ([24caa16](https://github.com/inference-gateway/schemas/commit/24caa16eb92a5b0f64006c8a0da3eb2669af9aa6))
+
+### Documentation
+
+* align agent guides with actual repo state ([#257](https://github.com/inference-gateway/schemas/issues/257)) ([c68ee84](https://github.com/inference-gateway/schemas/commit/c68ee843f47e20801551710b07786b266d7dde7a))
+* correct a2a sync and pipeline descriptions ([#253](https://github.com/inference-gateway/schemas/issues/253)) ([b9c7bc7](https://github.com/inference-gateway/schemas/commit/b9c7bc72e0d0e6ed7fd5cd359c9eb9de62c098f4))
+* correct release rules, release:dry usage and dead link ([#254](https://github.com/inference-gateway/schemas/issues/254)) ([713e5bb](https://github.com/inference-gateway/schemas/commit/713e5bbc54254aea623e4ead458ea5c4cec875e2))
+
+### Misc
+
+* **deps:** bump claude-code 2.1.278 -> 2.1.280 ([#247](https://github.com/inference-gateway/schemas/issues/247)) ([c72bb24](https://github.com/inference-gateway/schemas/commit/c72bb24a63e22be99b340c94c1c9a3ba1b0ef37e))
+* **deps:** bump infer CLI v0.205.3 -> v0.208.0 ([#248](https://github.com/inference-gateway/schemas/issues/248)) ([9888701](https://github.com/inference-gateway/schemas/commit/9888701a9735972e3713bac9b2b14b7729edf540))
+
 ## [0.34.2](https://github.com/inference-gateway/schemas/compare/v0.34.1...v0.34.2) (2026-09-25)
 
 ### Improvements
