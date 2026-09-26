@@ -223,11 +223,6 @@
           "type": "string"
         }
       },
-      "required": [
-        "uri",
-        "description",
-        "required"
-      ],
       "title": "Agent Extension",
       "type": "object"
     },
@@ -455,10 +450,6 @@
           "type": "string"
         }
       },
-      "required": [
-        "tenant",
-        "name"
-      ],
       "title": "Cancel Task Request",
       "type": "object"
     },
@@ -523,10 +514,6 @@
           "type": "string"
         }
       },
-      "required": [
-        "tenant",
-        "name"
-      ],
       "title": "Delete Task Push Notification Config Request",
       "type": "object"
     },
@@ -553,10 +540,6 @@
           "type": "string"
         }
       },
-      "required": [
-        "mediaType",
-        "name"
-      ],
       "title": "File Part",
       "type": "object"
     },
@@ -569,9 +552,6 @@
           "type": "string"
         }
       },
-      "required": [
-        "tenant"
-      ],
       "title": "Get Extended Agent Card Request",
       "type": "object"
     },
@@ -588,10 +568,6 @@
           "type": "string"
         }
       },
-      "required": [
-        "tenant",
-        "name"
-      ],
       "title": "Get Task Push Notification Config Request",
       "type": "object"
     },
@@ -699,12 +675,6 @@
           "type": "string"
         }
       },
-      "required": [
-        "tenant",
-        "parent",
-        "pageSize",
-        "pageToken"
-      ],
       "title": "List Task Push Notification Config Request",
       "type": "object"
     },
@@ -725,9 +695,6 @@
           "type": "string"
         }
       },
-      "required": [
-        "nextPageToken"
-      ],
       "title": "List Task Push Notification Config Response",
       "type": "object"
     },
@@ -785,13 +752,6 @@
           "type": "string"
         }
       },
-      "required": [
-        "tenant",
-        "contextId",
-        "status",
-        "pageToken",
-        "lastUpdatedAfter"
-      ],
       "title": "List Tasks Request",
       "type": "object"
     },
@@ -904,9 +864,6 @@
           "type": "string"
         }
       },
-      "required": [
-        "description"
-      ],
       "title": "Mutual Tls Security Scheme",
       "type": "object"
     },
@@ -1136,9 +1093,6 @@
           "description": "Configuration for the agent to send push notifications for task updates."
         }
       },
-      "required": [
-        "blocking"
-      ],
       "title": "Send Message Configuration",
       "type": "object"
     },
@@ -1165,7 +1119,7 @@
         }
       },
       "required": [
-        "tenant"
+        "message"
       ],
       "title": "Send Message Request",
       "type": "object"
@@ -1273,10 +1227,6 @@
           "type": "string"
         }
       },
-      "required": [
-        "tenant",
-        "name"
-      ],
       "title": "Subscribe To Task Request",
       "type": "object"
     },
