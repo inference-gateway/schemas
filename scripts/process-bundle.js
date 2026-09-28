@@ -43,7 +43,7 @@ cleanDescriptions(schema);
 const normalized = {};
 for (const [key, value] of Object.entries(schema.definitions)) {
   const cleanName = key
-    .replace(/^a2a\.v1\./, '')
+    .replace(/^lf\.a2a\.v1\./, '')
     .replace(/\.jsonschema\.strict\.json$/, '')
     .replace(/^google\.protobuf\./, '');
   normalized[cleanName] = value;
@@ -56,7 +56,7 @@ const normalizeRefs = (obj) => {
     if (key === '$ref' && typeof obj[key] === 'string') {
       obj[key] = obj[key]
         .replace('#/$defs/', '#/definitions/')
-        .replace(/a2a\.v1\./g, '')
+        .replace(/lf\.a2a\.v1\./g, '')
         .replace(/\.jsonschema\.strict\.json/g, '')
         .replace(/google\.protobuf\./g, '');
     } else if (typeof obj[key] === 'object') {

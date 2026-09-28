@@ -60,8 +60,9 @@ module.exports = filtered;
 if (require.main === module) {
   const assert = require('assert');
   assert.deepStrictEqual(filtered.SendMessageRequest, ['message']);
-  assert.deepStrictEqual(filtered.GetTaskRequest, ['name']);
+  assert.deepStrictEqual(filtered.GetTaskRequest, ['id']);
   assert.ok(!Object.values(filtered).some((fields) => fields.includes('tenant')));
-  assert.ok(!('CancelTaskRequest' in filtered));
+  assert.ok(filtered.AgentInterface.includes('protocolVersion'));
+  assert.ok(filtered.AgentCard.includes('supportedInterfaces'));
   console.log('✓ parse-proto-required self-check passed');
 }
