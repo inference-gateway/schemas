@@ -5161,7 +5161,7 @@ components:
                   env: 'ZAI_API_URL'
                   type: string
                   default: 'https://api.z.ai/api/paas/v4'
-                  description: 'ZAI API URL'
+                  description: 'ZAI API URL - the default is the pay-as-you-go endpoint. GLM Coding Plan subscribers must set https://api.z.ai/api/coding/paas/v4 so requests draw on the subscription instead of being billed pay-as-you-go'
                 - name: zai_api_key
                   env: 'ZAI_API_KEY'
                   type: string
