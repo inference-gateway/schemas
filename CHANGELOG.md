@@ -3,6 +3,22 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [0.34.4](https://github.com/inference-gateway/schemas/compare/v0.34.3...v0.34.4) (2026-09-30)
+
+### Improvements
+
+* **openapi:** default zai to coding plan base url ([#265](https://github.com/inference-gateway/schemas/issues/265)) ([96ecc34](https://github.com/inference-gateway/schemas/commit/96ecc345a74a42e56bf703208b8e8d07892fd1fa))
+
+### Documentation
+
+* **agents:** add code readability guidelines ([#258](https://github.com/inference-gateway/schemas/issues/258)) ([25f2d26](https://github.com/inference-gateway/schemas/commit/25f2d26bfe139304ff0a4ed8f3d8f5fc611188a7))
+* **agents:** add code readability guidelines ([#259](https://github.com/inference-gateway/schemas/issues/259)) ([4aef961](https://github.com/inference-gateway/schemas/commit/4aef9613a2320cec55191b612f51c7cb68f73a4b))
+
+### Misc
+
+* **deps:** bump claude-code 2.1.280 -> 2.1.283 ([#262](https://github.com/inference-gateway/schemas/issues/262)) ([a8028a9](https://github.com/inference-gateway/schemas/commit/a8028a9377454e2b41293e9cee45d358aaa19b13))
+* **deps:** bump infer CLI v0.208.0 -> v0.218.0 ([#263](https://github.com/inference-gateway/schemas/issues/263)) ([9617217](https://github.com/inference-gateway/schemas/commit/9617217923f5dc5322623f10b40a689e78ee997d))
+
 ## [0.34.3](https://github.com/inference-gateway/schemas/compare/v0.34.2...v0.34.3) (2026-09-26)
 
 ### Bug Fixes
