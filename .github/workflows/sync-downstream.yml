@@ -1,10 +1,13 @@
 ---
 name: Sync Downstream
 
-# Fans out the deterministic schemas->types sync to every OpenAPI consumer.
+# Fans out the deterministic schemas->types sync to every schemas consumer
+# (OpenAPI: sdk, python-sdk, rust-sdk, typescript-sdk, inference-gateway;
+# A2A: adk, rust-adk, typescript-adk).
 # Each downstream repo hosts a thin `schemas-sync.yml` caller of the org
 # reusable workflow (inference-gateway/.github/.github/workflows/schemas-sync.yml),
-# which runs that repo's `task oas-sync SCHEMAS_REF=<ref>` and opens/updates an
+# which runs that repo's sync task (`oas-sync` or `schemas-sync`) with
+# `SCHEMAS_REF=<ref>` and opens/updates an
 # idempotent PR on the fixed `schemas-sync` branch. This dispatcher is
 # fire-and-forget and safe to re-run: downstream re-runs update the existing
 # PR in place (or close it when the repo is back in sync).
@@ -18,7 +21,7 @@ on:
         type: string
         default: ''
       repository:
-        description: 'Single downstream repo to dispatch (omit = all of: sdk, python-sdk, rust-sdk, typescript-sdk, inference-gateway)'
+        description: 'Single downstream repo to dispatch (omit = all of: sdk, python-sdk, rust-sdk, typescript-sdk, inference-gateway, adk, rust-adk, typescript-adk)'
         required: false
         type: string
         default: ''
@@ -47,6 +50,9 @@ jobs:
             rust-sdk
             typescript-sdk
             inference-gateway
+            adk
+            rust-adk
+            typescript-adk
 
       - name: Dispatch schemas-sync to downstream repos
         env:
@@ -56,7 +62,7 @@ jobs:
           DRY_RUN: ${{ inputs.dry_run }}
         run: |
           set -euo pipefail
-          repos="sdk python-sdk rust-sdk typescript-sdk inference-gateway"
+          repos="sdk python-sdk rust-sdk typescript-sdk inference-gateway adk rust-adk typescript-adk"
           if [ -n "$ONLY" ]; then
             case " $repos " in
               *" $ONLY "*) repos="$ONLY" ;;
