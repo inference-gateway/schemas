@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [1.0.1](https://github.com/inference-gateway/schemas/compare/v1.0.0...v1.0.1) (2026-10-01)
+
+### Continuous Integration
+
+* **sync-downstream:** fan out to the a2a consumers ([#269](https://github.com/inference-gateway/schemas/issues/269)) ([db806f5](https://github.com/inference-gateway/schemas/commit/db806f58ab39f829d965b0646d949a6afe836f41))
+
 ## [1.0.0](https://github.com/inference-gateway/schemas/compare/v0.34.4...v1.0.0) (2026-10-01)
 
 ### ⚠ BREAKING CHANGES
