@@ -3,6 +3,27 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [1.0.0](https://github.com/inference-gateway/schemas/compare/v0.34.4...v1.0.0) (2026-10-01)
+
+### ⚠ BREAKING CHANGES
+
+* **a2a:** package a2a.v1 becomes lf.a2a.v1, TASK_STATE_CANCELLED
+  becomes TASK_STATE_CANCELED, AgentCard drops url/preferred_transport/
+  additional_interfaces and renames security to security_requirements,
+  FilePart/DataPart/PushNotificationConfig are removed, and the push
+  notification config RPCs are renamed.
+
+  Co-authored-by: inference-gateway-maintainer[bot] <246577062+inference-gateway-maintainer[bot]@users.noreply.github.com>
+
+### Improvements
+
+* **a2a:** sync proto with upstream v1.0.1 ([#261](https://github.com/inference-gateway/schemas/issues/261)) ([01461a6](https://github.com/inference-gateway/schemas/commit/01461a6191dadf8dd4b402430969b79acc2fc2fb))
+
+### Misc
+
+* **deps-dev:** bump the npm group with 2 updates ([#267](https://github.com/inference-gateway/schemas/issues/267)) ([32e1918](https://github.com/inference-gateway/schemas/commit/32e191863035bb64973ac2e2d2087ffda8a64e37))
+* **deps:** bump infer CLI v0.218.0 -> v0.221.1 ([#268](https://github.com/inference-gateway/schemas/issues/268)) ([3acacc7](https://github.com/inference-gateway/schemas/commit/3acacc7b5467d18aa129ca97bff1de571402c6c9))
+
 ## [0.34.4](https://github.com/inference-gateway/schemas/compare/v0.34.3...v0.34.4) (2026-09-30)
 
 ### Improvements
