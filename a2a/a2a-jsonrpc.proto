@@ -1,0 +1,72 @@
+syntax = "proto3";
+package lf.a2a.v1;
+
+import "google/api/field_behavior.proto";
+import "google/protobuf/struct.proto";
+
+// A JSON-RPC method name of the A2A service (A2A spec sections 5.3 and 9.4).
+// Hand-written by inference-gateway, not part of the official a2a.proto: upstream defines these
+// only as the rpc names of A2AService, and scripts/check-methods.js fails the sync on drift.
+enum A2AMethod {
+  SendMessage = 0;
+  SendStreamingMessage = 1;
+  GetTask = 2;
+  ListTasks = 3;
+  CancelTask = 4;
+  SubscribeToTask = 5;
+  CreateTaskPushNotificationConfig = 6;
+  GetTaskPushNotificationConfig = 7;
+  ListTaskPushNotificationConfigs = 8;
+  GetExtendedAgentCard = 9;
+  DeleteTaskPushNotificationConfig = 10;
+}
+
+// A JSON-RPC 2.0 request to an A2A agent (A2A spec section 9.3).
+// Hand-written by inference-gateway, not part of the official a2a.proto, which does not model
+// the JSON-RPC binding.
+message JSONRPCRequest {
+  // The JSON-RPC version, always "2.0".
+  string jsonrpc = 1 [(google.api.field_behavior) = REQUIRED];
+  // The request id: a string, a number or null. Omitted for notifications.
+  google.protobuf.Value id = 2;
+  // The A2A method to invoke.
+  A2AMethod method = 3 [(google.api.field_behavior) = REQUIRED];
+  // The method's request message, e.g. a SendMessageRequest for SendMessage.
+  google.protobuf.Struct params = 4;
+}
+
+// A JSON-RPC 2.0 response carrying the result of an A2A method (A2A spec section 9).
+// Hand-written by inference-gateway, not part of the official a2a.proto, which does not model
+// the JSON-RPC binding.
+message JSONRPCSuccessResponse {
+  // The JSON-RPC version, always "2.0".
+  string jsonrpc = 1 [(google.api.field_behavior) = REQUIRED];
+  // The id of the request this response answers.
+  google.protobuf.Value id = 2 [(google.api.field_behavior) = REQUIRED];
+  // The method's response message, e.g. a Task for GetTask.
+  google.protobuf.Value result = 3 [(google.api.field_behavior) = REQUIRED];
+}
+
+// A JSON-RPC 2.0 response reporting a failed A2A method call (A2A spec section 9.5).
+// Hand-written by inference-gateway, not part of the official a2a.proto, which does not model
+// the JSON-RPC binding.
+message JSONRPCErrorResponse {
+  // The JSON-RPC version, always "2.0".
+  string jsonrpc = 1 [(google.api.field_behavior) = REQUIRED];
+  // The id of the request this response answers, or null when it could not be read.
+  google.protobuf.Value id = 2 [(google.api.field_behavior) = REQUIRED];
+  // The error that occurred.
+  JSONRPCError error = 3 [(google.api.field_behavior) = REQUIRED];
+}
+
+// A JSON-RPC 2.0 error object; A2A error codes are mapped in spec section 5.4.
+// Hand-written by inference-gateway, not part of the official a2a.proto, which does not model
+// the JSON-RPC binding.
+message JSONRPCError {
+  // The error code, e.g. -32601 for an unknown method.
+  int32 code = 1 [(google.api.field_behavior) = REQUIRED];
+  // A short description of the error.
+  string message = 2 [(google.api.field_behavior) = REQUIRED];
+  // Additional information about the error.
+  google.protobuf.Value data = 3;
+}

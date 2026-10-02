@@ -3,7 +3,9 @@
 Shared schemas for the Inference Gateway ecosystem. Downstream projects (gateway, SDKs, docs, CLI, operator) regenerate from these files, so every change ripples - call out downstream impact in PRs (the SDK repos `inference-gateway/sdk`, `python-sdk`, `rust-sdk`, `typescript-sdk`, plus `inference-gateway/docs` and `inference-gateway/inference-gateway`).
 
 - `openapi.yaml` - the gateway's HTTP API. **Hand-edited; source of truth.**
-- `a2a/a2a.proto` - A2A types, **mirrored** from upstream `a2aproject/A2A` at the `A2A_REF` pin in `Taskfile.yml`; `a2a/a2a-schema.{json,yaml}` are **generated** from it.
+- `a2a/a2a.proto` - A2A types, **mirrored** from upstream `a2aproject/A2A` at the `A2A_REF` pin in `Taskfile.yml`.
+- `a2a/a2a-jsonrpc.proto` - **hand-written** JSON-RPC binding types (`A2AMethod`, `JSONRPCRequest`, `JSONRPCSuccessResponse`, `JSONRPCErrorResponse`, `JSONRPCError`) that the official proto does not model; the only place for non-official A2A types.
+- `a2a/a2a-schema.{json,yaml}` - **generated** from both protos; downstream ADKs generate their types from it and keep no hand-written copies.
 - `mcp/mcp-schema.{json,yaml}` - **mirrored** from upstream `modelcontextprotocol/modelcontextprotocol`.
 
 The `maintainer` skill (if loaded) documents cross-repo conventions for the `inference-gateway` polyrepo - read it before fan-out or breaking changes.
@@ -18,7 +20,7 @@ Runtime is Bun (`>= 1.3.13`); run `bun install` first. Everything goes through T
 | `task openapi:format`      | Prettier-format `openapi.yaml`.                                              |
 | `task lint` / `lint:fix`   | markdownlint over Markdown, minus `.markdownlintignore` (`AGENTS.md`, `CHANGELOG.md`, `node_modules/`). `lint` is a CI gate. |
 | `task check-reachable`     | Asserts streaming-payload schemas (`CreateChatCompletionStreamResponse` and friends) stay reachable from operations; oapi-codegen drops unreachable ones (issue #31). |
-| `task a2a-schema-download` | Downloads `a2a/a2a.proto` at `A2A_REF` (default: the pinned tag) and regenerates `a2a/a2a-schema.{json,yaml}` from it. Requires Go + `buf`. |
+| `task a2a-schema-download` | Downloads `a2a/a2a.proto` at `A2A_REF` (default: the pinned tag) and regenerates `a2a/a2a-schema.{json,yaml}` from it and `a2a/a2a-jsonrpc.proto`. Requires Go + `buf`. |
 | `task mcp-schema-download` | Re-syncs the MCP schema for the pinned protocol version (`MCP_PROTOCOL_VERSION` in `Taskfile.yml`); bump the pin when a new revision ships. |
 | `task release:dry`         | Previews the next semantic-release version and notes; publishes nothing. Needs `GITHUB_TOKEN`/`GH_TOKEN` exported and push access to `main` (it still runs `git push --dry-run` and the GitHub verifyConditions check, which fails with `ENOGHTOKEN` without a token). |
 
@@ -58,12 +60,12 @@ Env vars follow `{UPPER_SNAKE_PROVIDER}_API_URL` / `_API_KEY`.
 
 ## A2A generation pipeline
 
-`task a2a-schema-download` downloads `a2a/a2a.proto`, `buf.yaml` and `buf.lock` from `a2aproject/A2A` at `A2A_REF`, then runs four stages over the proto; the `scripts/` stages do what `buf`/`protoc-gen-jsonschema` alone can't (`scripts/sort-keys.js` gives both scripts deterministic key order; `check-reachable.js` belongs to `openapi.yaml`, not A2A).
+`task a2a-schema-download` downloads `a2a/a2a.proto`, `buf.yaml` and `buf.lock` from `a2aproject/A2A` at `A2A_REF`, then runs four stages over it and the hand-written `a2a/a2a-jsonrpc.proto`; the `scripts/` stages do what `buf`/`protoc-gen-jsonschema` alone can't (`scripts/sort-keys.js` gives both scripts deterministic key order; `check-reachable.js` belongs to `openapi.yaml`, not A2A).
 
 1. **`buf generate`** - emits per-message `*.jsonschema.strict.bundle.json` files into `a2a/` (`target=json-strict-bundle`).
 2. **`scripts/process-bundle.js`** - merges the bundles into one `a2a-schema.{json,yaml}` under `definitions:`, then strips MkDocs `--8<-- [start:X]` / `[end:X]` snippet markers from descriptions (upstream dropped them in v1.0.1, so this is currently a no-op kept for future revisions); strips the `lf.a2a.v1.` and `google.protobuf.` prefixes from definition keys **and** `$ref`s (only those two - a further upstream package rename needs this script updated); rewrites `#/$defs/` -> `#/definitions/`; deletes `patternProperties` (downstream codegen can't handle them); and removes the bundle files.
-3. **`scripts/add-required-fields.js`** - uses `scripts/parse-proto-required.js` to read `[(google.api.field_behavior) = REQUIRED]` annotations (`{ MessageName: [camelCaseField, ...] }`) and writes them into both outputs. The plugin already emits a presence-derived `required` array, so this stage **overwrites** it for annotated messages while unannotated definitions keep the plugin's array - that mismatch is a bug, tracked in #249.
-4. **`scripts/add-methods.js`** - adds the `A2AMethod` string enum: the rpc names of `service A2AService`, which A2A v1.0 uses verbatim as JSON-RPC method names (spec section 9.3). `protoc-gen-jsonschema` drops services, so without this stage the method names never reach the schema.
+3. **`scripts/add-required-fields.js`** - uses `scripts/parse-proto-required.js` to read `[(google.api.field_behavior) = REQUIRED]` annotations from both protos (`{ MessageName: [camelCaseField, ...] }`) and writes them into both outputs. The plugin already emits a presence-derived `required` array, so this stage **overwrites** it for annotated messages while unannotated definitions keep the plugin's array - that mismatch is a bug, tracked in #249.
+4. **`scripts/check-methods.js`** - fails the sync when the hand-written `A2AMethod` enum in `a2a/a2a-jsonrpc.proto` no longer matches the rpc names of the official `service A2AService` (A2A v1.0 uses them verbatim as JSON-RPC method names, spec section 5.3). When upstream adds or renames an rpc, update the enum.
 
 ## Gotchas
 

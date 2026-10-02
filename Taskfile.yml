@@ -33,7 +33,7 @@ tasks:
       - go install github.com/bufbuild/protoschema-plugins/cmd/protoc-gen-jsonschema@v0.6.0
       - curl -fsSL -o a2a/a2a.proto https://raw.githubusercontent.com/a2aproject/A2A/{{.A2A_REF}}/specification/a2a.proto
       - mkdir -p a2a/tmp
-      - cp a2a/a2a.proto a2a/tmp/a2a.proto
+      - cp a2a/a2a.proto a2a/a2a-jsonrpc.proto a2a/tmp/
       - curl -fsSL -o a2a/tmp/buf.yaml https://raw.githubusercontent.com/a2aproject/A2A/{{.A2A_REF}}/specification/buf.yaml
       - curl -fsSL -o a2a/tmp/buf.lock https://raw.githubusercontent.com/a2aproject/A2A/{{.A2A_REF}}/specification/buf.lock
       - |
@@ -55,8 +55,8 @@ tasks:
         echo "Adding required fields from proto annotations"
         bun scripts/add-required-fields.js
       - |
-        echo "Adding JSON-RPC method names from the A2AService rpcs"
-        bun scripts/add-methods.js
+        echo "Checking A2AMethod against the A2AService rpcs"
+        bun scripts/check-methods.js
       - rm -rf a2a/tmp
       - task: format
 
