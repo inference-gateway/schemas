@@ -32,7 +32,7 @@ and the operator.
 
 Two kinds of files live here:
 
-- **Sources of truth** are hand-edited here (`openapi.yaml`, `a2a/a2a.proto`).
+- **Sources of truth** are hand-edited here (`openapi.yaml`).
 - **Generated / mirrored** files are produced by the tasks below and should
   never be hand-edited - change the generator input (or upstream) and
   regenerate.
@@ -42,7 +42,7 @@ Two kinds of files live here:
 | Schema  | File(s)                                  | Editing                                                                                     |
 | ------- | ---------------------------------------- | ------------------------------------------------------------------------------------------- |
 | OpenAPI | `openapi.yaml`                           | **Hand-edited; source of truth** for the gateway's HTTP API.                                |
-| A2A     | `a2a/a2a.proto` → `a2a/a2a-schema.{json,yaml}` | `a2a.proto` is the source of truth; the JSON/YAML are **generated** via `task a2a-schema-download`. |
+| A2A     | `a2a/a2a.proto` → `a2a/a2a-schema.{json,yaml}` | `a2a.proto` is **mirrored** from [`a2aproject/A2A`](https://github.com/a2aproject/A2A) at a pinned tag; the JSON/YAML are **generated** from it via `task a2a-schema-download`. |
 | MCP     | `mcp/mcp-schema.{json,yaml}`             | **Mirrored** from [`modelcontextprotocol/modelcontextprotocol`](https://github.com/modelcontextprotocol/modelcontextprotocol) via `task mcp-schema-download`. |
 
 ## Layout
@@ -51,7 +51,7 @@ Two kinds of files live here:
 .
 ├── openapi.yaml          # Inference Gateway HTTP API spec - source of truth
 ├── a2a/
-│   ├── a2a.proto         # A2A protocol - source of truth
+│   ├── a2a.proto         # mirrored from upstream a2aproject/A2A
 │   ├── a2a-schema.json   # generated from a2a.proto
 │   └── a2a-schema.yaml   # generated from a2a.proto
 ├── mcp/
@@ -92,7 +92,7 @@ Common tasks:
 | `task openapi:format`      | Format `openapi.yaml` with Prettier.                              |
 | `task lint`                | Markdownlint over the Markdown files (runs in CI).               |
 | `task format`              | Format the YAML schemas with Prettier.                           |
-| `task a2a-schema-download` | Regenerate the A2A schema from `a2a/a2a.proto` (needs Go + buf). |
+| `task a2a-schema-download` | Sync `a2a/a2a.proto` from upstream and regenerate the A2A schema (needs Go + buf). |
 | `task mcp-schema-download` | Sync the MCP schema from upstream.                               |
 | `task release:dry`         | Preview the next semantic-release version locally (needs `GITHUB_TOKEN`). |
 

@@ -3,6 +3,11 @@ name: Sync A2A Schema
 
 on:
   workflow_dispatch:
+    inputs:
+      a2a_ref:
+        description: 'a2aproject/A2A ref to sync (refs/tags/vX.Y.Z, a branch ref, or a SHA). Empty = the A2A_REF pin in Taskfile.yml.'
+        required: false
+        default: ''
 
 permissions:
   contents: write
@@ -58,7 +63,9 @@ jobs:
           sudo chmod +x /usr/local/bin/buf
 
       - name: Download and convert A2A schema
-        run: task a2a-schema-download
+        run: task a2a-schema-download A2A_REF="${A2A_REF}"
+        env:
+          A2A_REF: ${{ inputs.a2a_ref }}
 
       - name: Create Pull Request
         id: cpr
@@ -71,10 +78,11 @@ jobs:
           commit-message: "chore(a2a): sync A2A schema"
           title: "chore(a2a): sync A2A schema"
           body: |
-            Automated update of A2A schema from google-a2a/A2A.
+            Automated update of the A2A proto and generated schema from a2aproject/A2A at `${{ inputs.a2a_ref || 'the Taskfile.yml A2A_REF pin' }}`.
 
             This PR updates:
-            - A2A schema from google-a2a/A2A
+            - `a2a/a2a.proto` from a2aproject/A2A
+            - `a2a/a2a-schema.{json,yaml}` generated from it
           labels: |
             a2a
             schema

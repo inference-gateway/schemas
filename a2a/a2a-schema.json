@@ -1,6 +1,24 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
+    "A2AMethod": {
+      "description": "JSON-RPC method names of the A2A service. A2A v1.0 uses the A2AService rpc names verbatim (spec section 9.3).",
+      "enum": [
+        "SendMessage",
+        "SendStreamingMessage",
+        "GetTask",
+        "ListTasks",
+        "CancelTask",
+        "SubscribeToTask",
+        "CreateTaskPushNotificationConfig",
+        "GetTaskPushNotificationConfig",
+        "ListTaskPushNotificationConfigs",
+        "GetExtendedAgentCard",
+        "DeleteTaskPushNotificationConfig"
+      ],
+      "title": "A2A Method",
+      "type": "string"
+    },
     "APIKeySecurityScheme": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "additionalProperties": false,
