@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [1.2.0](https://github.com/inference-gateway/schemas/compare/v1.1.0...v1.2.0) (2026-10-03)
+
+### Features
+
+* **openapi:** add a2a config section ([#272](https://github.com/inference-gateway/schemas/issues/272)) ([8d2a3c9](https://github.com/inference-gateway/schemas/commit/8d2a3c93f5ba141b37f42964b8c6e2cf906f5f3c))
+
 ## [1.1.0](https://github.com/inference-gateway/schemas/compare/v1.0.1...v1.1.0) (2026-10-03)
 
 ### Features
