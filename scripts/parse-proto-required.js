@@ -1,6 +1,8 @@
 const fs = require('fs');
 
-const protoContent = fs.readFileSync('a2a/a2a.proto', 'utf8');
+const protoContent = ['a2a/a2a.proto', 'a2a/a2a-jsonrpc.proto']
+  .map((file) => fs.readFileSync(file, 'utf8'))
+  .join('\n');
 
 const requiredFields = {};
 let currentMessage = null;
@@ -64,5 +66,6 @@ if (require.main === module) {
   assert.ok(!Object.values(filtered).some((fields) => fields.includes('tenant')));
   assert.ok(filtered.AgentInterface.includes('protocolVersion'));
   assert.ok(filtered.AgentCard.includes('supportedInterfaces'));
+  assert.deepStrictEqual(filtered.JSONRPCRequest, ['jsonrpc', 'method']);
   console.log('✓ parse-proto-required self-check passed');
 }
