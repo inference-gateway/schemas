@@ -3,6 +3,16 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [1.1.0](https://github.com/inference-gateway/schemas/compare/v1.0.1...v1.1.0) (2026-10-03)
+
+### Features
+
+* **a2a:** model the json-rpc binding in a hand-written proto and pin the official proto sync ([#271](https://github.com/inference-gateway/schemas/issues/271)) ([d2db792](https://github.com/inference-gateway/schemas/commit/d2db792ed2deaacdbad2f8fcadef9351ad58d9e7)), references [inference-gateway/adk#341](https://github.com/inference-gateway/adk/issues/341)
+
+### Misc
+
+* **deps:** bump claude-code 2.1.283 -> 2.1.285 ([#270](https://github.com/inference-gateway/schemas/issues/270)) ([48beb2a](https://github.com/inference-gateway/schemas/commit/48beb2aca21dcfee4faab80a99b4c21008229960))
+
 ## [1.0.1](https://github.com/inference-gateway/schemas/compare/v1.0.0...v1.0.1) (2026-10-01)
 
 ### Continuous Integration
