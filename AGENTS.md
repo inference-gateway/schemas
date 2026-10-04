@@ -6,6 +6,7 @@ Shared schemas for the Inference Gateway ecosystem. Downstream projects (gateway
 - `a2a/a2a.proto` - A2A types, **mirrored** from upstream `a2aproject/A2A` at the `A2A_REF` pin in `Taskfile.yml`.
 - `a2a/a2a-jsonrpc.proto` - **hand-written** JSON-RPC binding types (`A2AMethod`, `JSONRPCRequest`, `JSONRPCSuccessResponse`, `JSONRPCErrorResponse`, `JSONRPCError`) that the official proto does not model - the only place for non-official A2A types.
 - `a2a/a2a-schema.{json,yaml}` - **generated** from both protos - downstream ADKs generate their types from it and keep no hand-written copies.
+- `a2a/extensions/<name>/v<N>/README.md` - **hand-written** specs of our A2A extensions. The directory's GitHub tree URL is the extension URI, so never move or rename a published one - a breaking change gets a new `v<N>`.
 - `mcp/mcp-schema.{json,yaml}` - **mirrored** from upstream `modelcontextprotocol/modelcontextprotocol`.
 
 The `maintainer` skill (if loaded) documents cross-repo conventions for the `inference-gateway` polyrepo - read it before fan-out or breaking changes.

@@ -54,7 +54,8 @@ Two kinds of files live here:
 │   ├── a2a.proto         # mirrored from upstream a2aproject/A2A
 │   ├── a2a-jsonrpc.proto # hand-written JSON-RPC binding types
 │   ├── a2a-schema.json   # generated from both protos
-│   └── a2a-schema.yaml   # generated from both protos
+│   ├── a2a-schema.yaml   # generated from both protos
+│   └── extensions/       # hand-written specs of our A2A extensions, one dir per URI
 ├── mcp/
 │   ├── mcp-schema.json   # mirrored from upstream MCP
 │   └── mcp-schema.yaml   # mirrored from upstream MCP
