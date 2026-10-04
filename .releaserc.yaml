@@ -13,6 +13,8 @@ plugins:
           release: patch
         - type: refactor
           release: patch
+        - type: docs
+          release: patch
   - - '@semantic-release/release-notes-generator'
     - preset: conventionalcommits
       presetConfig:

@@ -49,7 +49,7 @@ Follow `.editorconfig` / `.prettierrc`: LF endings, UTF-8, final newline, trimme
 
 ## Commits & releases
 
-Conventional Commits with an all-lowercase description (`feat(openapi): add usage fields`) - semantic-release depends on it. Releases are automated by semantic-release (`.releaserc.yaml`, manual `Release` workflow in `.github/workflows/release.yml`), which updates `CHANGELOG.md`, tags, and creates a GitHub Release - nothing is published to a package registry. `feat:` -> minor, a `BREAKING CHANGE:` footer -> major, and `fix:`, `chore:`, `ci:`, `refactor:`, `perf:` and reverts -> patch (the `releaseRules` in `.releaserc.yaml` plus the commit-analyzer defaults). Of the configured types only `docs:`, `style:`, `test:` and `build:` do not cut a release - a batch of `chore`/`ci` commits alone still ships a patch version.
+Conventional Commits with an all-lowercase description (`feat(openapi): add usage fields`) - semantic-release depends on it. Releases are automated by semantic-release (`.releaserc.yaml`, manual `Release` workflow in `.github/workflows/release.yml`), which updates `CHANGELOG.md`, tags, and creates a GitHub Release - nothing is published to a package registry. `feat:` -> minor, a `BREAKING CHANGE:` footer -> major, and `fix:`, `chore:`, `ci:`, `refactor:`, `docs:`, `perf:` and reverts -> patch (the `releaseRules` in `.releaserc.yaml` plus the commit-analyzer defaults). Of the configured types only `style:`, `test:` and `build:` do not cut a release - a batch of `chore`/`ci`/`docs` commits alone still ships a patch version. `docs:` ships because hand-written specs such as the A2A extensions under `a2a/extensions/` are part of the published schemas.
 
 ## Adding a provider
 
