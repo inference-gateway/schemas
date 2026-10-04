@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Shared schemas for the Inference Gateway ecosystem. Downstream projects (gateway, SDKs, docs, CLI, operator) regenerate from these files, so every change ripples - call out downstream impact in PRs (the SDK repos `inference-gateway/sdk`, `python-sdk`, `rust-sdk`, `typescript-sdk`, plus `inference-gateway/docs` and `inference-gateway/inference-gateway`).
+Shared schemas for the Inference Gateway ecosystem. Downstream projects (gateway, SDKs, ADKs, docs, CLI, operator) regenerate from these files, so every change ripples - call out downstream impact in PRs (the SDK repos `inference-gateway/sdk`, `python-sdk`, `rust-sdk`, `typescript-sdk`, the ADK repos `inference-gateway/adk`, `rust-adk`, `typescript-adk`, plus `inference-gateway/docs` and `inference-gateway/inference-gateway`).
 
 - `openapi.yaml` - the gateway's HTTP API. **Hand-edited; source of truth.**
 - `a2a/a2a.proto` - A2A types, **mirrored** from upstream `a2aproject/A2A` at the `A2A_REF` pin in `Taskfile.yml`.
@@ -64,7 +64,7 @@ Env vars follow `{UPPER_SNAKE_PROVIDER}_API_URL` / `_API_KEY`.
 
 1. **`buf generate`** - emits per-message `*.jsonschema.strict.bundle.json` files into `a2a/` (`target=json-strict-bundle`).
 2. **`scripts/process-bundle.js`** - merges the bundles into one `a2a-schema.{json,yaml}` under `definitions:`, then strips MkDocs `--8<-- [start:X]` / `[end:X]` snippet markers from descriptions (upstream dropped them in v1.0.1, so this is currently a no-op kept for future revisions); strips the `lf.a2a.v1.` and `google.protobuf.` prefixes from definition keys **and** `$ref`s (only those two - a further upstream package rename needs this script updated); rewrites `#/$defs/` -> `#/definitions/`; deletes `patternProperties` (downstream codegen can't handle them); and removes the bundle files.
-3. **`scripts/add-required-fields.js`** - uses `scripts/parse-proto-required.js` to read `[(google.api.field_behavior) = REQUIRED]` annotations from both protos (`{ MessageName: [camelCaseField, ...] }`) and writes them into both outputs. The plugin already emits a presence-derived `required` array, so this stage **overwrites** it for annotated messages while unannotated definitions keep the plugin's array - that mismatch is a bug, tracked in #249.
+3. **`scripts/add-required-fields.js`** - uses `scripts/parse-proto-required.js` to read `[(google.api.field_behavior) = REQUIRED]` annotations from both protos (`{ MessageName: [camelCaseField, ...] }`) and writes them into both outputs. The plugin also emits a presence-derived `required` array, so `required` ends up derived solely from the annotations: this stage **overwrites** it for annotated messages and **deletes** the plugin's array from every other definition.
 4. **`scripts/check-methods.js`** - fails the sync when the hand-written `A2AMethod` enum in `a2a/a2a-jsonrpc.proto` no longer matches the rpc names of the official `service A2AService` (A2A v1.0 uses them verbatim as JSON-RPC method names, spec section 5.3). When upstream adds or renames an rpc, update the enum.
 
 ## Gotchas

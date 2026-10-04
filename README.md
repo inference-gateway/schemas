@@ -27,8 +27,8 @@ the Model Context Protocol (MCP).
 
 This repository holds the three shared schemas that the rest of the
 Inference Gateway ecosystem consumes. Downstream projects regenerate from these
-files, so a change here ripples into the gateway, the SDKs, the docs, the CLI,
-and the operator.
+files, so a change here ripples into the gateway, the SDKs, the ADKs, the docs,
+the CLI, and the operator.
 
 Two kinds of files live here:
 
@@ -67,8 +67,12 @@ These schemas are consumed across the [`inference-gateway`](https://github.com/i
 
 - [`inference-gateway`](https://github.com/inference-gateway/inference-gateway) - vendors `openapi.yaml` for Go code generation.
 - [`sdk`](https://github.com/inference-gateway/sdk), [`python-sdk`](https://github.com/inference-gateway/python-sdk), [`rust-sdk`](https://github.com/inference-gateway/rust-sdk), [`typescript-sdk`](https://github.com/inference-gateway/typescript-sdk) - client SDKs generated from these schemas.
+- [`adk`](https://github.com/inference-gateway/adk), [`rust-adk`](https://github.com/inference-gateway/rust-adk), [`typescript-adk`](https://github.com/inference-gateway/typescript-adk) - agent development kits that generate their A2A types from `a2a/a2a-schema.{json,yaml}`.
 - [`docs`](https://github.com/inference-gateway/docs) - API reference and guides.
 - [`operator`](https://github.com/inference-gateway/operator) and [`cli`](https://github.com/inference-gateway/cli) - consume the shared types.
+
+The `Sync Downstream` workflow (`.github/workflows/sync-downstream.yml`) fans the
+schemas-to-types sync out to the SDKs, the ADKs and the gateway.
 
 ## Development
 
