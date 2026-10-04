@@ -41,8 +41,8 @@ Two kinds of files live here:
 
 | Schema  | File(s)                                  | Editing                                                                                     |
 | ------- | ---------------------------------------- | ------------------------------------------------------------------------------------------- |
-| OpenAPI | `openapi.yaml`                           | **Hand-edited; source of truth** for the gateway's HTTP API.                                |
-| A2A     | `a2a/a2a.proto` + `a2a/a2a-jsonrpc.proto` → `a2a/a2a-schema.{json,yaml}` | `a2a.proto` is **mirrored** from [`a2aproject/A2A`](https://github.com/a2aproject/A2A) at a pinned tag; `a2a-jsonrpc.proto` is **hand-written** (JSON-RPC binding types the official proto does not model); the JSON/YAML are **generated** from both via `task a2a-schema-download`. |
+| OpenAPI | `openapi.yaml`                           | **Hand-edited - source of truth** for the gateway's HTTP API.                                |
+| A2A     | `a2a/a2a.proto` + `a2a/a2a-jsonrpc.proto` → `a2a/a2a-schema.{json,yaml}` | `a2a.proto` is **mirrored** from [`a2aproject/A2A`](https://github.com/a2aproject/A2A) at a pinned tag - `a2a-jsonrpc.proto` is **hand-written** (JSON-RPC binding types the official proto does not model) - the JSON/YAML are **generated** from both via `task a2a-schema-download`. |
 | MCP     | `mcp/mcp-schema.{json,yaml}`             | **Mirrored** from [`modelcontextprotocol/modelcontextprotocol`](https://github.com/modelcontextprotocol/modelcontextprotocol) via `task mcp-schema-download`. |
 
 ## Layout
@@ -122,7 +122,7 @@ task release:dry
 
 - Use [Conventional Commits](https://www.conventionalcommits.org) - semantic-release
   derives versions from the commit history.
-- Edit `openapi.yaml` directly; it is the source of truth.
+- Edit `openapi.yaml` directly - it is the source of truth.
 - Never hand-edit generated or mirrored files (`a2a/a2a-schema.*`,
   `mcp/mcp-schema.*`) - change the generator input and rerun the task.
 
