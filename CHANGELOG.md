@@ -3,6 +3,20 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [1.2.1](https://github.com/inference-gateway/schemas/compare/v1.2.0...v1.2.1) (2026-10-04)
+
+### Documentation
+
+* **a2a:** add the usage extension spec ([#279](https://github.com/inference-gateway/schemas/issues/279)) ([6259804](https://github.com/inference-gateway/schemas/commit/62598041606f8dff85db7ec2d34f76c8c73a2b5a)), references [inference-gateway/cli#1526](https://github.com/inference-gateway/cli/issues/1526)
+* **agents:** add code readability guidelines ([#278](https://github.com/inference-gateway/schemas/issues/278)) ([234976e](https://github.com/inference-gateway/schemas/commit/234976e96f408dfef1cfff2eb40a08508e406fe8))
+* list adk consumers and drop stale [#249](https://github.com/inference-gateway/schemas/issues/249) note ([#276](https://github.com/inference-gateway/schemas/issues/276)) ([e1d673a](https://github.com/inference-gateway/schemas/commit/e1d673a05263bf022a41dbafb4769b626e6d2837))
+* **openapi:** fix two x-config descriptions ([#275](https://github.com/inference-gateway/schemas/issues/275)) ([f2bcc51](https://github.com/inference-gateway/schemas/commit/f2bcc5191be9209b3d818e2bdc69e8e12a64b5f2))
+* replace semicolons with hyphens ([#277](https://github.com/inference-gateway/schemas/issues/277)) ([d3d3a9e](https://github.com/inference-gateway/schemas/commit/d3d3a9e7e4c854e44db3dd77318a788503ab4c0c))
+
+### Continuous Integration
+
+* **release:** cut a patch release for docs commits ([#280](https://github.com/inference-gateway/schemas/issues/280)) ([960fde5](https://github.com/inference-gateway/schemas/commit/960fde5c88619adc464535abd7d579a941a38e2d))
+
 ## [1.2.0](https://github.com/inference-gateway/schemas/compare/v1.1.0...v1.2.0) (2026-10-03)
 
 ### Features
