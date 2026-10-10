@@ -3,6 +3,17 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [1.2.2](https://github.com/inference-gateway/schemas/compare/v1.2.1...v1.2.2) (2026-10-10)
+
+### Documentation
+
+* **openapi:** drop unused CLIENT_TIMEOUT, fix two descriptions ([#284](https://github.com/inference-gateway/schemas/issues/284)) ([3d5613b](https://github.com/inference-gateway/schemas/commit/3d5613bd9d840c4a95019cb86647a2ef81afe6a9))
+
+### Misc
+
+* **deps:** bump claude-code 2.1.285 -> 2.1.289 ([#281](https://github.com/inference-gateway/schemas/issues/281)) ([e6533f3](https://github.com/inference-gateway/schemas/commit/e6533f35c7ac7f8276ceae09357c737f91413485))
+* **deps:** bump infer CLI v0.221.1 -> v0.226.0 ([#282](https://github.com/inference-gateway/schemas/issues/282)) ([fdea2cf](https://github.com/inference-gateway/schemas/commit/fdea2cfee19c9d42a1c6b6ed0257b94757f15fad))
+
 ## [1.2.1](https://github.com/inference-gateway/schemas/compare/v1.2.0...v1.2.1) (2026-10-04)
 
 ### Documentation
