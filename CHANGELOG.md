@@ -3,6 +3,17 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [1.3.0](https://github.com/inference-gateway/schemas/compare/v1.2.2...v1.3.0) (2026-10-19)
+
+### Features
+
+* **openapi:** add WebWright provider ([#287](https://github.com/inference-gateway/schemas/issues/287)) ([afe2156](https://github.com/inference-gateway/schemas/commit/afe21569ca7c9205d689cc29d47f20955b24efa9))
+
+### Misc
+
+* **deps:** bump the github-actions group with 2 updates ([#285](https://github.com/inference-gateway/schemas/issues/285)) ([81e8664](https://github.com/inference-gateway/schemas/commit/81e8664e229ade3d21764161ac1777823479d975))
+* **deps:** bump the npm group with 3 updates ([#286](https://github.com/inference-gateway/schemas/issues/286)) ([e62bc2c](https://github.com/inference-gateway/schemas/commit/e62bc2c9858a8cb89363e8822c51b79e0ec483f7))
+
 ## [1.2.2](https://github.com/inference-gateway/schemas/compare/v1.2.1...v1.2.2) (2026-10-10)
 
 ### Documentation
