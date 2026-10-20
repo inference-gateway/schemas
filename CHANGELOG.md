@@ -3,6 +3,16 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [1.4.1](https://github.com/inference-gateway/schemas/compare/v1.4.0...v1.4.1) (2026-10-20)
+
+### Continuous Integration
+
+* **release:** cut a patch release for revert, style, test and build commits ([9f3d880](https://github.com/inference-gateway/schemas/commit/9f3d88035cae7b9a1c65bc57df7d0cc10ff27928))
+
+### Reverts
+
+* **openapi:** remove WebWright provider ([2d72c92](https://github.com/inference-gateway/schemas/commit/2d72c920d3c04cbdf1a4b3b071b517eaf3695f9b))
+
 ## [1.4.0](https://github.com/inference-gateway/schemas/compare/v1.3.0...v1.4.0) (2026-10-20)
 
 ### Features
