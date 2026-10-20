@@ -3,6 +3,17 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [1.4.0](https://github.com/inference-gateway/schemas/compare/v1.3.0...v1.4.0) (2026-10-20)
+
+### Features
+
+* **openapi:** add deprecated to the models include enum ([#290](https://github.com/inference-gateway/schemas/issues/290)) ([614a885](https://github.com/inference-gateway/schemas/commit/614a8852dd9802a5e201e327f364160b73ca1418)), references [inference-gateway/inference-gateway#793](https://github.com/inference-gateway/inference-gateway/issues/793)
+
+### Misc
+
+* **deps:** bump claude-code 2.1.289 -> 2.1.296 ([#288](https://github.com/inference-gateway/schemas/issues/288)) ([e115ee8](https://github.com/inference-gateway/schemas/commit/e115ee8c983261f2fc526429ab8ee1807d8c4af2))
+* **deps:** bump infer CLI v0.226.0 -> v0.231.1 ([#289](https://github.com/inference-gateway/schemas/issues/289)) ([21f3f1d](https://github.com/inference-gateway/schemas/commit/21f3f1d2bcb0f5bd8b4951f1930e83e9b4dd42d9))
+
 ## [1.3.0](https://github.com/inference-gateway/schemas/compare/v1.2.2...v1.3.0) (2026-10-19)
 
 ### Features
