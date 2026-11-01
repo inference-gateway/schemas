@@ -3,6 +3,18 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [1.6.0](https://github.com/inference-gateway/schemas/compare/v1.5.0...v1.6.0) (2026-11-01)
+
+### Features
+
+* **openapi:** add mutual tls config settings ([#297](https://github.com/inference-gateway/schemas/issues/297)) ([5442387](https://github.com/inference-gateway/schemas/commit/5442387de8ef1f359e87f5d1e576e01ee9ed8947)), closes [#296](https://github.com/inference-gateway/schemas/issues/296)
+
+### Misc
+
+* **deps-dev:** bump markdownlint-cli ([#295](https://github.com/inference-gateway/schemas/issues/295)) ([45dcdb5](https://github.com/inference-gateway/schemas/commit/45dcdb57682522f8bd28d54a30ca8e1da9e8a0c7))
+* **deps:** bump claude-code 2.1.296 -> 2.1.308 ([#294](https://github.com/inference-gateway/schemas/issues/294)) ([b0aaf8b](https://github.com/inference-gateway/schemas/commit/b0aaf8b7c2b126fd29bd8450038276c38d07adc3))
+* **deps:** bump js-yaml from 5.4.3 to 5.5.0 in the npm group ([#293](https://github.com/inference-gateway/schemas/issues/293)) ([b3c222f](https://github.com/inference-gateway/schemas/commit/b3c222fc2d836041507d347f32ae3790f702cbe5))
+
 ## [1.5.0](https://github.com/inference-gateway/schemas/compare/v1.4.1...v1.5.0) (2026-10-21)
 
 ### Features
