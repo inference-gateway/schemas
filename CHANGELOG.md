@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [1.10.0](https://github.com/inference-gateway/schemas/compare/v1.9.0...v1.10.0) (2026-11-03)
+
+### Features
+
+* **openapi:** add the systemone decisions endpoint to ollama, ollama_cloud and llamacpp ([#303](https://github.com/inference-gateway/schemas/issues/303)) ([41fd78d](https://github.com/inference-gateway/schemas/commit/41fd78df8e611c172edc9f53da6489a9de5eec4f))
+
 ## [1.9.0](https://github.com/inference-gateway/schemas/compare/v1.8.0...v1.9.0) (2026-11-03)
 
 ### Features
