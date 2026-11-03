@@ -4884,6 +4884,11 @@ components:
                   type: bool
                   default: 'false'
                   description: 'Enable the Audio API (POST /v1/audio/speech, POST /v1/audio/sfx, POST /v1/audio/music). When disabled, the endpoints return a 404. Served by providers with speech, sound-effect or music support (currently openai and elevenlabs) or by the local llama-tts engine'
+                - name: decisions_enabled
+                  env: 'DECISIONS_ENABLED'
+                  type: bool
+                  default: 'false'
+                  description: 'Enable the Decisions API (POST /v1/decisions). When disabled, the endpoint returns a 404. Served by providers with a decisions endpoint (currently openai) for models whose output modalities list decisions. Opt-in while the upstream Decisions APIs are in preview'
                 - name: videos_enabled
                   env: 'VIDEOS_ENABLED'
                   type: bool
