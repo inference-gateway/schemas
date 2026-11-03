@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [1.7.0](https://github.com/inference-gateway/schemas/compare/v1.6.0...v1.7.0) (2026-11-03)
+
+### Features
+
+* **openapi:** add the decisions api ([#299](https://github.com/inference-gateway/schemas/issues/299)) ([7c2c0cb](https://github.com/inference-gateway/schemas/commit/7c2c0cb8f4de3336d2cf440c966ceb6ccda52448))
+
 ## [1.6.0](https://github.com/inference-gateway/schemas/compare/v1.5.0...v1.6.0) (2026-11-01)
 
 ### Features
