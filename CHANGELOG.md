@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [1.9.0](https://github.com/inference-gateway/schemas/compare/v1.8.0...v1.9.0) (2026-11-03)
+
+### Features
+
+* **openapi:** add the DECISIONS_ENABLED config flag ([#302](https://github.com/inference-gateway/schemas/issues/302)) ([6a75a69](https://github.com/inference-gateway/schemas/commit/6a75a69a0f68316246c3194243ba5512ca278d9a))
+
 ## [1.8.0](https://github.com/inference-gateway/schemas/compare/v1.7.0...v1.8.0) (2026-11-03)
 
 ### Features
