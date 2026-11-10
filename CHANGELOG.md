@@ -3,6 +3,13 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [1.10.1](https://github.com/inference-gateway/schemas/compare/v1.10.0...v1.10.1) (2026-11-10)
+
+### Misc
+
+* **a2a:** sync A2A schema ([#304](https://github.com/inference-gateway/schemas/issues/304)) ([4f39d77](https://github.com/inference-gateway/schemas/commit/4f39d77c3e4da2281ecbc6ed0979a453744053cf))
+* **mcp:** sync MCP schema ([#305](https://github.com/inference-gateway/schemas/issues/305)) ([df76f9c](https://github.com/inference-gateway/schemas/commit/df76f9cf9e1545d0633acb94344aeb1426e9c780))
+
 ## [1.10.0](https://github.com/inference-gateway/schemas/compare/v1.9.0...v1.10.0) (2026-11-03)
 
 ### Features
