@@ -3,6 +3,16 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [1.11.0](https://github.com/inference-gateway/schemas/compare/v1.10.1...v1.11.0) (2026-11-11)
+
+### Features
+
+* **openapi:** add mirelo provider for sfx generation ([#308](https://github.com/inference-gateway/schemas/issues/308)) ([f0f8b98](https://github.com/inference-gateway/schemas/commit/f0f8b98f502ec59a460ddf375b4e0173afdd8a59)), closes [#307](https://github.com/inference-gateway/schemas/issues/307)
+
+### Misc
+
+* **deps:** bump claude-code 2.1.308 -> 2.1.318 ([#306](https://github.com/inference-gateway/schemas/issues/306)) ([f1cb263](https://github.com/inference-gateway/schemas/commit/f1cb26321465a5d83e7c32f6226bbc18b56dc3d0))
+
 ## [1.10.1](https://github.com/inference-gateway/schemas/compare/v1.10.0...v1.10.1) (2026-11-10)
 
 ### Misc
