@@ -3,6 +3,16 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [1.12.0](https://github.com/inference-gateway/schemas/compare/v1.11.0...v1.12.0) (2026-11-13)
+
+### Features
+
+* **openapi:** add the elevenlabs voice endpoints for cloning from a reference sample ([#311](https://github.com/inference-gateway/schemas/issues/311)) ([b1be1bd](https://github.com/inference-gateway/schemas/commit/b1be1bdd2abb60b989cacde2202c99119a396828))
+
+### Misc
+
+* **deps:** bump peter-evans/create-pull-request ([#310](https://github.com/inference-gateway/schemas/issues/310)) ([a808dde](https://github.com/inference-gateway/schemas/commit/a808ddef84fe7c128d489a9947168562177a2ae7))
+
 ## [1.11.0](https://github.com/inference-gateway/schemas/compare/v1.10.1...v1.11.0) (2026-11-11)
 
 ### Features
