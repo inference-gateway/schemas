@@ -3535,6 +3535,10 @@ components:
             - mix
             - sfx
             - speech
+          x-enum-varnames:
+            - CreateSFXRequestOutputMix
+            - CreateSFXRequestOutputSFX
+            - CreateSFXRequestOutputSpeech
           default: mix
           description: |-
             Video input only. Which track to return. `mix` is the generated
