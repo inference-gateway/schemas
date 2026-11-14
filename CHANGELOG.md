@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [1.14.0](https://github.com/inference-gateway/schemas/compare/v1.13.2...v1.14.0) (2026-11-14)
+
+### Features
+
+* **openapi:** add a video input to the videos api for dubbing ([#320](https://github.com/inference-gateway/schemas/issues/320)) ([b846913](https://github.com/inference-gateway/schemas/commit/b846913eaed9c236dd7976ce2a526d7411b166b6))
+
 ## [1.13.2](https://github.com/inference-gateway/schemas/compare/v1.13.1...v1.13.2) (2026-11-14)
 
 ### Bug Fixes
