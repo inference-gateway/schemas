@@ -3508,8 +3508,10 @@ components:
           type: number
           minimum: 0.5
           description: |-
-            Length of the generated audio in seconds - 0.5 to 30 for a text
-            prompt, at least 1 for a video. For a text prompt it is the
+            Length of the generated audio in seconds - at least 0.5 for a
+            text prompt and at least 1 for a video. The ceiling depends on
+            the model (30 for ElevenLabs text-to-sfx), and a longer value is
+            rejected with `400 Bad Request`. For a text prompt it is the
             length of the generated clip. With a video it is the length of
             the scored window, counted from `start_offset_seconds`. Omit to
             let the provider pick a length that fits the prompt or the
