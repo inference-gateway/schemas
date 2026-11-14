@@ -3,6 +3,13 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [1.13.0](https://github.com/inference-gateway/schemas/compare/v1.12.0...v1.13.0) (2026-11-14)
+
+### Features
+
+* **openapi:** add the elevenlabs image edit endpoints ([#313](https://github.com/inference-gateway/schemas/issues/313)) ([0c8604d](https://github.com/inference-gateway/schemas/commit/0c8604d8649d572feb14628c6642d47b4f9a341c)), closes [#312](https://github.com/inference-gateway/schemas/issues/312)
+* **openapi:** score a video on the sfx endpoint ([#314](https://github.com/inference-gateway/schemas/issues/314)) ([915bc38](https://github.com/inference-gateway/schemas/commit/915bc3868a2404d48f4a674be00194f4da532635))
+
 ## [1.12.0](https://github.com/inference-gateway/schemas/compare/v1.11.0...v1.12.0) (2026-11-13)
 
 ### Features
