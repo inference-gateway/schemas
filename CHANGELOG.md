@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [1.13.1](https://github.com/inference-gateway/schemas/compare/v1.13.0...v1.13.1) (2026-11-14)
+
+### Improvements
+
+* **openapi:** fold video-to-sfx into CreateSFXRequest as an optional video input ([#318](https://github.com/inference-gateway/schemas/issues/318)) ([26f7d23](https://github.com/inference-gateway/schemas/commit/26f7d23f1e16af2ae6a5d3871fe42ddaac73cf44))
+
 ## [1.13.0](https://github.com/inference-gateway/schemas/compare/v1.12.0...v1.13.0) (2026-11-14)
 
 ### Features
