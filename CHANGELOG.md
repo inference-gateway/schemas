@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [1.13.2](https://github.com/inference-gateway/schemas/compare/v1.13.1...v1.13.2) (2026-11-14)
+
+### Bug Fixes
+
+* **openapi:** pin the generated names of the sfx output enum ([#319](https://github.com/inference-gateway/schemas/issues/319)) ([8aab087](https://github.com/inference-gateway/schemas/commit/8aab08739887a250b05c199eddff4c0a70bf3430))
+
 ## [1.13.1](https://github.com/inference-gateway/schemas/compare/v1.13.0...v1.13.1) (2026-11-14)
 
 ### Improvements
