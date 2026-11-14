@@ -979,20 +979,16 @@ paths:
         `mp3`).
 
         One JSON body covers both inputs. Without `video` the request is
-        text-to-sfx, describing the sound in `prompt`. With `video` - an
-        https URL or a base64 `data:video/...` URI - the provider watches the
-        clip and generates the sound that fits it, optionally keeping or
-        separating the speech already in the clip. A URL is passed to the
-        provider as a URL media reference, with no upload and no request
-        body limit. A data URI is decoded and uploaded as a provider asset:
-        it is about a third larger than the file, and the gateway holds the
-        inline bytes in memory, so large clips should be sent as a URL.
+        text-to-sfx, describing the sound in `prompt`. With `video` the
+        provider watches the clip and generates the sound that fits it,
+        optionally keeping or separating the speech already in the clip -
+        see `video` for the forms it takes.
 
         The request stays open until the audio is ready, and a body larger
         than the gateway's request body limit returns `413`.
 
         Not every provider implements sound-effect generation, fewer
-        implement video-to-sfx, and a provider or model that cannot honour a
+        implement video-to-sfx, and a provider or model that cannot honor a
         field (e.g. `prompt_influence`) rejects the request with
         `400 Bad Request` and an explanatory error message.
       summary: Generate a sound effect from a text prompt or a video
@@ -1022,7 +1018,7 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
         '413':
-          description: The request body exceeds the gateway's request body limit, e.g. a large inline video data URI. Send the clip as a URL to sidestep the limit.
+          description: The request body exceeds the gateway's request body limit - send a large clip as a URL.
           content:
             application/json:
               schema:
@@ -1503,7 +1499,7 @@ components:
       description: |
         The selected provider does not implement the requested form of
         sound-effect generation - text-to-sfx or video-to-sfx - or cannot
-        honour a field in the request (e.g. `prompt_influence`). The
+        honor a field in the request (e.g. `prompt_influence`). The
         gateway returns this when such a request is routed to a provider
         that does not support it.
       content:
@@ -1794,6 +1790,10 @@ components:
               name: 'create_music'
               method: 'POST'
               endpoint: '/music'
+            sfx_video:
+              name: 'create_sfx_from_video'
+              method: 'POST'
+              endpoint: '/music/video-to-music'
             videos:
               name: 'create_video'
               method: 'POST'
@@ -3485,7 +3485,7 @@ components:
       properties:
         model:
           type: string
-          description: Model ID to use for sound-effect generation (e.g. `elevenlabs/eleven_text_to_sound_v2`, `mirelo/sfx-2.0`).
+          description: Model ID to use for sound-effect generation (e.g. `elevenlabs/eleven_text_to_sound_v2`, `mirelo/sfx-2.0`, or `elevenlabs/music_v2_5` to score a video).
         prompt:
           type: string
           description: |-
@@ -3499,21 +3499,21 @@ components:
           description: |-
             Optional video to score: the provider watches the clip and
             generates the sound that fits it. Either an https URL or a
-            base64 data URI (`data:video/...`). A URL is passed to the
-            provider as a URL media reference, with no upload and no
-            request body limit. A data URI is decoded by the gateway and
-            uploaded as a provider asset - it is about a third larger than
-            the file and held in memory on the way through, so large clips
-            should be sent as a URL.
+            base64 data URI (`data:video/...`). Prefer a URL for large
+            clips: a data URI is about a third larger than the file and
+            counts against the gateway's request body limit. A provider
+            that cannot take the given form answers `400 Bad Request`. The
+            gateway never downloads the URL itself.
         duration_seconds:
           type: number
           minimum: 0.5
           description: |-
-            Length of the generated audio in seconds. For a text prompt it
-            is the length of the generated clip; with a video it is the
-            length of the scored window, counted from
-            `start_offset_seconds`. Omit to let the provider pick a length
-            that fits the prompt or the clip, up to its ceiling.
+            Length of the generated audio in seconds - 0.5 to 30 for a text
+            prompt, at least 1 for a video. For a text prompt it is the
+            length of the generated clip. With a video it is the length of
+            the scored window, counted from `start_offset_seconds`. Omit to
+            let the provider pick a length that fits the prompt or the
+            clip, up to its ceiling.
         start_offset_seconds:
           type: number
           minimum: 0
@@ -3543,14 +3543,14 @@ components:
           minimum: 0
           maximum: 1
           description: |-
-            How closely the generation follows the prompt. Higher values stay
-            closer to the prompt, lower values allow more variation. Omit to
-            use the provider default. Only models with prompt-influence
-            support honor it; a model that cannot honour it rejects the
-            request with `400 Bad Request`.
+            Text prompt only. How closely the generation follows the prompt.
+            Higher values stay closer to the prompt, lower values allow more
+            variation. Omit to use the provider default. Only models with
+            prompt-influence support honor it - a model that cannot honor it
+            rejects the request with `400 Bad Request`.
         loop:
           type: boolean
-          description: Whether to generate a clip that loops seamlessly.
+          description: Text prompt only. Whether to generate a clip that loops seamlessly.
         response_format:
           type: string
           enum:
