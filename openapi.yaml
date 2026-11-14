@@ -3488,6 +3488,7 @@ components:
           description: Model ID to use for sound-effect generation (e.g. `elevenlabs/eleven_text_to_sound_v2`, `mirelo/sfx-2.0`, or `elevenlabs/music_v2_5` to score a video).
         prompt:
           type: string
+          x-go-type-skip-optional-pointer: true
           description: |-
             Description of the sound to generate (e.g. `distant thunder
             rolling over a valley`). Required unless `video` is given:
