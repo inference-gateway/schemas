@@ -4945,8 +4945,13 @@ components:
             - tool_use
             - pause_turn
             - refusal
+            - model_context_window_exceeded
+          nullable: true
           description: |
-            The reason the model stopped generating.
+            The reason the model stopped generating. Always non-null in
+            non-streaming responses. In streaming mode it is null in the
+            `message_start` event and is delivered in the `message_delta`
+            event.
         stop_sequence:
           type: string
           nullable: true
