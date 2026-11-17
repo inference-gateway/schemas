@@ -3,6 +3,25 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+## [1.14.1](https://github.com/inference-gateway/schemas/compare/v1.14.0...v1.14.1) (2026-11-17)
+
+### Bug Fixes
+
+* **openapi:** accept standard openai chat stream chunks ([#331](https://github.com/inference-gateway/schemas/issues/331)) ([1acca7c](https://github.com/inference-gateway/schemas/commit/1acca7ce071b7962d8036ac5a03a3662e27c75de)), closes [#328](https://github.com/inference-gateway/schemas/issues/328)
+* **openapi:** make messages stop_reason nullable ([#329](https://github.com/inference-gateway/schemas/issues/329)) ([2d6d8cf](https://github.com/inference-gateway/schemas/commit/2d6d8cfb510aaddfd1ef13803b1373a06510c8bb))
+
+### Misc
+
+* **deps-dev:** bump the npm group with 2 updates ([#324](https://github.com/inference-gateway/schemas/issues/324)) ([200d83b](https://github.com/inference-gateway/schemas/commit/200d83be77d31f8e6171581852c465d090bae84f))
+* **deps:** bump flox dependencies to latest ([#321](https://github.com/inference-gateway/schemas/issues/321)) ([6d1b3b3](https://github.com/inference-gateway/schemas/commit/6d1b3b3d3b8a569f8f1ba273c7a4e06506f7ade0))
+* **deps:** bump flox dependencies to latest ([#322](https://github.com/inference-gateway/schemas/issues/322)) ([d353937](https://github.com/inference-gateway/schemas/commit/d3539371e2c942e69c96f7ede455715a3170ceab))
+* **deps:** bump peter-evans/create-pull-request ([#325](https://github.com/inference-gateway/schemas/issues/325)) ([1138814](https://github.com/inference-gateway/schemas/commit/1138814d0ec34e52260a4c64fd15df34dc55e84d))
+
+### Continuous Integration
+
+* align Dependabot schedule and grouping ([#323](https://github.com/inference-gateway/schemas/issues/323)) ([c0c6aa0](https://github.com/inference-gateway/schemas/commit/c0c6aa0c0ef457889c5198315321acd68c5cfc25))
+* set up orchestrators from repos.yaml ([#326](https://github.com/inference-gateway/schemas/issues/326)) ([f4c438d](https://github.com/inference-gateway/schemas/commit/f4c438db93b0018a3d21afd937f13cdfc20a9a1d))
+
 ## [1.14.0](https://github.com/inference-gateway/schemas/compare/v1.13.2...v1.14.0) (2026-11-14)
 
 ### Features
