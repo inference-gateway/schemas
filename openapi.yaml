@@ -3124,7 +3124,6 @@ components:
       type: object
       required:
         - delta
-        - finish_reason
         - index
       properties:
         delta:
@@ -3137,11 +3136,13 @@ components:
             content:
               description: A list of message content tokens with log probability information.
               type: array
+              nullable: true
               items:
                 $ref: '#/components/schemas/ChatCompletionTokenLogprob'
             refusal:
               description: A list of message refusal tokens with log probability information.
               type: array
+              nullable: true
               items:
                 $ref: '#/components/schemas/ChatCompletionTokenLogprob'
           required:
