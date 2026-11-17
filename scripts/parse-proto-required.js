@@ -1,6 +1,7 @@
 const fs = require('fs');
+const { A2A_JSONRPC_PROTO, A2A_PROTO } = require('./paths.js');
 
-const protoContent = ['a2a/a2a.proto', 'a2a/a2a-jsonrpc.proto']
+const protoContent = [A2A_PROTO, A2A_JSONRPC_PROTO]
   .map((file) => fs.readFileSync(file, 'utf8'))
   .join('\n');
 

@@ -1,14 +1,4 @@
 #!/usr/bin/env bun
-// One-shot reachability checker for the OAS spec.
-//
-// Walks every $ref starting from operations under `paths.*` and reports
-// whether the streaming-payload schemas are reachable. This mirrors what
-// oapi-codegen's pruner does when --skip-prune is NOT passed: any schema
-// that isn't reachable from an operation is dropped from the generated
-// types. We use it to verify the fix for issue #31.
-//
-// Usage: bun scripts/check-reachable.js [path/to/openapi.yaml]
-
 const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
@@ -29,6 +19,10 @@ function resolveRef(ref) {
   return cur;
 }
 
+/**
+ * Collects every $ref reachable from `node`, mirroring oapi-codegen's pruner - without
+ * --skip-prune it drops any schema not reachable from an operation (issue #31).
+ */
 function walk(node) {
   if (node == null) return;
   if (Array.isArray(node)) {

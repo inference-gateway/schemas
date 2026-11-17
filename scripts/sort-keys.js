@@ -1,11 +1,8 @@
 /**
- * Recursively sort object keys so the generated A2A schema is emitted in a
- * stable, canonical order. Without this, definitions are merged in
- * `fs.readdirSync` order (filesystem-dependent), which produces huge, noisy
- * diffs on every re-sync even when nothing actually changed.
- *
- * Array element order is preserved (it is significant for `required`, `enum`,
- * proto field ordering, etc.); only object keys are reordered.
+ * Recursively sorts object keys so the generated A2A schema has a stable order.
+ * Otherwise definitions merge in filesystem-dependent `fs.readdirSync` order and every
+ * re-sync produces noisy diffs. Array order is kept since it is significant for
+ * `required`, `enum` and proto field ordering.
  */
 function sortKeysDeep(value) {
   if (Array.isArray(value)) {

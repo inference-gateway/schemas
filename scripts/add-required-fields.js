@@ -1,23 +1,30 @@
 const fs = require('fs');
 const yaml = require('js-yaml');
 const sortKeysDeep = require('./sort-keys.js');
+const { A2A_SCHEMA_JSON, A2A_SCHEMA_YAML, YAML_NO_WRAP } = require('./paths.js');
 
 const requiredFieldsMap = require('./parse-proto-required.js');
 
-const schema = yaml.load(fs.readFileSync('a2a/a2a-schema.yaml', 'utf8'));
-
-// The jsonschema plugin marks every implicit-presence scalar/enum field as required,
-// so `required` is derived solely from the proto's field_behavior annotations here.
-for (const [typeName, definition] of Object.entries(schema.definitions || {})) {
-  const fields = requiredFieldsMap[typeName];
-  if (fields) {
-    definition.required = fields;
-    console.log(`✓ Added required fields to ${typeName}: [${fields.join(', ')}]`);
-  } else if (definition.required) {
-    delete definition.required;
-    console.log(`✓ Removed plugin-generated required fields from ${typeName}`);
+/**
+ * Derives each definition's `required` solely from the proto's field_behavior annotations,
+ * because the jsonschema plugin marks every implicit-presence scalar/enum field as required.
+ */
+function replaceRequiredWithAnnotations(definitions) {
+  for (const [typeName, definition] of Object.entries(definitions)) {
+    const fields = requiredFieldsMap[typeName];
+    if (fields) {
+      definition.required = fields;
+      console.log(`✓ Added required fields to ${typeName}: [${fields.join(', ')}]`);
+    } else if (definition.required) {
+      delete definition.required;
+      console.log(`✓ Removed plugin-generated required fields from ${typeName}`);
+    }
   }
 }
+
+const schema = yaml.load(fs.readFileSync(A2A_SCHEMA_YAML, 'utf8'));
+
+replaceRequiredWithAnnotations(schema.definitions || {});
 
 for (const typeName of Object.keys(requiredFieldsMap)) {
   if (!schema.definitions || !schema.definitions[typeName]) {
@@ -26,7 +33,7 @@ for (const typeName of Object.keys(requiredFieldsMap)) {
 }
 
 const sortedSchema = sortKeysDeep(schema);
-fs.writeFileSync('a2a/a2a-schema.yaml', yaml.dump(sortedSchema, {lineWidth: -1}));
-fs.writeFileSync('a2a/a2a-schema.json', JSON.stringify(sortedSchema, null, 2));
+fs.writeFileSync(A2A_SCHEMA_YAML, yaml.dump(sortedSchema, YAML_NO_WRAP));
+fs.writeFileSync(A2A_SCHEMA_JSON, JSON.stringify(sortedSchema, null, 2));
 
 console.log('\n✓ Schema updated with required fields');

@@ -1,10 +1,22 @@
 const fs = require('fs');
 const yaml = require('js-yaml');
 const sortKeysDeep = require('./sort-keys.js');
+const { A2A_DIR, A2A_SCHEMA_JSON, A2A_SCHEMA_YAML, YAML_NO_WRAP } = require('./paths.js');
+
+const BUNDLE_SUFFIX = '.jsonschema.strict.bundle.json';
+const DEFINITION_SUFFIX = '.jsonschema.strict.json';
+const STRIPPED_PACKAGE_PREFIXES = ['lf.a2a.v1.', 'google.protobuf.'];
+
+/** Strips the proto package prefixes and the plugin's file suffix from a definition name or $ref. */
+const stripGeneratedNaming = (name) =>
+  [...STRIPPED_PACKAGE_PREFIXES, DEFINITION_SUFFIX].reduce(
+    (stripped, part) => stripped.replaceAll(part, ''),
+    name
+  );
 
 const files = fs
-  .readdirSync('a2a')
-  .filter(f => f.endsWith('.jsonschema.strict.bundle.json'))
+  .readdirSync(A2A_DIR)
+  .filter(f => f.endsWith(BUNDLE_SUFFIX))
   .sort();
 if (files.length === 0) throw new Error('No bundle files found');
 
@@ -14,7 +26,7 @@ const schema = {
 };
 
 files.forEach(bundleFile => {
-  const bundle = JSON.parse(fs.readFileSync('a2a/' + bundleFile, 'utf8'));
+  const bundle = JSON.parse(fs.readFileSync(`${A2A_DIR}/${bundleFile}`, 'utf8'));
   if (bundle.$defs) {
     Object.assign(schema.definitions, bundle.$defs);
   }
@@ -42,11 +54,7 @@ cleanDescriptions(schema);
 
 const normalized = {};
 for (const [key, value] of Object.entries(schema.definitions)) {
-  const cleanName = key
-    .replace(/^lf\.a2a\.v1\./, '')
-    .replace(/\.jsonschema\.strict\.json$/, '')
-    .replace(/^google\.protobuf\./, '');
-  normalized[cleanName] = value;
+  normalized[stripGeneratedNaming(key)] = value;
 }
 schema.definitions = normalized;
 
@@ -54,11 +62,7 @@ const normalizeRefs = (obj) => {
   if (typeof obj !== 'object' || obj === null) return;
   for (const key in obj) {
     if (key === '$ref' && typeof obj[key] === 'string') {
-      obj[key] = obj[key]
-        .replace('#/$defs/', '#/definitions/')
-        .replace(/lf\.a2a\.v1\./g, '')
-        .replace(/\.jsonschema\.strict\.json/g, '')
-        .replace(/google\.protobuf\./g, '');
+      obj[key] = stripGeneratedNaming(obj[key].replace('#/$defs/', '#/definitions/'));
     } else if (typeof obj[key] === 'object') {
       normalizeRefs(obj[key]);
     }
@@ -80,9 +84,9 @@ const removePatternProps = (obj) => {
 removePatternProps(schema);
 
 const sortedSchema = sortKeysDeep(schema);
-fs.writeFileSync('a2a/a2a-schema.json', JSON.stringify(sortedSchema, null, 2));
-fs.writeFileSync('a2a/a2a-schema.yaml', yaml.dump(sortedSchema, {lineWidth: -1}));
+fs.writeFileSync(A2A_SCHEMA_JSON, JSON.stringify(sortedSchema, null, 2));
+fs.writeFileSync(A2A_SCHEMA_YAML, yaml.dump(sortedSchema, YAML_NO_WRAP));
 
-files.forEach(f => fs.unlinkSync('a2a/' + f));
+files.forEach(f => fs.unlinkSync(`${A2A_DIR}/${f}`));
 
 console.log(`✓ Processed ${files.length} bundle files into unified schema`);
