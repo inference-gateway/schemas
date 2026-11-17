@@ -568,20 +568,18 @@ definitions:
     $schema: https://json-schema.org/draft/2020-12/schema
     additionalProperties: false
     description: |-
-      A JSON-RPC 2.0 error object; A2A error codes are mapped in spec section 5.4.
-       Hand-written by inference-gateway, not part of the official a2a.proto, which does not model
-       the JSON-RPC binding.
+      A JSON-RPC 2.0 error object - A2A error codes are mapped in spec section 5.4.
+       `code` is e.g. -32601 for an unknown method, `message` is a short description of the error
+       and `data` carries additional information about it.
+       Hand-written by inference-gateway - the official a2a.proto does not model the JSON-RPC binding.
     properties:
       code:
-        description: The error code, e.g. -32601 for an unknown method.
         maximum: 2147483647
         minimum: -2147483648
         type: integer
       data:
         $ref: '#/definitions/Value'
-        description: Additional information about the error.
       message:
-        description: A short description of the error.
         type: string
     required:
       - code
@@ -593,17 +591,15 @@ definitions:
     additionalProperties: false
     description: |-
       A JSON-RPC 2.0 response reporting a failed A2A method call (A2A spec section 9.5).
-       Hand-written by inference-gateway, not part of the official a2a.proto, which does not model
-       the JSON-RPC binding.
+       `jsonrpc` is always "2.0" and `id` is the id of the request this response answers, or null
+       when it could not be read.
+       Hand-written by inference-gateway - the official a2a.proto does not model the JSON-RPC binding.
     properties:
       error:
         $ref: '#/definitions/JSONRPCError'
-        description: The error that occurred.
       id:
         $ref: '#/definitions/Value'
-        description: The id of the request this response answers, or null when it could not be read.
       jsonrpc:
-        description: The JSON-RPC version, always "2.0".
         type: string
     required:
       - jsonrpc
@@ -616,17 +612,15 @@ definitions:
     additionalProperties: false
     description: |-
       A JSON-RPC 2.0 request to an A2A agent (A2A spec section 9.3).
-       Hand-written by inference-gateway, not part of the official a2a.proto, which does not model
-       the JSON-RPC binding.
+       `jsonrpc` is always "2.0". `id` is a string, a number or null, and is omitted for notifications.
+       `params` carries the method's request message, e.g. a SendMessageRequest for SendMessage.
+       Hand-written by inference-gateway - the official a2a.proto does not model the JSON-RPC binding.
     properties:
       id:
         $ref: '#/definitions/Value'
-        description: 'The request id: a string, a number or null. Omitted for notifications.'
       jsonrpc:
-        description: The JSON-RPC version, always "2.0".
         type: string
       method:
-        description: The A2A method to invoke.
         enum:
           - SendMessage
           - SendStreamingMessage
@@ -643,7 +637,6 @@ definitions:
         type: string
       params:
         $ref: '#/definitions/Struct'
-        description: The method's request message, e.g. a SendMessageRequest for SendMessage.
     required:
       - jsonrpc
       - method
@@ -654,18 +647,16 @@ definitions:
     additionalProperties: false
     description: |-
       A JSON-RPC 2.0 response carrying the result of an A2A method (A2A spec section 9).
-       Hand-written by inference-gateway, not part of the official a2a.proto, which does not model
-       the JSON-RPC binding.
+       `jsonrpc` is always "2.0" and `id` is the id of the request this response answers.
+       `result` carries the method's response message, e.g. a Task for GetTask.
+       Hand-written by inference-gateway - the official a2a.proto does not model the JSON-RPC binding.
     properties:
       id:
         $ref: '#/definitions/Value'
-        description: The id of the request this response answers.
       jsonrpc:
-        description: The JSON-RPC version, always "2.0".
         type: string
       result:
         $ref: '#/definitions/Value'
-        description: The method's response message, e.g. a Task for GetTask.
     required:
       - jsonrpc
       - id
