@@ -19,13 +19,14 @@ Runtime is Bun (`>= 1.3.13`) - run `bun install` first. Everything goes through 
 | -------------------------- | --------------------------------------------------------------------------- |
 | `task openapi:lint`        | Spectral lint of `openapi.yaml` (CI gate).                                  |
 | `task openapi:format`      | Prettier-format `openapi.yaml`.                                              |
+| `task format`              | Prettier-format all YAML (the two sync tasks run it automatically).          |
 | `task lint` / `lint:fix`   | markdownlint over Markdown, minus `.markdownlintignore` (`AGENTS.md`, `CHANGELOG.md`, `node_modules/`). `lint` is a CI gate. |
 | `task check-reachable`     | Asserts streaming-payload schemas (`CreateChatCompletionStreamResponse` and friends) stay reachable from operations - oapi-codegen drops unreachable ones (issue #31). |
 | `task a2a-schema-download` | Downloads `a2a/a2a.proto` at `A2A_REF` (default: the pinned tag) and regenerates `a2a/a2a-schema.{json,yaml}` from it and `a2a/a2a-jsonrpc.proto`. Requires Go + `buf`. |
 | `task mcp-schema-download` | Re-syncs the MCP schema for the pinned protocol version (`MCP_PROTOCOL_VERSION` in `Taskfile.yml`) - bump the pin when a new revision ships. |
 | `task release:dry`         | Previews the next semantic-release version and notes - publishes nothing. Needs `GITHUB_TOKEN`/`GH_TOKEN` exported and push access to `main` (it still runs `git push --dry-run` and the GitHub verifyConditions check, which fails with `ENOGHTOKEN` without a token). |
 
-The two schema-sync tasks are also `workflow_dispatch` workflows (`a2a-schema-sync.yml`, `mcp-schema-sync.yml`) that open a `chore(scope): sync ...` PR.
+The two schema-sync tasks are also `workflow_dispatch` workflows (`a2a-schema-sync.yml`, `mcp-schema-sync.yml`) that open a `chore(scope): sync ...` PR. After merging a schema change, the `Sync Downstream` workflow (`sync-downstream.yml`) dispatches that ref to every consumer - OpenAPI: `sdk`, `python-sdk`, `rust-sdk`, `typescript-sdk`, `inference-gateway`, A2A: `adk`, `rust-adk`, `typescript-adk`. Each downstream repo then runs its own `schemas-sync.yml` caller with `SCHEMAS_REF` (empty resolves the latest schemas release) and opens or updates an idempotent PR on its `schemas-sync` branch - re-running is safe, and `dry_run` previews diffs without opening PRs.
 
 ## Validation
 
